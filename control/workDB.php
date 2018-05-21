@@ -21,4 +21,46 @@ class workDB
             sqlsrv_close($this->conn);
         }
     }
+
+    /**
+     * Метод вставки данных в таблицу по имени таблицы и массиву ключ-значение. Проверки на соотсветствия типа данных нет.
+     * @param $tableName Имя таблицы в которую будет производиться запись
+     * @param $columnValues Массив ключ-значение, где ключ имя столбца в которое вносится изменение, а значение то, что
+     *                      необходимо внести
+     */
+    public function insertDataTable($tableName, $columnValues) {
+
+    }
+
+    /**
+     * Получение всех столбцов и строк из таблицы
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     */
+    public function selectAllDataTable($tableName) {
+
+    }
+
+    /**
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить
+     */
+    public function selectDataTable($tableName, $columnName) {
+
+    }
+
+    /**
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить
+     * @param $condition Условие, которое записывается после WHERE
+     */
+    public function selectDataTableWhere($tableName, $columnName, $condition) {
+
+    }
+
+    /**
+     * @param $query Произвольны запрос к БД
+     */
+    public function anyQueryDB ($query) {
+
+    }
 }
