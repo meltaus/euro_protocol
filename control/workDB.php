@@ -63,4 +63,24 @@ class workDB
     public function anyQueryDB ($query) {
 
     }
+
+    /**
+     * Удалить строку из таблицы
+     * @param $tableName Имя таблицы из которой необходимо удалить строку
+     * @param $nameIDColumn Имя столбца с никальными значениями, по которому можно вычислить строку для удаления
+     * @param $id Значения столбца $nameIDColumn
+     */
+    public function deleteRowDataTable ($tableName, $nameIDColumn, $id) {
+
+    }
+
+    /**
+     * Метод вставки данных в таблицу по имени таблицы и массиву ключ-значение. Проверки на соотсветствия типа данных нет.
+     * @param $tableName Имя таблицы в которую будет производиться запись
+     * @param $columnValues Массив ключ-значение, где ключ имя столбца в которое вносится изменение, а значение то, что
+     *                      необходимо внести
+     */
+    public function updateDataTable($tableName, $columnValue) {
+
+    }
 }
