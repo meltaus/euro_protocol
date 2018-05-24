@@ -13,6 +13,8 @@ class workDB
         // подключаемся к серверу
         $this->conn = mysqli_connect($host, $user, $password, $database)
         or die("Ошибка подключения к базе данных" . mysqli_error($this->conn));
+        mysqli_query($this->conn, "use euro_protocol") or die("Ошибка " . mysqli_error($this->conn));
+        mysqli_query($this->conn, "SET NAMES utf8") or die("Ошибка " . mysqli_error($this->conn));
     }
 
     //Закрываем подключение
