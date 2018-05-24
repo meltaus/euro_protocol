@@ -15,17 +15,5 @@
 </head>
 
 <?php
-header ("Content-type:text/html; charset=utf-8");
-
-include "./control/workDB.php";
-
-$workDB = new workDB();
-
-$column = array("id", "mark", "name");
-
-
-
-$array = $workDB->selectDataTable("auto", "name");
-print_r($array);
 
 ?>
