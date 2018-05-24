@@ -25,7 +25,6 @@ class authClass
         $iter = count($userArray);
         for ($i = 0; $i < $iter; $i++) {
             if (strcmp($password, $userArray[$i][2]) == 0) {
-                echo "Вы будете авторизованы";
                 $_SESSION["is_auth"] = true; //Делаем пользователя авторизованным
                 $_SESSION["login"] = $login; //Записываем в сессию логин пользователя
                 $_SESSION["user_id"] = $userArray[$i][0];   //user_id
