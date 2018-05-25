@@ -139,14 +139,16 @@
     text-transform: capitalize;
     transition: all 0.5s ease 0s;
 }
-@media only screen and (max-width: 479px){
-    .form-horizontal .form-group{
+@media only screen and (max-width: 479px) {
+    .form-horizontal .form-group {
         padding: 0 25px;
     }
-    .form-horizontal .form-group i{
+
+    .form-horizontal .form-group i {
         left: 45px;
     }
-    .form-horizontal .btn{
+
+    .form-horizontal .btn {
         padding: 10px 20px;
     }
 }
