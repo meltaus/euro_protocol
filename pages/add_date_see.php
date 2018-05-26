@@ -18,7 +18,7 @@
     <form class="form-horizontal" method="post" action="" name="notification">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <table>
+                <table style="margin:10px auto;">
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
