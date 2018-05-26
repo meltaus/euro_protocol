@@ -18,10 +18,10 @@
     <form class="form-horizontal" method="post" action="" name="notification">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <table border="1">
+                <table>
                     <tr>
                         <td>
-                            <div  style="margin-left: 20px; margin-right: 20px">
+                            <div style="margin-left: 5%; margin-right: 5%">
                                 <div class="row">
                                     <label>
                                         Назначенная дата осмотра (если пусто, значит осмотр еще не назначен)
@@ -60,9 +60,11 @@
                             </div>
                         </td>
                         <td>
-                            Связанные с данным полисом ДТП
-                            <br>
-                            Заполняется динамически
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Связанные с данным полисом ДТП
+                                <br>
+                                Заполняется динамически
+                            </div>
                         </td>
                     </tr>
                 </table>
