@@ -21,29 +21,31 @@
                 <tr>
                     <td>
                         <form class="form-horizontal" method="post" action="" name="notification">
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <div style="margin-right: 5%">
-                                        <button type="button" class="btn btn-success">
-                                            Добавить<br>протокол
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <div style="margin-left: 5%; margin-right: 5%">
-                                        <button type="button" class="btn btn-success">
-                                            Добавить<br>участника
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <div style="margin-left: 5%;">
-                                        <button type="button" class="btn btn-success">
-                                            Изменить
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="margin-right: 10px">
+                                            <button type="button" class="btn btn-success">
+                                                Добавить<br>протокол
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="margin-left: 10px; margin-right: 10px">
+                                            <button type="button" class="btn btn-success">
+                                                Добавить<br>участника
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="margin-left: 10px;">
+                                            <button type="button" class="btn btn-success">
+                                                Изменить
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </form>
                     </td>
                     <td>
