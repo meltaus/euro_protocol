@@ -17,35 +17,21 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <table border="1" style="margin:10px auto;">
+            <table style="margin:10px auto;">
                 <tr>
                     <td>
                         <form class="form-horizontal" method="post" action="" name="notification">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div style="margin-right: 10px">
-                                            <button type="button" class="btn btn-success">
-                                                Добавить<br>протокол
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div style="margin-left: 10px; margin-right: 10px">
-                                            <button type="button" class="btn btn-success">
-                                                Добавить<br>участника
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div style="margin-left: 10px;">
-                                            <button type="button" class="btn btn-success">
-                                                Изменить
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div style="margin:10px auto;">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default btn-block">Добавить протокол</button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default btn-block">Добавить участника</button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default btn-block">Внести изменения</button>
+                                </div>
+                            </div>
                         </form>
                     </td>
                     <td>
