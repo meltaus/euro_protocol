@@ -14,4 +14,46 @@
     <link href="../css/style.css" media="all" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table border="1" style="margin:10px auto;">
+                <tr>
+                    <td>
+                        <form class="form-horizontal" method="post" action="" name="notification">
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div style="margin-right: 5%">
+                                        <button type="button" class="btn btn-success">
+                                            Добавить<br>протокол
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div style="margin-left: 5%; margin-right: 5%">
+                                        <button type="button" class="btn btn-success">
+                                            Добавить<br>участника
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div style="margin-left: 5%;">
+                                        <button type="button" class="btn btn-success">
+                                            Изменить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            Динамоеское наполнение событиями, требующими внимания
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
