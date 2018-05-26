@@ -15,12 +15,12 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" method="post" action="" name="notification">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <table style="margin:10px auto;">
-                    <tr>
-                        <td>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table style="margin:10px auto;">
+                <tr>
+                    <td>
+                        <form class="form-horizontal" method="post" action="" name="notification">
                             <div style="margin-left: 5%; margin-right: 5%">
                                 <div class="row">
                                     <label>
@@ -58,18 +58,18 @@
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Связанные с данным полисом ДТП
-                                <br>
-                                Заполняется динамически
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            Связанные с данным полисом ДТП
+                            <br>
+                            Заполняется динамически
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-    </form>
+    </div>
 </div>
 </body>
