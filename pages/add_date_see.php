@@ -14,4 +14,60 @@
     <link href="../css/style.css" media="all" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="container">
+    <form class="form-horizontal" method="post" action="" name="notification">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table border="1">
+                    <tr>
+                        <td>
+                            <div  style="margin-left: 20px; margin-right: 20px">
+                                <div class="row">
+                                    <label>
+                                        Назначенная дата осмотра (если пусто, значит осмотр еще не назначен)
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <input type="datetime-local" class="form-control" name="date" id="date">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label>
+                                        Фактическая дата осмотра (если пусто, значит осмотр еще не проводился)
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <input type="datetime-local" class="form-control" name="date" id="date">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+                                    </div>
+                                    <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                        <div class="form-group" style="margin-top: 5%">
+                                            <button type="button" class="btn btn-danger" style="background: red;">Отменить</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                        <div class="form-group" style="margin-top: 5%">
+                                            <button type="button" class="btn btn-success" style="background: green;">Сохранить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            Связанные с данным полисом ДТП
+                            <br>
+                            Заполняется динамически
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
