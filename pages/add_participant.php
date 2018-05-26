@@ -14,6 +14,60 @@
     <link href="../css/style.css" media="all" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
+<div class="container">
+    <form class="form-horizontal" method="post" action="" name="notification">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <label>О участнике ДТП</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="FIO" id="FIO"
+                           placeholder="ФИО">
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="FIO" id="FIO"
+                               placeholder="Марка автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="FIO" id="FIO"
+                               placeholder="Модель автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="FIO" id="FIO"
+                               placeholder="Гос. Номер">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+            </div>
+            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                <div class="form-group" style="margin-top: 5%">
+                    <button type="button" class="btn btn-danger btn-block" style="background: red;">Отменить</button>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                <div class="form-group" style="margin-top: 5%">
+                    <button type="button" class="btn btn-success btn-block" style="background: green;">Внести данные</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
