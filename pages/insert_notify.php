@@ -22,14 +22,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="number_polis" id="number_polis"
                            placeholder="Номер полиса">
                     <i class="fa fa-file"></i>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <select class="custom-select form-control" id="prefix" name="prefix">
                         <option selected="selected">Метод подачи заявления</option>
@@ -46,6 +46,15 @@
                     </select>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                <div class="checkbox form-group">
+                    <label style="margin-top: 5%">
+                        <input type="checkbox" value="">
+                        <i class="fa fa-2x icon-checkbox"></i>
+                        Довереность
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
@@ -53,36 +62,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">
                     <input type="text" class="form-control" name="FIO" id="FIO"
                            placeholder="ФИО">
                     <i class="fa fa-user"></i>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6" >
-                <table border="1">
-                    <tr>
-                        <td valign="top">
-                            <div style="margin-top: 25%;">
-                                Дата&shy;&shy;
-                            </div>
-                        </td>
-                        <td valign="top">
-                            <div style="margin-top: 21%;">
-                                аварии
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group-personal"">
-                                <input type="date" class="form-control" name="date" id="date"
-                                       value="<?php echo date('Y-m-d'); ?>">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
@@ -106,6 +92,71 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div style="margin-top: 12%; margin-left: 40px">
+                                Дата&shy;&shy;
+                            </div>
+                        </td>
+                        <td valign="top">
+                            <div style="margin-top: 35%;">
+                                ДТП
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group-personal"">
+                            <input type="date" class="form-control" name="date" id="date"
+                                   value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div style="margin-top: 13%; margin-left: 40px">
+                                Дата&shy;&shy;
+                            </div>
+                        </td>
+                        <td valign="top">
+                            <div style="margin-top: 11%;">
+                                регистрации&shy;&shy;
+                            </div>
+                        </td>
+                        <td valign="top">
+                            <div style="margin-top: 35%;">
+                                ДТП
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group-personal"">
+                            <input type="date" class="form-control" name="date" id="date"
+                                   value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+        </div>
+        <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+            <div class="form-group" style="margin-top: 5%">
+                <button type="button" class="btn btn-danger btn-block" style="background: red;">Отменить</button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+            <div class="form-group" style="margin-top: 5%">
+                <button type="button" class="btn btn-success btn-block" style="background: green;">Внести данные</button>
+            </div>
+        </div>
+    </div>
     </form>
 </div>
 </body>
