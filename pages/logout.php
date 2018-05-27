@@ -1,7 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bunta
- * Date: 27.05.18
- * Time: 11:20
- */
+//Выход из сессии
+$_SESSION["is_auth"]=false;
+header("Refresh: 0; ../index.php");
+?>
