@@ -5,7 +5,7 @@ $auth = new AuthClass();
 if (isset($_SESSION['user_id'])) {
     echo $_SESSION['is_auth'];
     if ($auth->isAuth()) { // Если пользователь авторизован, приветствуем:
-        echo "Вы авторизованы";
+        echo '<meta http-equiv="refresh" content="0; url=../pages/user_space">';
     } else {
         unset($_SESSION['user_id']);
         echo "Вы не авторизованы";
@@ -14,7 +14,7 @@ if (isset($_SESSION['user_id'])) {
 } else {
     $auth->auth($_POST["login"], $_POST["password"]);
     if ($auth->isAuth()) { // Если пользователь авторизован, приветствуем:
-        echo "Вы авторизованы";
+        echo '<meta http-equiv="refresh" content="0; url=../pages/user_space.php">';
     } else {
         unset($_SESSION['user_id']);
         echo "Вы не авторизованы";
