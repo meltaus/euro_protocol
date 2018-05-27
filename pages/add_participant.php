@@ -32,21 +32,21 @@
             <div class="row">
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="mark_auto" id="mark_auto"
                                placeholder="Марка автомобиля">
                         <i class="fa fa-car"></i>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="model_auto" id="model_auto"
                                placeholder="Модель автомобиля">
                         <i class="fa fa-car"></i>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="state_car_number" id="state_car_number"
                                placeholder="Гос. Номер">
                         <i class="fa fa-car"></i>
                     </div>
