@@ -58,7 +58,7 @@
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                 <div class="form-group" style="margin-top: 5%">
-                    <button type="button" class="btn btn-danger btn-block" style="background: red;">Отменить</button>
+                    <a href="user_space.php" class="btn btn-danger btn-block" style="background: red;">Отменить</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
