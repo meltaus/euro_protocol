@@ -106,7 +106,7 @@ class workDB
     public function selectUniqueDataTable($tableName, $columnName) {
         //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
         if (gettype($columnName) == "array") {
-            $query = "SELECT DISTINCT";
+            $query = "SELECT DISTINCT ";
             $iter = count($columnName);
             for ($i = 0; $i < $iter; $i++) {
                 $query .= "$columnName[$i]";
