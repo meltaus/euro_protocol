@@ -96,6 +96,34 @@ class workDB
     }
 
     /**
+     * Возвращает двумерный массив уникльных начений таблицы по заданному столбцу,
+     * где array[$i] является массивом, в котором каждый элемент соответствует
+     * столбцу переданному в массиве $columnName запрашиваемой таблицы
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить
+     * @return array Возвращает двумерный массив, где array[$i] является массивом, в котором каждый элемент соответствует столбцу запрашиваемой таблицы
+     */
+    public function selectUniqueDataTable($tableName, $columnName) {
+        //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
+        if (gettype($columnName) == "array") {
+            $query = "SELECT DISTINCT ";
+            $iter = count($columnName);
+            for ($i = 0; $i < $iter; $i++) {
+                $query .= "$columnName[$i]";
+                if ($i == $iter - 1) {
+                    $query .= " ";
+                } else {
+                    $query .= ", ";
+                }
+            }
+            $query .= "FROM ".$tableName;
+            return $this->analysisResult($this->anyQueryDB($query));
+        }
+
+        return null;
+    }
+
+    /**
      * Ведет себя так же как selectDataTable, но к запросу добавляет условие, которое содержится в строке $condition
      * @param $tableName Имя таблицы из которой необходимо получить данные
      * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить

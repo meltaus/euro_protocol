@@ -27,7 +27,7 @@
                     <td>
                         <div style="margin:10px auto;">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-block">Добавить протокол</button>
+                                <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
                             </div>
                             <div class="form-group">
                                 <a href="#addParticipant" id="btn1" class="btn btn-primary btn-block">Добавить участника</a>
