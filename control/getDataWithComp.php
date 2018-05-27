@@ -1,9 +1,6 @@
 <?php
-//Получение списка всех имен для автодополнения
 include $_SERVER["DOCUMENT_ROOT"] . "/control/workDB.php";
 $workDB = new workDB();
-
-
 
 switch ($_GET['mode']) {
     case 'user': // Имена пользователей для автозаполнения
