@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" method="post" action="" name="notification">
+    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>О заявлении:</label>
@@ -154,7 +154,7 @@
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                 <div class="form-group" style="margin-top: 5%">
-                    <button type="button" class="btn btn-success btn-block" style="background: green;">Внести данные</button>
+                    <button type="submit" class="btn btn-success btn-block" style="background: green;">Внести данные</button>
                 </div>
             </div>
         </div>
