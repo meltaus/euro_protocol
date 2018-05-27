@@ -7,10 +7,6 @@ $workDB = new workDB();
 
 switch ($_GET['mode']) {
     case 'user': // Имена пользователей для автозаполнения
-        $fd = fopen("hello.txt", 'w') or die("не удалось создать файл");
-        $str = "Привет мир";
-        fwrite($fd, $_GET['mode']);
-        fclose($fd);
         $columnName = array("name");
         $nameArray = $workDB->selectUniqueDataTable("user", $columnName);
         $iter = count($nameArray);
