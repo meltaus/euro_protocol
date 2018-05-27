@@ -16,27 +16,33 @@
 <body>
 <div class="container">
     <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+            <a href="/pages/logout.php" class="btn btn-danger pull-right">Выйти</a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <table style="margin:10px auto;">
                 <tr>
                     <td>
-                        <form class="form-horizontal" method="post" action="" name="notification">
-                            <div style="margin:10px auto;">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-default btn-block">Добавить протокол</button>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-default btn-block">Добавить участника</button>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-default btn-block">Внести изменения</button>
-                                </div>
+                        <div style="margin:10px auto;">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block">Добавить протокол</button>
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block">Добавить участника</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block">Добавить данные с осмотра</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block">Внести изменения</button>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <div style="margin-left: 5%; margin-right: 5%">
-                            Динамоеское наполнение событиями, требующими внимания
+                            Динамическое наполнение событиями, требующих внимания
                         </div>
                     </td>
                 </tr>
