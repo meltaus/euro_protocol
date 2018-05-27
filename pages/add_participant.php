@@ -32,21 +32,21 @@
             <div class="row">
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="mark_auto" id="mark_auto"
                                placeholder="Марка автомобиля">
                         <i class="fa fa-car"></i>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="model_auto" id="model_auto"
                                placeholder="Модель автомобиля">
                         <i class="fa fa-car"></i>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="FIO" id="FIO"
+                        <input type="text" class="form-control" name="state_car_number" id="state_car_number"
                                placeholder="Гос. Номер">
                         <i class="fa fa-car"></i>
                     </div>
@@ -58,7 +58,7 @@
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                 <div class="form-group" style="margin-top: 5%">
-                    <button type="button" class="btn btn-danger btn-block" style="background: red;">Отменить</button>
+                    <a href="user_space.php" class="btn btn-danger btn-block" style="background: red;">Отменить</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
@@ -71,3 +71,23 @@
 </div>
 </body>
 </html>
+
+<script>
+    $(function () {
+        $("#FIO").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=people'
+        });
+
+        $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=mark_auto'
+        });
+
+        $("#model_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=model_auto'
+        });
+
+        $("#state_car_number").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=state_car_number'
+        });
+    })
+</script>
