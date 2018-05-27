@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="number_polis" id="number_polis"
+                    <input type="text" class="form-control" name="number_polis" id="number_polis" autocomplete="off"
                            placeholder="Номер полиса">
                     <i class="fa fa-file"></i>
                 </div>
@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="FIO" id="FIO"
+                    <input type="text" class="form-control" name="FIO" id="FIO" autocomplete="off"
                            placeholder="ФИО">
                     <i class="fa fa-user"></i>
                 </div>
@@ -73,21 +73,21 @@
         <div class="row">
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="FIO" id="FIO"
+                    <input type="text" class="form-control" name="mark_auto" id="mark_auto" autocomplete="off"
                            placeholder="Марка автомобиля">
                     <i class="fa fa-car"></i>
                 </div>
             </div>
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="FIO" id="FIO"
+                    <input type="text" class="form-control" name="model_auto" id="model_auto" autocomplete="off"
                            placeholder="Модель автомобиля">
                     <i class="fa fa-car"></i>
                 </div>
             </div>
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="FIO" id="FIO"
+                    <input type="text" class="form-control" name="state_car_number" id="state_car_number" autocomplete="off"
                            placeholder="Гос. Номер">
                     <i class="fa fa-car"></i>
                 </div>
