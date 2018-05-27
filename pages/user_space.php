@@ -40,6 +40,10 @@
                                 <a href="#changeData" id="btn3" class="btn btn-primary btn-block">
                                     Внести изменения</a>
                             </div>
+                            <div class="form-group">
+                                <a href="#addAuto" id="btn4" class="btn btn-primary btn-block">
+                                    Добавить автомобиль</a>
+                            </div>
                         </div>
                     </td>
                     <td>
@@ -60,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Заголовок модального окна</h4>
+                <h4 class="modal-title">Добавить участника</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -95,7 +99,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Заголовок модального окна</h4>
+                <h4 class="modal-title">Добавить данные с осмотра</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -130,7 +134,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Заголовок модального окна</h4>
+                <h4 class="modal-title">Внести изменения</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -146,6 +150,50 @@
                                     <select class="custom-select form-control" id="prefix" name="prefix">
                                         <option selected="selected">Выбрать протокол</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary">Далее</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addAuto" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Добавить автомобиль</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                            <div class="row">
+                                <label>
+                                    Добавьте марку и модель автомобиля
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="mark_auto" id="mark_auto"
+                                                   placeholder="Марка автомобиля">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="model_auto" id="model_auto"
+                                                   placeholder="Модель автомобиля">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,4 +228,21 @@
             $("#changeData").modal('show');
         });
     });
+
+    $(function () {
+        $("#btn4").click(function () {
+            $("#addAuto").modal('show');
+        });
+    });
+
+
+    $(function () {
+        $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=mark_auto'
+        });
+
+        $("#model_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=model_auto'
+        });
+    })
 </script>
