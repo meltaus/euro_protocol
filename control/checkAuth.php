@@ -8,7 +8,8 @@ if (isset($_SESSION['user_id'])) {
         echo "Вы авторизованы";
     } else {
         unset($_SESSION['user_id']);
-        echo '<meta http-equiv="refresh" content="0; url=../index.php">';
+        echo "Вы не авторизованы";
+        echo '<meta http-equiv="refresh" content="2; url=../index.php">';
     }
 } else {
     $auth->auth($_POST["login"], $_POST["password"]);
@@ -16,8 +17,8 @@ if (isset($_SESSION['user_id'])) {
         echo "Вы авторизованы";
     } else {
         unset($_SESSION['user_id']);
-        echo "Вы авторизованы 2";
-        echo '<meta http-equiv="refresh" content="0; url=../index.php">';
+        echo "Вы не авторизованы";
+        echo '<meta http-equiv="refresh" content="2; url=../index.php">';
     }
 }
 
