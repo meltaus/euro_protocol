@@ -71,3 +71,23 @@
 </div>
 </body>
 </html>
+
+<script>
+    $(function () {
+        $("#FIO").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=people'
+        });
+
+        $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=mark_auto'
+        });
+
+        $("#model_auto").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=model_auto'
+        });
+
+        $("#state_car_number").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=state_car_number'
+        });
+    })
+</script>
