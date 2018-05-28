@@ -13,6 +13,13 @@ switch ($_GET['mode']) {
         //statement                     Если отличается ФИО, но аналогичный номер есть - выдать предупреждение
         //auto                          Если есть совпадающие марка и авто - новое поле не добавлять
         //polis                         Всегда уникален
+
+        //Проверка уникальности номера полиса
+        $query = "SELECT count(number_polis) FROM polis WHERE number_polis =".$_POST['number_polis'];
+        $count = $workDB->analysisResult($workDB->anyQueryDB($query));
+        if ($count[0][0] == 0) {
+        } else {
+        }
         echo '<meta http-equiv="refresh" content="0; url=/pages/user_space.php">';
         break;
 }
