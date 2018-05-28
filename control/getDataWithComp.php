@@ -1,4 +1,6 @@
 <?php
+//Скрипт автодополнения для полей input. Выбор данных для дополнения выбирается путем передачи данных черех $_GET[]
+
 include $_SERVER["DOCUMENT_ROOT"] . "/control/workDB.php";
 $workDB = new workDB();
 
