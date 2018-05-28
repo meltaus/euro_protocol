@@ -30,7 +30,7 @@
                                 <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
                             </div>
                             <div class="form-group">
-                                <a href="#addParticipant" id="btn1" class="btn btn-primary btn-block">Добавить участника</a>
+                                <a href="#addParticipant" id="btn1" class="btn btn-primary btn-block">Указать дату осмотра</a>
                             </div>
                             <div class="form-group">
                                 <a href="#addData" id="btn2" class="btn btn-primary btn-block">
@@ -64,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Добавить участника</h4>
+                <h4 class="modal-title">Дата осмотра</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -72,7 +72,7 @@
                         <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                             <div class="row">
                                 <label>
-                                    Выбрете протокол, к которому необходимо добавить участника
+                                    Выбрете протокол, которому необходимо установить дату осмотра
                                 </label>
                             </div>
                             <div class="row">
