@@ -196,7 +196,7 @@ class workDB
      * @param $result ответ из БД
      * @return array Двумерный массив строка\колонка
      */
-    private function analysisResult($result) {
+    public function analysisResult($result) {
         if($result)
         {
             $result_array = array();
