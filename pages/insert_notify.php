@@ -31,13 +31,13 @@
             </div>
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <select class="custom-select form-control" id="prefix" name="prefix">
+                    <select class="custom-select form-control" id="method_notification" name="method_notification">
                         <option selected="selected">Метод подачи заявления</option>
                         <?php
                         require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
                         $workDB = new workDB();
                         $columnName = array("method");
-                        $methodArray = $workDB->selectDataTable("method_notification", $columnName);
+                        $methodArray = $workDB->selectUniqueDataTable("method_notification", $columnName);
                         $iter = count($methodArray);
                         for ($i = 0; $i < $iter; $i++) {
                             echo '<option value="' . $i . '">' . $methodArray[$i][0] . '</option>';
@@ -49,7 +49,7 @@
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="checkbox form-group">
                     <label style="margin-top: 5%">
-                        <input type="checkbox" value="">
+                        <input type="checkbox" value="" id="proxy" name="proxy">
                         <i class="fa fa-2x icon-checkbox"></i>
                         Довереность
                     </label>
@@ -136,12 +136,49 @@
                         </td>
                         <td>
                             <div class="form-group">
-                            <input type="date" class="form-control" name="date" id="date"
+                            <input type="date" class="form-control" name="date_registration" id="date_registration"
                                    value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </td>
                     </tr>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <label>О участнике ДТП</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="FIO_participant" id="FIO_participant"
+                           placeholder="ФИО">
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="mark_auto_participant" id="mark_auto_participant"
+                               placeholder="Марка автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="model_auto_participant" id="model_auto_participant"
+                               placeholder="Модель автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="state_car_number_participant" id="state_car_number_participant"
+                               placeholder="Гос. Номер">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -183,6 +220,22 @@
 
         $("#number_polis").typeahead({ //на какой input:text назначить результаты списка
             ajax: '/control/getDataWithComp.php?mode=number_polis'
+        });
+
+        $("#FIO_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=people'
+        });
+
+        $("#mark_auto_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=mark_auto'
+        });
+
+        $("#model_auto_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=model_auto'
+        });
+
+        $("#state_car_number_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=state_car_number'
         });
     })
 </script>
