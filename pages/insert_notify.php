@@ -145,6 +145,43 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <label>О участнике ДТП</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="FIO_participant" id="FIO_participant"
+                           placeholder="ФИО">
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="mark_auto_participant" id="mark_auto_participant"
+                               placeholder="Марка автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="model_auto_participant" id="model_auto_participant"
+                               placeholder="Модель автомобиля">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="state_car_number_participant" id="state_car_number_participant"
+                               placeholder="Гос. Номер">
+                        <i class="fa fa-car"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
@@ -183,6 +220,22 @@
 
         $("#number_polis").typeahead({ //на какой input:text назначить результаты списка
             ajax: '/control/getDataWithComp.php?mode=number_polis'
+        });
+
+        $("#FIO_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=people'
+        });
+
+        $("#mark_auto_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=mark_auto'
+        });
+
+        $("#model_auto_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=model_auto'
+        });
+
+        $("#state_car_number_participant").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=state_car_number'
         });
     })
 </script>
