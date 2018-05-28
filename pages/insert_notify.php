@@ -31,13 +31,13 @@
             </div>
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <select class="custom-select form-control" id="prefix" name="prefix">
+                    <select class="custom-select form-control" id="method_notification" name="method_notification">
                         <option selected="selected">Метод подачи заявления</option>
                         <?php
                         require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
                         $workDB = new workDB();
                         $columnName = array("method");
-                        $methodArray = $workDB->selectDataTable("method_notification", $columnName);
+                        $methodArray = $workDB->selectUniqueDataTable("method_notification", $columnName);
                         $iter = count($methodArray);
                         for ($i = 0; $i < $iter; $i++) {
                             echo '<option value="' . $i . '">' . $methodArray[$i][0] . '</option>';
@@ -49,7 +49,7 @@
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="checkbox form-group">
                     <label style="margin-top: 5%">
-                        <input type="checkbox" value="">
+                        <input type="checkbox" value="" id="proxy" name="proxy">
                         <i class="fa fa-2x icon-checkbox"></i>
                         Довереность
                     </label>
@@ -136,7 +136,7 @@
                         </td>
                         <td>
                             <div class="form-group">
-                            <input type="date" class="form-control" name="date" id="date"
+                            <input type="date" class="form-control" name="date_registration" id="date_registration"
                                    value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </td>
