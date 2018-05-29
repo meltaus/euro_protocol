@@ -14,7 +14,9 @@ switch ($_GET['mode']) {
         //statement
         //auto                          Если есть совпадающие марка и авто - новое поле не добавлять
         //polis                         Всегда уникален
+        //Если count[0][0] == 0 => Сделать вставку в соответствующую таблицу и получить id новой записи
 
+        $columnValues = array();
 
         //Проверка уникальности человека
         $query = "SELECT count(people.name) FROM people 
@@ -23,6 +25,7 @@ switch ($_GET['mode']) {
                   people.name = '".$_POST['FIO']."'";
         $count = $workDB->analysisResult($workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
+            //Добавить человека и запомнить id добавленного человека
         } else {
             //Получаем id человека, который совпадает по ФИО, машине и гос.номеру
             $query = "SELECT people.id FROM people 
@@ -38,6 +41,7 @@ switch ($_GET['mode']) {
                   people.name = '".$_POST['FIO_participant']."'";
         $count = $workDB->analysisResult($workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
+            //Добавить человека и запомнить id добавленного человека
         } else {
             //Получаем id человека, который совпадает по ФИО, машине и гос.номеру
             $query = "SELECT people.id FROM people 
@@ -51,6 +55,7 @@ switch ($_GET['mode']) {
         $query = "SELECT count(number_polis) FROM polis WHERE number_polis =".$_POST['number_polis'];
         $count = $workDB->analysisResult($workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
+            //добавить полис и запомнить id добавленного полиса
         } else {
             $column_name = array("id");
             $condition = "WHERE number_polis =".$_POST['number_polis'];
@@ -63,7 +68,7 @@ switch ($_GET['mode']) {
                     //Есть совпадение по полису и первому участнику
                 }
 
-                $query = "SELECT count(id) FROM protocol WHERE id_number_polis = ".$id_polis[0][0]." && id_people_member = ".$id_people_member[0][0];
+                $query = "SELECT count(id) FROM protocol WHERE id_number_polis_member = ".$id_polis[0][0]." && id_people_member = ".$id_people_member[0][0];
                 $count = $workDB->analysisResult($workDB->anyQueryDB($query));
                 if ($count[0][0] != 0) {
                     //Есть совпадение по полису и второму участнику
@@ -121,6 +126,8 @@ switch ($_GET['mode']) {
             } else {
                 //Предупреждение о том, что такой событие уже есть
             }
+        } else {
+
         }
 
 
