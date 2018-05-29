@@ -8,7 +8,7 @@ class insertAllData
     //Переменные, содержащие в себе значения переданных полей
     private $number_polis_culprit;
     private $number_polis_member;
-    private $id_statement;
+    private $statement;
     private $proxy;
     private $time_auto_emer;
     private $time_register;
@@ -28,6 +28,7 @@ class insertAllData
     private $id_people_member;
     private $id_auto_culprit;
     private $id_auto_member;
+    private $id_statement;
 
     //Конструктор
     public function __construct()
@@ -48,7 +49,7 @@ class insertAllData
     public function setData($columnValues) {
         $this->number_polis_culprit = $columnValues['number_polis_culprit'];
         $this->number_polis_member = $columnValues['number_polis_member'];
-        $this->id_statement = $columnValues['id_statement'];
+        $this->statement = $columnValues['statement'];
         $this->proxy = $columnValues['proxy'];
         $this->time_auto_emer = $columnValues['time_auto_emer'];
         $this->time_register = $columnValues['time_register'];
@@ -71,6 +72,8 @@ class insertAllData
             $this->state_car_number_culprit);
         $this->id_people_member = $this->idPeople($this->FIO_member, $this->id_auto_member,
             $this->state_car_number_member);
+
+        $this->id_statement = $this->idStatement($this->statement, $this->proxy);
     }
 
     /**
@@ -78,7 +81,16 @@ class insertAllData
      * Возвращает будевое значение. true значит, что совпадения нет и вставка прошла успешно
      */
     public function insert() {
-
+        $query = "SELECT count(id) FROM protocol WHERE id_number_polis = ".$this->id_number_polis." && 
+                    id_people_culprit = ".$this->id_people_culprit." && id_number_polis_member = 
+                    ".$this->id_number_polis_member." && id_people_member = ".$this->id_people_member;
+        $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        if ($count[0][0] == 0) {
+            $this->insertData();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function idAuto($mark, $model) {
@@ -116,6 +128,16 @@ class insertAllData
         return $result[0][0];
     }
 
+    private function idStatement($statement, $proxy)
+    {
+        $query = "start transaction;
+	                insert into statement (method, `proxy`) values (".$statement.", ".$proxy.");
+                    select * from statement where id = LAST_INSERT_ID();
+                    commit";
+        $result = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        return $result[0][0];
+    }
+
     private function idPeople($FIO, $id_auto, $state_number_car) {
         $query = "SELECT count(id) FROM people WHERE `name` = '".$FIO."' && id_auto = ".$id_auto." 
                     && state_car_number = '".$state_number_car."'";
@@ -142,6 +164,16 @@ class insertAllData
      * Метод вызывается из метода insert после установки всех необходимых параметров
      */
     private function insertData() {
+        $columnName = array(
+            'id_number_polis' => $this->id_number_polis,
+            'id_statement' => $this->id_statement,
+            'time_register' => $this->time_register,
+            'time_atuo_emer' => $this->time_auto_emer,
+            'id_people_culprit' => $this->id_people_culprit,
+            'id_people_member' => $this->id_people_member,
+            'id_number_polis_member' => $this->id_number_polis_member
+        );
 
+        $this->workDB->insertDataTable("protocol", $columnName);
     }
 }
