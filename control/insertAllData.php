@@ -46,7 +46,20 @@ class insertAllData
      * @param $columnValues ассоциативный массив, где ключ имя столбца.
      */
     public function setData($columnValues) {
-
+        $this->number_polis_culprit = $columnValues['number_polis_culprit'];
+        $this->number_polis_member = $columnValues['number_polis_member'];
+        $this->id_statement = $columnValues['id_statement'];
+        $this->proxy = $columnValues['proxy'];
+        $this->time_auto_emer = $columnValues['time_auto_emer'];
+        $this->time_register = $columnValues['time_register'];
+        $this->FIO_culprit = $columnValues['FIO_culprit'];
+        $this->mark_culprit = $columnValues['mark_culprit'];
+        $this->model_culprit = $columnValues['model_culprit'];
+        $this->state_car_number_culprit = $columnValues['state_car_number_culprit'];
+        $this->FIO_member = $columnValues['FIO_member'];
+        $this->mark_member = $columnValues['mark_member'];
+        $this->model_member = $columnValues['model_member'];
+        $this->state_car_number_member = $columnValues['state_car_number_member'];
     }
 
     /**
@@ -55,6 +68,18 @@ class insertAllData
      */
     public function insert() {
 
+    }
+
+    private function idAuto() {
+
+    }
+
+    private function idNumberPolis() {
+
+    }
+
+    private function idPeople() {
+        
     }
 
     /**
