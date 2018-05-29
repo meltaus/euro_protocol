@@ -16,7 +16,22 @@ switch ($_GET['mode']) {
         //polis                         Всегда уникален
         //Если count[0][0] == 0 => Сделать вставку в соответствующую таблицу и получить id новой записи
 
-        $columnValues = array();
+        $columnValues = array(
+            'number_polis_culprit' => '',
+            'number_polis_member' => '',
+            'id_statement' => '',
+            'proxy' => '',
+            'time_auto_emer' => '',
+            'time_register' => '',
+            'FIO_culprit' => '',
+            'mark_culprit' => '',
+            'model_culprit' => '',
+            'state_car_number_culprit' => '',
+            'FIO_member' => '',
+            'mark_member' => '',
+            'model_member' => '',
+            'state_car_number_member' => '',
+        );
 
         //Проверка уникальности человека
         $query = "SELECT count(people.name) FROM people 
