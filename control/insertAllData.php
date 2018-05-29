@@ -26,8 +26,8 @@ class insertAllData
     private $id_number_polis_member;
     private $id_people_culprit;
     private $id_people_member;
-    private $id_auto_member;
     private $id_auto_culprit;
+    private $id_auto_member;
 
     //Конструктор
     public function __construct()
@@ -60,6 +60,17 @@ class insertAllData
         $this->mark_member = $columnValues['mark_member'];
         $this->model_member = $columnValues['model_member'];
         $this->state_car_number_member = $columnValues['state_car_number_member'];
+
+        $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
+        $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
+
+        $this->id_number_polis = $this->idNumberPolis($this->number_polis_culprit);
+        $this->id_number_polis_member = $this->idNumberPolis($this->number_polis_member);
+
+        $this->id_people_culprit = $this->idPeople($this->FIO_culprit, $this->id_auto_culprit,
+            $this->state_car_number_culprit);
+        $this->id_people_member = $this->idPeople($this->FIO_member, $this->id_auto_member,
+            $this->state_car_number_member);
     }
 
     /**
@@ -70,16 +81,60 @@ class insertAllData
 
     }
 
-    private function idAuto() {
+    private function idAuto($mark, $model) {
+        $query = "SELECT count(id) FROM auto WHERE mark = '".$mark."' && `name` = '".$model."' ";
+        $condition = "WHERE mark = '".$mark."' && `name` = '".$model."'";
+        $column_name = array("id");
+        $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        if($count[0][0] == 0) {
+            $columnName = array(
+                'mark' => $mark,
+                'name' => $model
+            );
+            $this->workDB->insertDataTable("auto", $columnName);
+        }
 
+        $result = $this->workDB->selectDataTableWhere("auto", $column_name, $condition);
+
+        return $result[0][0];
     }
 
-    private function idNumberPolis() {
+    private function idNumberPolis($number_polis) {
+        $query = "SELECT count(id) FROM polis WHERE number_polis = ".$number_polis;
+        $condition = "WHERE number_polis = ".$number_polis;
+        $column_name = array("id");
+        $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        if ($count[0][0] == 0) {
+            $columnName = array(
+                'number_polis' => $number_polis
+            );
+            $this->workDB->insertDataTable("polis", $columnName);
+        }
 
+        $result = $this->workDB->selectDataTableWhere("polis",$column_name, $condition);
+
+        return $result[0][0];
     }
 
-    private function idPeople() {
-        
+    private function idPeople($FIO, $id_auto, $state_number_car) {
+        $query = "SELECT count(id) FROM people WHERE `name` = '".$FIO."' && id_auto = ".$id_auto." 
+                    && state_car_number = '".$state_number_car."'";
+        $condition = "WHERE `name` = '".$FIO."' && id_auto = ".$id_auto."
+                    && state_car_number = '".$state_number_car."'";
+        $column_name = array("id");
+        $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        if ($count[0][0] == 0) {
+            $columnName = array(
+                'name' => $FIO,
+                'id_auto' => $id_auto,
+                'state_car_number' => $state_number_car
+            );
+            $this->workDB->insertDataTable("people", $columnName);
+        }
+
+        $result = $this->workDB->selectDataTableWhere("people", $column_name, $condition);
+
+        return $result[0][0];
     }
 
     /**
