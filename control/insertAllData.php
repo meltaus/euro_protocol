@@ -8,6 +8,8 @@ class insertAllData
     //Переменные, содержащие в себе значения переданных полей
     private $number_polis_culprit;
     private $number_polis_member;
+    private $serial_polis_culprit;
+    private $serial_polis_member;
     private $statement;
     private $proxy;
     private $time_auto_emer;
@@ -20,6 +22,8 @@ class insertAllData
     private $mark_member;
     private $model_member;
     private $state_car_number_member;
+    private $company_name_culprit;
+    private $company_name_member;
 
     //Переменные присущие только таблице
     private $id_number_polis;
@@ -29,6 +33,8 @@ class insertAllData
     private $id_auto_culprit;
     private $id_auto_member;
     private $id_statement;
+    private $id_company_culprit;
+    private $id_company_member;
 
     //Конструктор
     public function __construct()
@@ -61,19 +67,49 @@ class insertAllData
         $this->mark_member = $columnValues['mark_member'];
         $this->model_member = $columnValues['model_member'];
         $this->state_car_number_member = $columnValues['state_car_number_member'];
+        $this->serial_polis_culprit = $columnValues['serial_polis_culprit'];
+        $this->serial_polis_member = $columnValues['serial_polis_member'];
+        $this->company_name_culprit = $columnValues['company_name_culprit'];
+        $this->company_name_member = $columnValues['company_name_member'];
 
         $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
         $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
 
-        $this->id_number_polis = $this->idNumberPolis($this->number_polis_culprit);
-        $this->id_number_polis_member = $this->idNumberPolis($this->number_polis_member);
+        $this->id_company_culprit = $this->idCompany($this->company_name_culprit);
+        $this->id_company_member = $this->idCompany($this->company_name_member);
+
+        $this->id_number_polis = $this->idNumberPolis($this->number_polis_culprit, $this->serial_polis_culprit);
+        $this->id_number_polis_member = $this->idNumberPolis($this->number_polis_member, $this->serial_polis_member);
 
         $this->id_people_culprit = $this->idPeople($this->FIO_culprit, $this->id_auto_culprit,
-            $this->state_car_number_culprit);
+            $this->state_car_number_culprit, $this->id_company_culprit);
         $this->id_people_member = $this->idPeople($this->FIO_member, $this->id_auto_member,
-            $this->state_car_number_member);
+            $this->state_car_number_member, $this->id_company_member);
 
         $this->id_statement = $this->idStatement($this->statement, $this->proxy);
+    }
+
+    /**
+     * Возвращает id компании. Если такой компании нет - добавляет ее
+     * @param $companyName Имя компании
+     * @return mixed id компании
+     */
+    private function idCompany($companyName) {
+        $query = "SELECT count (id) FROM company WHERE company_name = '".$companyName."'";
+        $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        $condition = "WHERE company_name = '".$companyName."'";
+        $column_name = array("id");
+        if ($count[0][0] == 0) {
+            $columnName = array(
+                'company_name' => $companyName
+            );
+
+            $this->workDB->insertDataTable("company", $column_name);
+        }
+
+        $result = $this->workDB->selectDataTableWhere("company", $column_name, $condition);
+
+        return $result[0][0];
     }
 
     /**
@@ -122,14 +158,16 @@ class insertAllData
      * @param $number_polis номер полиса
      * @return mixed id номера полиса
      */
-    private function idNumberPolis($number_polis) {
-        $query = "SELECT count(id) FROM polis WHERE number_polis = ".$number_polis;
-        $condition = "WHERE number_polis = ".$number_polis;
+    private function idNumberPolis($number_polis, $serial_polis) {
+        $query = "SELECT count(id) FROM polis WHERE number_polis = '".$number_polis."' 
+                    && serial_polise = '".$serial_polis."'";
+        $condition = "WHERE number_polis = '".$number_polis."' && serial_polis = '".$serial_polis."'";
         $column_name = array("id");
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
             $columnName = array(
-                'number_polis' => $number_polis
+                'number_polis' => $number_polis,
+                'serial_polis' => $serial_polis
             );
             $this->workDB->insertDataTable("polis", $columnName);
         }
@@ -162,7 +200,7 @@ class insertAllData
      * @param $state_number_car Гос.номер указанного автомобиля
      * @return mixed id человека
      */
-    private function idPeople($FIO, $id_auto, $state_number_car) {
+    private function idPeople($FIO, $id_auto, $state_number_car, $id_company) {
         $query = "SELECT count(id) FROM people WHERE `name` = '".$FIO."' && id_auto = ".$id_auto." 
                     && state_car_number = '".$state_number_car."'";
         $condition = "WHERE `name` = '".$FIO."' && id_auto = ".$id_auto."
@@ -173,7 +211,8 @@ class insertAllData
             $columnName = array(
                 'name' => $FIO,
                 'id_auto' => $id_auto,
-                'state_car_number' => $state_number_car
+                'state_car_number' => $state_number_car,
+                'id_company' => $id_company
             );
             $this->workDB->insertDataTable("people", $columnName);
         }
