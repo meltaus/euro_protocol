@@ -188,11 +188,9 @@ class insertAllData
     {
         if (!isset($proxy)) {
             $proxy = 0;
+        } else {
+            $proxy = 1;
         }
-//        $query = "start transaction
-//	                insert into statement (method, `proxy`) values (".$statement.", ".$proxy.")
-//                    select LAST_INSERT_ID()
-//                    commit";
         $this->workDB->anyQueryDB("start transaction");
         $query = "insert into statement (method, `proxy`) values (".$statement.", ".$proxy.")";
         $this->workDB->anyQueryDB($query);
