@@ -25,6 +25,7 @@ class insertAllData
     private $company_name_culprit;
     private $company_name_member;
     private $time_send_service_control;
+    private $documentName;
 
     //Переменные присущие только таблице
     private $id_number_polis;
@@ -73,6 +74,7 @@ class insertAllData
         $this->company_name_culprit = $columnValues['company_name_culprit'];
         $this->company_name_member = $columnValues['company_name_member'];
         $this->time_send_service_control = $columnValues['time_send_service_control'];
+        $this->documentName = $columnValues['filename'];
 
         $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
         $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
@@ -244,6 +246,16 @@ class insertAllData
             'time_send_service_control' => $this->time_send_service_control
         );
 
+        $this->workDB->anyQueryDB("start transaction");
         $this->workDB->insertDataTable("protocol", $columnName);
+        $query = "select LAST_INSERT_ID()";
+        $result = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        $columnName = array(
+            'id_protocol' => $result[0][0],
+            'name' => $this->documentName,
+            'id_type' => 1
+        );
+        $this->workDB->insertDataTable("document", $columnName);
+        $this->workDB->anyQueryDB("commit");
     }
 }

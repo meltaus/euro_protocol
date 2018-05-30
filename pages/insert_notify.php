@@ -40,7 +40,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
 */
 ?>
 <div class="container">
-    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification">
+    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>Извещение о ДПТ</label>
@@ -94,7 +94,8 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                             </div>
                         </td>
                         <td valign="top">
-
+                            <input dropzone="move" name="scanpdf" id="scanpdf" type="file"
+                                   accept="application/pdf" />
                         </td>
                     </tr>
                     <tr>

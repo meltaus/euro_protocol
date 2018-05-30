@@ -1,4 +1,4 @@
 <?php
-$absRootDir = $_SERVER["DOCUMENT_ROOT"]."/documents";
-$rootDir = "/documents";
+$absRootDir = $_SERVER["DOCUMENT_ROOT"]."/documents/";
+$rootDir = "/documents/";
 ?>

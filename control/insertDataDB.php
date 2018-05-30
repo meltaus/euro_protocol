@@ -35,12 +35,14 @@ switch ($_GET['mode']) {
             'serial_polis_member' => $_POST['SerialPolisP'],
             'company_name_culprit' => $_POST['CompanyV'],
             'company_name_member' => $_POST['CompanyP'],
-            'time_send_service_control' => $_POST['dateN']
+            'time_send_service_control' => $_POST['dateN'],
+            'filename' => $_FILES["scanpdf"]["name"]
         );
 
         $insertAllData->setData($columnValues);
 
         if($insertAllData->insert()){
+            include_once $_SERVER["DOCUMENT_ROOT"]."/control/uploadFile.php";
             echo "Все хорошо";
         } else {
             echo "Все плохо";
