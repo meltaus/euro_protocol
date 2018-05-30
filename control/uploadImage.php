@@ -2,10 +2,8 @@
 //Сборка пути до конечной директории. В конец вставляется номер талона
 require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
 $outputDir = $rooDir . $_GET['serial_polis'] . $_GET['number_polis'] . '\\';
-if (isset($_COOKIE["dir"])) {
-    if (!file_exists($outputDir)) {
-        @mkdir($outputDir);
-    }
+if (!file_exists($outputDir)) {
+    @mkdir($outputDir);
 }
 //Загрузка фотографии во временную директорию и перемещение в конечную директорию
 if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
