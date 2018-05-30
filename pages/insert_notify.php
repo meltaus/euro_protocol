@@ -17,7 +17,7 @@
 <?php
 /*
 id="method_notification" - Метод подачи заявления
-id="proxy" - Признак подачи по доверенности
+id="proxy" - Признак подачи по доверенностиmethod_notification
 id="dateN" - Дата направления в СК
 id="dateP" - Дата поступления в СК
 id="dateDtp" - Дата ДТП

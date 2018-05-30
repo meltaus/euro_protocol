@@ -24,6 +24,7 @@ class insertAllData
     private $state_car_number_member;
     private $company_name_culprit;
     private $company_name_member;
+    private $time_send_service_control;
 
     //Переменные присущие только таблице
     private $id_number_polis;
@@ -71,6 +72,7 @@ class insertAllData
         $this->serial_polis_member = $columnValues['serial_polis_member'];
         $this->company_name_culprit = $columnValues['company_name_culprit'];
         $this->company_name_member = $columnValues['company_name_member'];
+        $this->time_send_service_control = $columnValues['time_send_service_control'];
 
         $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
         $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
@@ -95,7 +97,7 @@ class insertAllData
      * @return mixed id компании
      */
     private function idCompany($companyName) {
-        $query = "SELECT count (id) FROM company WHERE company_name = '".$companyName."'";
+        $query = "SELECT count(id) FROM company WHERE company_name = '".$companyName."'";
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         $condition = "WHERE company_name = '".$companyName."'";
         $column_name = array("id");
@@ -104,7 +106,7 @@ class insertAllData
                 'company_name' => $companyName
             );
 
-            $this->workDB->insertDataTable("company", $column_name);
+            $this->workDB->insertDataTable("company", $columnName);
         }
 
         $result = $this->workDB->selectDataTableWhere("company", $column_name, $condition);
@@ -149,7 +151,6 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("auto", $column_name, $condition);
-
         return $result[0][0];
     }
 
@@ -160,7 +161,7 @@ class insertAllData
      */
     private function idNumberPolis($number_polis, $serial_polis) {
         $query = "SELECT count(id) FROM polis WHERE number_polis = '".$number_polis."' 
-                    && serial_polise = '".$serial_polis."'";
+                    && serial_polis = '".$serial_polis."'";
         $condition = "WHERE number_polis = '".$number_polis."' && serial_polis = '".$serial_polis."'";
         $column_name = array("id");
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
@@ -185,11 +186,19 @@ class insertAllData
      */
     private function idStatement($statement, $proxy)
     {
-        $query = "start transaction;
-	                insert into statement (method, `proxy`) values (".$statement.", ".$proxy.");
-                    select * from statement where id = LAST_INSERT_ID();
-                    commit";
+        if (!isset($proxy)) {
+            $proxy = 0;
+        }
+//        $query = "start transaction
+//	                insert into statement (method, `proxy`) values (".$statement.", ".$proxy.")
+//                    select LAST_INSERT_ID()
+//                    commit";
+        $this->workDB->anyQueryDB("start transaction");
+        $query = "insert into statement (method, `proxy`) values (".$statement.", ".$proxy.")";
+        $this->workDB->anyQueryDB($query);
+        $query = "select LAST_INSERT_ID()";
         $result = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        $this->workDB->anyQueryDB("commit");
         return $result[0][0];
     }
 
@@ -218,7 +227,6 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("people", $column_name, $condition);
-
         return $result[0][0];
     }
 
@@ -234,7 +242,8 @@ class insertAllData
             'time_atuo_emer' => $this->time_auto_emer,
             'id_people_culprit' => $this->id_people_culprit,
             'id_people_member' => $this->id_people_member,
-            'id_number_polis_member' => $this->id_number_polis_member
+            'id_number_polis_member' => $this->id_number_polis_member,
+            'time_send_service_control' => $this->time_send_service_control
         );
 
         $this->workDB->insertDataTable("protocol", $columnName);

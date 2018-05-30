@@ -46,10 +46,10 @@ class workDB
         for ($i = 0; $i < $iter; $i++) {
             if ($i == $iter - 1) {
                 $column .= $columnArray[$i].")";
-                $values .= $valuesArray[$i].")";
+                $values .= "'".$valuesArray[$i]."')";
             } else {
                 $column .= $columnArray[$i].", ";
-                $values .= $valuesArray[$i].", ";
+                $values .= "'".$valuesArray[$i]."', ";
             }
         }
         $query .= $column." values ".$values;

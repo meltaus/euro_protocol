@@ -17,25 +17,28 @@ switch ($_GET['mode']) {
         //polis                         Всегда уникален
 
         $columnValues = array(
-            'number_polis_culprit' => '',
-            'number_polis_member' => '',
-            'statement' => '',
-            'proxy' => '',
-            'time_auto_emer' => '',
-            'time_register' => '',
-            'FIO_culprit' => '',
-            'mark_culprit' => '',
-            'model_culprit' => '',
-            'state_car_number_culprit' => '',
-            'FIO_member' => '',
-            'mark_member' => '',
-            'model_member' => '',
-            'state_car_number_member' => '',
-            'serial_polis_culprit' => '',
-            'serial_polis_member' => ''
+            'number_polis_culprit' => $_POST['NumberPolisV'],
+            'number_polis_member' => $_POST['NumberPolisP'],
+            'statement' => $_POST['method_notification']+1,
+            'proxy' => $_POST['proxy'],
+            'time_auto_emer' => $_POST['dateDtp'],
+            'time_register' => $_POST['dateP'],
+            'FIO_culprit' => $_POST['fioV'],
+            'mark_culprit' => $_POST['MarkAutoV'],
+            'model_culprit' => $_POST['ModelAutoV'],
+            'state_car_number_culprit' => $_POST['GosNumberV'],
+            'FIO_member' => $_POST['fioP'],
+            'mark_member' => $_POST['MarkAutoP'],
+            'model_member' => $_POST['ModelAutoP'],
+            'state_car_number_member' => $_POST['GosNumberP'],
+            'serial_polis_culprit' => $_POST['SerialPolisV'],
+            'serial_polis_member' => $_POST['SerialPolisP'],
+            'company_name_culprit' => $_POST['CompanyV'],
+            'company_name_member' => $_POST['CompanyP'],
+            'time_send_service_control' => $_POST['dateN']
         );
 
-        $insertAllData->insert($columnValues);
+        $insertAllData->setData($columnValues);
 
         if($insertAllData->insert()){
             echo "Все хорошо";
