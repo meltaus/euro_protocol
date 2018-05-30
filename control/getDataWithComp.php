@@ -59,5 +59,16 @@ switch ($_GET['mode']) {
         }
         echo json_encode($result);
         break;
+
+    case 'company': // Автозаполнение серии полиса
+        $columnName = array("company_name");
+        $nameArray = $workDB->selectUniqueDataTable("company", $columnName);
+        $iter = count($nameArray);
+        $result = array();
+        for ($i = 0; $i < $iter; $i++) {
+            array_push($result, $nameArray[$i][0]);
+        }
+        echo json_encode($result);
+        break;
 }
 ?>

@@ -325,5 +325,13 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
             ajax: '/control/getDataWithComp.php?mode=serial_polis'
         });
 
+        $("#CompanyV").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=company'
+        });
+
+        $("#CompanyP").typeahead({ //на какой input:text назначить результаты списка
+            ajax: '/control/getDataWithComp.php?mode=company'
+        });
+
     })
 </script>
