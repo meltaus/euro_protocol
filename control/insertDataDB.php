@@ -31,6 +31,8 @@ switch ($_GET['mode']) {
             'mark_member' => '',
             'model_member' => '',
             'state_car_number_member' => '',
+            'serial_polis_culprit' => '',
+            'serial_polis_member' => ''
         );
 
         $insertAllData->insert($columnValues);
