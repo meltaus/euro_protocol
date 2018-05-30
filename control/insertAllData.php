@@ -93,6 +93,12 @@ class insertAllData
         }
     }
 
+    /**
+     * Метод получение id автомобиля. Если нет совпадения по марке и моделе - заносится новая строка
+     * @param $mark Модель автомобиля
+     * @param $model Марка автомобиля
+     * @return mixed id автомобиля
+     */
     private function idAuto($mark, $model) {
         $query = "SELECT count(id) FROM auto WHERE mark = '".$mark."' && `name` = '".$model."' ";
         $condition = "WHERE mark = '".$mark."' && `name` = '".$model."'";
@@ -111,6 +117,11 @@ class insertAllData
         return $result[0][0];
     }
 
+    /**
+     * Метод получения id номера полиса. Если полиса нет - будет создана новая завись
+     * @param $number_polis номер полиса
+     * @return mixed id номера полиса
+     */
     private function idNumberPolis($number_polis) {
         $query = "SELECT count(id) FROM polis WHERE number_polis = ".$number_polis;
         $condition = "WHERE number_polis = ".$number_polis;
@@ -128,6 +139,12 @@ class insertAllData
         return $result[0][0];
     }
 
+    /**
+     * Метод получения id метода поступления извещения. Всегда добавляет новую запись
+     * @param $statement id метода извещения из таблицы method_notofication
+     * @param $proxy использовалась ли при этом доверенность
+     * @return mixed id метода поступления извещения
+     */
     private function idStatement($statement, $proxy)
     {
         $query = "start transaction;
@@ -138,6 +155,13 @@ class insertAllData
         return $result[0][0];
     }
 
+    /**
+     * Метод получения id человека. Если полного совпадения нет - создается новая запись
+     * @param $FIO Фамилия, имя отчество
+     * @param $id_auto id указанного автомобиля
+     * @param $state_number_car Гос.номер указанного автомобиля
+     * @return mixed id человека
+     */
     private function idPeople($FIO, $id_auto, $state_number_car) {
         $query = "SELECT count(id) FROM people WHERE `name` = '".$FIO."' && id_auto = ".$id_auto." 
                     && state_car_number = '".$state_number_car."'";
