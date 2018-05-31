@@ -212,4 +212,29 @@ class workDB
         }
         return $result_array;
     }
+	
+	    /**
+     * Разбор ответа из БД
+     * @param $result ответ из БД
+     * @return array Двумерный массив строка\колонка
+     */
+    public function selectDataFromMainPage($sort) {
+        //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
+        if ($sort == "time_register") {
+            $query = "SELECT id, time_register FROM polis SORTBY";
+            $iter = count($columnName);
+            for ($i = 0; $i < $iter; $i++) {
+                $query .= "$columnName[$i]";
+                if ($i == $iter - 1) {
+                    $query .= " ";
+                } else {
+                    $query .= ", ";
+                }
+            }
+            $query .= "FROM ".$tableName;
+            return $this->analysisResult($this->anyQueryDB($query));
+        }
+
+        return null;
+    }
 }
