@@ -48,7 +48,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
         </div>
 
         <div class="row">
-            <div>
+            <div class="form-group" style="margin-left: 1%">
                 <table border="0px">
                     <tr>
                         <td valign="top">
@@ -94,8 +94,17 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                             </div>
                         </td>
                         <td valign="top">
-                            <input dropzone="move" name="scanpdf" id="scanpdf" type="file"
-                                   accept="application/pdf" />
+                            <div class="form-group">
+                                <div class="row">
+                                    <label>
+                                        Загрузките отсканированное извещение в формате pdf
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <input dropzone="move" name="scanpdf" id="scanpdf" type="file"
+                                           accept="application/pdf" />
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -125,7 +134,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
         </div>
 
         <div class="row">
-            <div>
+            <div class="form-group" style="margin-left: 1%">
                 <table border="0px">
                     <tr>
                         <td valign="top">
