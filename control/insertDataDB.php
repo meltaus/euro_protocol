@@ -1,7 +1,8 @@
 <?php
-//include $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
+include $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 include $_SERVER["DOCUMENT_ROOT"]."/control/insertAllData.php";
 $insertAllData = new insertAllData();
+$workDB = new workDB();
 
 switch ($_GET['mode']) {
     case "notify":
@@ -52,10 +53,13 @@ switch ($_GET['mode']) {
         }
         break;
     case "addDateSee":
-        $fd = fopen("hello.txt", 'w') or die("не удалось создать файл");
-        $str = $_GET['id'] . "   " . $_GET['dateP'] . "    " . $_GET['comment'];
-        fwrite($fd, $str);
-        fclose($fd);
+
+        $columnValues = array(
+            'time_inspection' => $_GET['dateP'],
+            'comment' => $_GET['comment']
+        );
+
+        $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
         break;
 }
 ?>

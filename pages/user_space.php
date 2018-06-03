@@ -194,11 +194,11 @@ $result = createDataForMailPage();
                     'dateP':dateP,
                     'comment':comment}
         });
-        $("#addParticipant").modal('close');
+        $("#addParticipant").modal('hidden');
     }
 
     function closeAddParticipant(){
-        $("#addParticipant").modal('close');
+        $("#addParticipant").modal('hidden');
     }
 
     $(function () {
