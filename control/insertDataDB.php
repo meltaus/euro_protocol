@@ -16,6 +16,8 @@ switch ($_GET['mode']) {
         //auto                          Если есть совпадающие марка и авто - новое поле не добавлять
         //polis                         Всегда уникален
 
+        $current_date = date('Y-m-d');
+
         $columnValues = array(
             'number_polis_culprit' => $_POST['NumberPolisV'],
             'number_polis_member' => $_POST['NumberPolisP'],
@@ -36,19 +38,18 @@ switch ($_GET['mode']) {
             'company_name_culprit' => $_POST['CompanyV'],
             'company_name_member' => $_POST['CompanyP'],
             'time_send_service_control' => $_POST['dateN'],
-            'filename' => $_FILES["scanpdf"]["name"]
+            'filename' => substr($_FILES["scanpdf"]["name"],0,-4)  . $current_date . ".pdf"
         );
 
         $insertAllData->setData($columnValues);
 
         if($insertAllData->insert()){
             include_once $_SERVER["DOCUMENT_ROOT"]."/control/uploadFile.php";
-            echo "Все хорошо";
+            echo "Протокол заведен";
+            echo '<meta http-equiv="refresh" content="2; url=/pages/user_space.php">';
         } else {
             echo "Все плохо";
         }
-
-//        echo '<meta http-equiv="refresh" content="0; url=/pages/user_space.php">';
         break;
 }
 ?>
