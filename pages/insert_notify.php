@@ -37,6 +37,8 @@ id="NumberPolisP" - Номер полиса пострадавшего
 id="MarkAutoP" - Марка автомобиля пострадавшего
 id="ModelAutoP" - Модель автомобиля пострадавшего
 id="GosNumberP" - Гос. номер автомобиля пострадавшего
+
+id="comment"    - Комментарий к протоколу
 */
 ?>
 <div class="container">
@@ -91,6 +93,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                             <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
                                 <input type="date" class="form-control" name="dateN" id="dateN"
                                        value="<?php echo date('Y-m-d'); ?>">
+                                <i class="fa fa-calendar"></i>
                             </div>
                         </td>
                         <td valign="top">
@@ -117,6 +120,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                             <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
                                 <input type="date" class="form-control" name="dateP" id="dateP"
                                        value="<?php echo date('Y-m-d'); ?>">
+                                <i class="fa fa-calendar"></i>
                             </div>
                         </td>
                         <td valign="top">
@@ -149,6 +153,7 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                             <div style="margin-top: 5%; margin-left: 5px"; class="form-group">
                                 <input type="datetime-local" class="form-control" name="dateDtp" id="dateDtp"
                                        value="<?php echo date('Y-m-d\TH:i:s'); ?>">
+                                <i class="fa fa-calendar"></i>
                             </div>
                         </td>
                     </tr>
@@ -278,6 +283,16 @@ id="GosNumberP" - Гос. номер автомобиля пострадавше
                     <input type="text" class="form-control" name="GosNumberP" id="GosNumberP" autocomplete="off"
                            placeholder="Гос. Номер">
                     <i class="fa fa-car"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="comment" id="comment" autocomplete="off"
+                           placeholder="Комментарии к протоколу">
+                    <i class="fa fa-file-text-o"></i>
                 </div>
             </div>
         </div>
