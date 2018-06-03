@@ -38,8 +38,7 @@ switch ($_GET['mode']) {
             'company_name_culprit' => $_POST['CompanyV'],
             'company_name_member' => $_POST['CompanyP'],
             'time_send_service_control' => $_POST['dateN'],
-            'filename' => substr($_FILES["scanpdf"]["name"],0,-4)  . $current_date . ".pdf",
-            'comment' => $_POST['comment']
+            'filename' => substr($_FILES["scanpdf"]["name"],0,-4)  . $current_date . ".pdf"
         );
 
         $insertAllData->setData($columnValues);

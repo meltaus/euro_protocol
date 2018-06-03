@@ -26,7 +26,6 @@ class insertAllData
     private $company_name_member;
     private $time_send_service_control;
     private $documentName;
-    private $comment;
 
     //Переменные присущие только таблице
     private $id_number_polis;
@@ -76,7 +75,6 @@ class insertAllData
         $this->company_name_member = $columnValues['company_name_member'];
         $this->time_send_service_control = $columnValues['time_send_service_control'];
         $this->documentName = $columnValues['filename'];
-        $this->comment = $columnValues['comment'];
 
         $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
         $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
@@ -245,8 +243,7 @@ class insertAllData
             'id_people_culprit' => $this->id_people_culprit,
             'id_people_member' => $this->id_people_member,
             'id_number_polis_member' => $this->id_number_polis_member,
-            'time_send_service_control' => $this->time_send_service_control,
-            'comment' => $this->comment
+            'time_send_service_control' => $this->time_send_service_control
         );
 
         $this->workDB->anyQueryDB("start transaction");

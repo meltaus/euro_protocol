@@ -288,16 +288,6 @@ id="comment"    - Комментарий к протоколу
         </div>
 
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="comment" id="comment" autocomplete="off"
-                           placeholder="Комментарии к протоколу">
-                    <i class="fa fa-file-text-o"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
             </div>
             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
