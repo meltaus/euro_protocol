@@ -24,6 +24,10 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 
 $workDB = new workDB();
 
+setcookie("id_protocol", "", time() - 3600);
+setcookie("SerialPolisV","", time() - 3600);
+setcookie("NumberPolisV","", time() - 3600);
+
 if (isset($_GET['id_protocol'])) {
     //Получаем id полиса
     $columnName = array("id_number_polis");
@@ -44,15 +48,19 @@ if (isset($_GET['id_protocol'])) {
     $columnName = array("name");
     $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 1";
     $nameScan = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+
+    setcookie("id_protocol",$_GET['id_protocol']);
+    setcookie("SerialPolisV",$polis[0][1]);
+    setcookie("NumberPolisV",$polis[0][0]);
 }
 ?>
 
 <div class="container kv-main">
     <?php
     if ((isset($_GET['id_protocol'])) && (isset($nameScan))) {
-        echo "<div class='row'";
+        echo "<div class='row'>";
         echo "<object>";
-        echo "<embed src='. $absRootDir . "/" . $nameScan[0][0] .' width='100%' height='300' />";
+        echo "<embed src='". $absRootDir . "/" . $nameScan[0][0] ."' width='100%' height='300' />";
         echo "</object>";
         echo "</div>";
     }
@@ -74,7 +82,6 @@ if (isset($_GET['id_protocol'])) {
                 }
                 echo '</div>';
             }
-            unset($workDB);
             ?>
         </div>
         <br>
@@ -97,15 +104,10 @@ if (isset($_GET['id_protocol'])) {
 </html>
 
 <script>
-    //Получаем id протокола
-    var id_protocol = <?php json_encode($_GET['id_protocol']);?>;
-    var serial_polis = <?php json_encode($polis[0][1]);?>;
-    var number_polis = <?php json_encode($polis[0][0]);?>;
-
     //Загрузка файлов
     $('#file-ru').fileinput({
         language: 'ru',
-        uploadUrl: '../control/uploadImage.php?id_protocol=' + id_protocol + '&SerialPolisV=' + serial_polis + "&NumberPolisV=" + number_polis,
+        uploadUrl: '../control/uploadImage.php',
         allowedFileExtensions: ['jpg']
     });
 
