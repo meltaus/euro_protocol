@@ -14,6 +14,11 @@
     <link href="../css/style.css" media="all" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<?php
+include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
+$result = createDataForMailPage();
+?>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
@@ -22,65 +27,148 @@
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <table style="margin:10px auto;">
+            <table border="1px";  style="margin:10px auto;">
                 <tr>
                     <td>
                         <div style="margin:10px auto;">
                             <div class="form-group">
                                 <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
                             </div>
-                            <div class="form-group">
-                                <a href="#addParticipant" id="btn1" class="btn btn-primary btn-block">Указать дату осмотра</a>
-                            </div>
-                            <div class="form-group">
-                                <a href="#addData" id="btn2" class="btn btn-primary btn-block">
-                                    Добавить данные с осмотра</a>
-                            </div>
-                            <div class="form-group">
-                                <a href="#changeData" id="btn3" class="btn btn-primary btn-block">
-                                    Внести изменения</a>
-                            </div>
-                            <div class="form-group">
-                                <a href="#addAuto" id="btn4" class="btn btn-primary btn-block">
-                                    Добавить автомобиль</a>
-                            </div>
                         </div>
                     </td>
                     <td>
                         <div style="margin-left: 5%; margin-right: 5%">
-                            Динамическое наполнение событиями, требующих внимания
+                            Тут могла быть Ваша реклама
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-</div>
-</body>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table border="1px"; style="margin:10px auto">
+                <tr>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            Дата занесения
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            Серия/Номер виновника
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            Серия/Номер пострадавшего
+                        </div>
+                    </td>
+                    <td>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            12.12.1231
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            УУУ 123221234
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
+                            ООО 3223223223
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+                            <a href="/pages/logout.php" class="btn btn-danger pull-right">На осмотр</a>
+                            <a href="#addProtocol" id="bq" class="btn btn-danger pull-right">Редактировать</a>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                for ($i = 0; $i < count($result); $i++) {
+                    echo "<tr>";
+
+                    for ($j = 0; $j < count($result[$i]); $j++) {
+
+                        switch ($j) {
+                            case 0:
+                                break;
+                            case 1:
+                                echo "<td>";
+                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+                                echo $result[$i][$j];
+                                echo "</div>";
+                                echo "</td>";
+                                break;
+                            case 2:
+                                echo "<td>";
+                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+                                echo $result[$i][$j];
+                                echo "</div>";
+                                echo "</td>";
+                                break;
+                            case 3:
+                                echo "<td>";
+                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+                                echo $result[$i][$j];
+                                echo "</div>";
+                                echo "</td>";
+                                break;
+                            case 4:
+                                if ($result[$i][$j] == null) {
+                                    echo "<td>";
+                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                                    echo "<a href=\"#addParticipant&". $result[$i][0] ."\" id=\"btn\" class=\"btn btn-danger pull-right\">На осмотр</a>";
+                                    echo "</div>";
+                                    echo "</td>";
+                                }
+                                else {
+                                    echo "<td>";
+                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                                    echo "Дата осмотра: ". $result[$i][$j];
+                                    echo "</div>";
+                                    echo "</td>";
+                                }
+                                break;
+                        }
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+</div>
 <!--модальные окна-->
 <div id="addParticipant" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Дата осмотра</h4>
+                <h4 class="modal-title">Назначить осмотр</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
-                            <div class="row">
-                                <label>
-                                    Выбрете протокол, которому необходимо установить дату осмотра
-                                </label>
+
+                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+                                Дата осмотра:
+                                <input type="date" class="form-control" name="dateP" id="dateP" value="
+									<?php
+                                echo date('Y-m-d');
+                                ?>">
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <select class="custom-select form-control" id="prefix" name="prefix">
-                                        <option selected="selected">Выбрать протокол</option>
-                                    </select>
-                                </div>
+                            <div style="margin-top: 10%; margin-left: 5px">
+                                Примечание:
+                                <textarea rows="15" cols="47" name="text"></textarea>
                             </div>
                         </div>
                     </div>
@@ -94,147 +182,21 @@
     </div>
 </div>
 
-<div id="addData" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Добавить данные с осмотра</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
-                            <div class="row">
-                                <label>
-                                    Выбрете протокол, к которому необходимо добавить участника
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <select class="custom-select form-control" id="prefix" name="prefix">
-                                        <option selected="selected">Выбрать протокол</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary">Далее</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="changeData" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Внести изменения</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
-                            <div class="row">
-                                <label>
-                                    Выбрете протокол, к которому необходимо добавить участника
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <select class="custom-select form-control" id="prefix" name="prefix">
-                                        <option selected="selected">Выбрать протокол</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary">Далее</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="addAuto" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Добавить автомобиль</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
-                            <div class="row">
-                                <label>
-                                    Добавьте марку и модель автомобиля
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="mark_auto" id="mark_auto"
-                                                   placeholder="Марка автомобиля">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="model_auto" id="model_auto"
-                                                   placeholder="Модель автомобиля">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary">Далее</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+</body>
 </html>
 
 <script>
     $(function () {
-        $("#btn1").click(function () {
+        $("#btn").click(function () {
             $("#addParticipant").modal('show');
         });
     });
 
     $(function () {
-        $("#btn2").click(function () {
-            $("#addData").modal('show');
+        $("#bq").click(function () {
+            $("#addProtocol").modal('show');
         });
     });
-
-    $(function () {
-        $("#btn3").click(function () {
-            $("#changeData").modal('show');
-        });
-    });
-
-    $(function () {
-        $("#btn4").click(function () {
-            $("#addAuto").modal('show');
-        });
-    });
-
 
     $(function () {
         $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
