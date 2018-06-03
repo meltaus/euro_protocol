@@ -150,7 +150,7 @@ $result = createDataForMailPage();
                             </div>
                             <div style="margin-top: 10%; margin-left: 5px">
                                 Примечание:
-                                <textarea rows="15" cols="47" name="text"></textarea>
+                                <textarea rows="15" cols="47" id="comment" name="comment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ $result = createDataForMailPage();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary">Далее</button>
+                <button type="button" onclick="addDateSee()" class="btn btn-primary">Далее</button>
             </div>
         </div>
     </div>
@@ -170,13 +170,16 @@ $result = createDataForMailPage();
 <script>
     function addParticipant(val) {
         document.cookie = "id_protocol=" + val;
-        window.alert(val);
         $("#addParticipant").modal('show');
     }
 
     function updateProtocol(val) {
         document.cookie = "id_protocol=" + val;
         window.alert("Здесь будет возможность редактировать составленный ранее протокол")
+    }
+
+    function addDateSee() {
+        window.alert("Work");
     }
 
     $(function () {
