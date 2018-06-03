@@ -74,6 +74,7 @@ if (isset($_GET['id_protocol'])) {
                 }
                 echo '</div>';
             }
+            unset($workDB);
             ?>
         </div>
         <br>
@@ -98,11 +99,13 @@ if (isset($_GET['id_protocol'])) {
 <script>
     //Получаем id протокола
     var id_protocol = <?php json_encode($_GET['id_protocol']);?>;
+    var serial_polis = <?php json_encode($polis[0][1]);?>;
+    var number_polis = <?php json_encode($polis[0][0]);?>;
 
     //Загрузка файлов
     $('#file-ru').fileinput({
         language: 'ru',
-        uploadUrl: 'upload.php?id_protocol=' + id_protocol,
+        uploadUrl: '../control/uploadImage.php?id_protocol=' + id_protocol + '&SerialPolisV=' + serial_polis + "&NumberPolisV=" + number_polis,
         allowedFileExtensions: ['jpg']
     });
 
