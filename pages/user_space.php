@@ -184,10 +184,15 @@ $result = createDataForMailPage();
     }
 
     function addDateSee() {
+        var dateP = $('dateP').val();
+        var comment = $('comment').val();
         $.ajax({
             type: "get",
             url: "../contol/insertDataDB.php",
-            data: "id="+id_protocol+",dateP="+$('dateP').val()+",comment="+$('comment').val()
+            data:{'mode':'addDateSee',
+                    'id':id_protocol,
+                    'dateP':dateP,
+                    'comment':comment}
         });
         $("#addParticipant").modal('close');
     }
