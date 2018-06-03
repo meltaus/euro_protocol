@@ -125,8 +125,7 @@ $result = createDataForMailPage();
                                 if ($result[$i][$j] == null) {
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<a href=\"#addParticipant&". $result[$i][0] ."\" id=\"btn\" 
-                                            class=\"btn btn-danger pull-right\" onclick='addParticipant()'>На осмотр</a>";
+                                    echo "<button onclick='addParticipant()'>На осмотр</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
