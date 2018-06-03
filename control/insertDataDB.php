@@ -51,5 +51,8 @@ switch ($_GET['mode']) {
             echo "Все плохо";
         }
         break;
+    case "addDateSee":
+
+        break;
 }
 ?>
