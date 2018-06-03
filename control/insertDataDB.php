@@ -51,11 +51,15 @@ switch ($_GET['mode']) {
         }
         break;
     case "addDateSee":
-
+        include_once "updateData.php";
+        $updateData = new updateData();
         $columnValues = array(
             'time_inspection' => $_GET['dateP'],
             'comment' => $_GET['comment']
         );
+
+        $updateData->setData($columnValues);
+        $updateData->updateData($_GET['id']);
         break;
 }
 ?>

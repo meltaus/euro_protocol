@@ -215,6 +215,10 @@ class workDB
         }
         $query = substr($query,0,-1);
         $query .= " WHERE ".$nameIDColumn. " = ".$id;
+        $fd = fopen("hello.txt", 'w') or die("не удалось создать файл");
+        $str = "Привет мир";
+        fwrite($fd, $query);
+        fclose($fd);
         $this->anyQueryDB($query);
     }
 
