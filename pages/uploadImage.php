@@ -43,6 +43,6 @@
     $('#file-ru').fileinput({
         language: 'ru',
         uploadUrl: 'upload.php',
-        allowedFileExtensions: ['jpg', 'png', 'gif']
+        allowedFileExtensions: ['jpg']
     });
 </script>
