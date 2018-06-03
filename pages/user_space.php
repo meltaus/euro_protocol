@@ -103,9 +103,11 @@ $result = createDataForMailPage();
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
                                     echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
-                                            class='btn btn-danger pull-right'>На осмотр</button>";
+                                            class='btn btn-danger pull-right' 
+                                            style='margin-left: 5px'>На осмотр</button>";
                                     echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . " 
-                                            ' class='btn btn-danger pull-right'>Редактировать</button>";
+                                            ' class='btn btn-danger pull-right' 
+                                            style='margin-right: 5px'>Редактировать</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
@@ -167,10 +169,13 @@ $result = createDataForMailPage();
 
 <script>
     function addParticipant(val) {
+        document.cookie = "id_protocol=" + val;
+        window.alert(val);
         $("#addParticipant").modal('show');
     }
 
     function updateProtocol(val) {
+        document.cookie = "id_protocol=" + val;
         window.alert("Здесь будет возможность редактировать составленный ранее протокол")
     }
 
