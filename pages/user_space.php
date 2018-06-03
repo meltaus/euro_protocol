@@ -125,7 +125,8 @@ $result = createDataForMailPage();
                                 if ($result[$i][$j] == null) {
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<a href=\"#addParticipant&". $result[$i][0] ."\" id=\"btn\" class=\"btn btn-danger pull-right\">На осмотр</a>";
+                                    echo "<a href=\"#addParticipant&". $result[$i][0] ."\" id=\"btn\" 
+                                            class=\"btn btn-danger pull-right\" onclick='addParticipant()'>На осмотр</a>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
@@ -186,11 +187,9 @@ $result = createDataForMailPage();
 </html>
 
 <script>
-    $(function () {
-        $("#btn").click(function () {
-            $("#addParticipant").modal('show');
-        });
-    });
+    function addParticipant() {
+        modal('show');
+    }
 
     $(function () {
         $("#bq").click(function () {
