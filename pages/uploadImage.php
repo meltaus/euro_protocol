@@ -41,16 +41,38 @@ $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
 ?>
 
 <div class="container kv-main">
-    <form enctype="multipart/form-data" method="post" action="/control/uploadImage.php" name="uploadImage">
-        <br>
-        <div class="conteiner">
-            <hr style="border: 2px dotted">
-            <input id="file-ru" name="file-image[]" type="file" multiple data-max-file-count="20"
-                   data-preview-file-type="any" data-upload-url="/control/uploadImage.php"
-                   accept='image/*'>
+    <div class="row">
+        <div class="conteiner" id="gallery">
+            <?php
+            $count = count($nameFiles);
+            echo '<div id="proho'. $_GET['id_protocol'] . '" style="display: none;">';
+            for ($i = 0; $i < $count; $i++) {
+                echo '<a href="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] .
+                    '/' . '" class="flipLightBox" name="' .
+                    $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '">';
+                echo '<img src="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '" width="225" height="225"></img>';
+                echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
+                        <button onclick="clickDelete(this.id)" id="' . $polis[0][1] . $polis[0][0] . '">
+                        Удалить</button></span></span>';
+                echo '</a>';
+            }
+            echo '</div>';
+            ?>
         </div>
         <br>
-    </form>
+    </div>
+    <div class="row">
+        <form enctype="multipart/form-data" method="post" action="/control/uploadImage.php" name="uploadImage">
+            <br>
+            <div class="conteiner">
+                <hr style="border: 2px dotted">
+                <input id="file-ru" name="file-image[]" type="file" multiple data-max-file-count="20"
+                       data-preview-file-type="any" data-upload-url="/control/uploadImage.php"
+                       accept='image/*'>
+            </div>
+            <br>
+        </form>
+    </div>
 </div>
 
 </body>
