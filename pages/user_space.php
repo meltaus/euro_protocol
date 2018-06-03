@@ -115,6 +115,9 @@ $result = createDataForMailPage();
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
                                     echo "Дата осмотра: ". $result[$i][$j];
+                                    echo "<a href='uploadImage.php?id_protocol=". $result[$i][0] ."' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-danger pull-right' 
+                                            style='margin-left: 10px'>Добавить осмотр</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
@@ -170,6 +173,12 @@ $result = createDataForMailPage();
 <script>
 
     var id_protocol;
+
+    function addSee(val) {
+        document.cookie = "id_protocol=" + val;
+        id_protocol = val;
+        $("#addSee").modal('show');
+    }
 
     function addParticipant(val) {
         document.cookie = "id_protocol=" + val;

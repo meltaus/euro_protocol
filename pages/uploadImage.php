@@ -24,10 +24,19 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 
 $workDB = new workDB();
 
-setcookie("id_protocol", "", time() - 3600);
-setcookie("SerialPolisV","", time() - 3600);
-setcookie("NumberPolisV","", time() - 3600);
-
+if (isset($_COOKIE['id_protocol'])){
+    setcookie("id_protocol", " ", time() - 3600);
+}
+if (isset($_COOKIE['SerialPolisV'])) {
+    setcookie("SerialPolisV", " ", time() - 3600);
+}
+if (isset($_COOKIE['NumberPolisV'])) {
+    setcookie("NumberPolisV", " ", time() - 3600);
+}
+$id_polis = "";
+$polis = "";
+$nameFiles = "";
+$nameScan = "";
 if (isset($_GET['id_protocol'])) {
     //Получаем id полиса
     $columnName = array("id_number_polis");
@@ -41,23 +50,24 @@ if (isset($_GET['id_protocol'])) {
 
     // Получаем имена файлов, связанные с заданным протоколом
     $columnName = array("name");
-    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
-    $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." && id_type = 2";
+    $nameFiles = $workDB->selectDataTableWhere("document", $columnName, $condition);
 
     //Получаем имя скана изввещения
     $columnName = array("name");
-    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 1";
-    $nameScan = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." && id_type = 1";
+    $nameScan = $workDB->selectDataTableWhere("document", $columnName, $condition);
 
-    setcookie("id_protocol",$_GET['id_protocol']);
-    setcookie("SerialPolisV",$polis[0][1]);
-    setcookie("NumberPolisV",$polis[0][0]);
+    setcookie("id_protocol",$_GET['id_protocol'], time()+300, "/");
+    setcookie("SerialPolisV",$polis[0][1], time()+300, "/");
+    setcookie("NumberPolisV",$polis[0][0], time()+300, "/");
 }
 ?>
 
 <div class="container kv-main">
     <?php
-    if ((isset($_GET['id_protocol'])) && (isset($nameScan))) {
+
+    if ((isset($_GET['id_protocol'])) && (count($nameScan) != 0)) {
         echo "<div class='row'>";
         echo "<object>";
         echo "<embed src='". $absRootDir . "/" . $nameScan[0][0] ."' width='100%' height='300' />";
@@ -68,20 +78,21 @@ if (isset($_GET['id_protocol'])) {
     <div class="row">
         <div class="conteiner" id="gallery">
             <?php
-            if (isset($_GET['id_protocol']) && isset($nameFiles)) {
-                $count = count($nameFiles);
-                echo '<div id="proho'. $_GET['id_protocol'] . '" style="display: none;">';
-                for ($i = 0; $i < $count; $i++) {
-                    echo '<a href="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] .
-                        '/' . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
-                    echo '<img src="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '" width="225" height="225"></img>';
-                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
-                        <button onclick="clickDelete(this.id)" id="' . $nameFiles[$i][0] . '">
-                        Удалить</button></span></span>';
-                    echo '</a>';
-                }
-                echo '</div>';
-            }
+//            if ((isset($_GET['id_protocol'])) && (count($nameFiles) != 0)) {
+//                $count = count($nameFiles);
+//                echo '<div id="photo'. $_GET['id_protocol'] . '">';
+//                for ($i = 0; $i < $count; $i++) {
+//                    echo '<a href="' . $rootDir  . $polis[0][1] . $polis[0][0] .
+//                        '/' . $nameFiles[0][$i] . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
+//                    echo '<img src="' . $rootDir  . $polis[0][1] . $polis[0][0] .
+//                        '/' . $nameFiles[0][$i] . '" width="225" height="225"></img>';
+//                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
+//                        <button onclick="clickDelete(this.id)" id="' . $nameFiles . '">
+//                        Удалить</button></span></span>';
+//                    echo '</a>';
+//                }
+//                echo '</div>';
+//            }
             ?>
         </div>
         <br>
