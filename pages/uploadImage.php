@@ -19,7 +19,25 @@
 <body>
 
 <?php
+include_once $_SERVER["DOCUMENT_ROOT"]."settings/getRootDir.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."control/workDB.php";
 
+$workDB = new workDB();
+
+//Получаем id полиса
+$columnName = array("id_number_polis");
+$condition = "WHERE id = ".$_GET['id_protocol'];
+$id_polis = $workDB->selectDataTableWhere("protocol", $columnName, $condition);
+
+//Получаем есрию и номер полиса, связанным с заданным протоколом
+$columnName = array("number_polis", "serial_polis");
+$condition = "WHERE id = ".$id_polis[0][0];
+$polis = $workDB->selectDataTableWhere("polis", $columnName, $condition);
+
+// Получаем имена файлов, связанные с заданным протоколом
+$columnName = array("name");
+$condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
+$nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
 ?>
 
 <div class="container kv-main">
