@@ -15,8 +15,8 @@
 </head>
 <body>
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
-$result = createDataForMailPage();
+//include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
+//$result = createDataForMailPage();
 ?>
 
 <div class="container">
@@ -69,60 +69,68 @@ $result = createDataForMailPage();
                     </td>
                 </tr>
                 <?php
-                for ($i = 0; $i < count($result); $i++) {
-                    echo "<tr>";
-
-                    for ($j = 0; $j < count($result[$i]); $j++) {
-
-                        switch ($j) {
-                            case 0:
-                                break;
-                            case 1:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 2:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 3:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 4:
-                                if ($result[$i][$j] == null) {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
+//                for ($i = 0; $i < count($result); $i++) {
+//                    echo "<tr>";
+//
+//                    for ($j = 0; $j < count($result[$i]); $j++) {
+//
+//                        switch ($j) {
+//                            case 0:
+//                                break;
+//                            case 1:
+//                                echo "<td>";
+//                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+//                                echo $result[$i][$j];
+//                                echo "</div>";
+//                                echo "</td>";
+//                                break;
+//                            case 2:
+//                                echo "<td>";
+//                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+//                                echo $result[$i][$j];
+//                                echo "</div>";
+//                                echo "</td>";
+//                                break;
+//                            case 3:
+//                                echo "<td>";
+//                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+//                                echo $result[$i][$j];
+//                                echo "</div>";
+//                                echo "</td>";
+//                                break;
+//                            case 4:
+//                                if ($result[$i][$j] == null) {
+//                                    echo "<td>";
+//                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+//                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
+//                                            class='btn btn-danger pull-right'
+//                                            style='margin-left: 5px'>На осмотр</button>";
+//                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . "
+//                                            ' class='btn btn-danger pull-right'
+//                                            style='margin-right: 5px'>Редактировать</button>";
+//                                    echo "</div>";
+//                                    echo "</td>";
+//                                }
+//                                else {
+//                                    echo "<td>";
+//                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+//                                    echo "Дата осмотра: ". $result[$i][$j];
+//                                    echo "</div>";
+//                                    echo "</td>";
+//                                }
+//                                break;
+//                        }
+//                    }
+//                    echo "</tr>";
+//                }
+                echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                echo "<button onclick='addParticipant(this.id)' id='". 2 . "'
                                             class='btn btn-danger pull-right' 
                                             style='margin-left: 5px'>На осмотр</button>";
-                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . " 
+                echo "<button onclick='updateProtocol(this.id)' id='" . 2 . " 
                                             ' class='btn btn-danger pull-right' 
                                             style='margin-right: 5px'>Редактировать</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                else {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "Дата осмотра: ". $result[$i][$j];
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                break;
-                        }
-                    }
-                    echo "</tr>";
-                }
+                echo "</div>";
                 ?>
             </table>
         </div>
