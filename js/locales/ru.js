@@ -20,7 +20,7 @@
         removeTitle: 'Очистить выбранные файлы',
         cancelLabel: 'Отмена',
         cancelTitle: 'Отменить текущую загрузку',
-        uploadLabel: 'Загрузить в АРМ',
+        uploadLabel: 'Загрузить фото',
         uploadTitle: 'Загрузить выбранные файлы',
         msgNo: 'нет',
         msgNoFilesSelected: '',
