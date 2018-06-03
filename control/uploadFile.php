@@ -14,7 +14,7 @@ if ((isset($_POST['SerialPolisV'])) && (isset($_POST['NumberPolisV']))) {
         move_uploaded_file
         (
             $_FILES["scanpdf"]["tmp_name"],
-            $outputDir .  $_FILES["scanpdf"]["name"]
+            $outputDir . substr($_FILES["scanpdf"]["name"],0,-4)  . $current_date . ".pdf"
         );
     } else {
         echo("Ошибка загрузки файла");
