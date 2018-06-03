@@ -47,6 +47,7 @@ function createDataForMailPage() {
 			array_push($totalResult, $result);
 			$result = [];
         }
+		unset($workDB);
 		return $totalResult;
 	}
 	
