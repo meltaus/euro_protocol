@@ -68,29 +68,6 @@ $result = createDataForMailPage();
 
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            12.12.1231
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            УУУ 123221234
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            ООО 3223223223
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
-                            <a href="/pages/logout.php" class="btn btn-danger pull-right">На осмотр</a>
-                            <a href="#addProtocol" id="bq" class="btn btn-danger pull-right">Редактировать</a>
-                        </div>
-                    </td>
-                </tr>
                 <?php
                 for ($i = 0; $i < count($result); $i++) {
                     echo "<tr>";
@@ -125,7 +102,10 @@ $result = createDataForMailPage();
                                 if ($result[$i][$j] == null) {
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'>На осмотр</button>";
+                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
+                                            class='btn btn-danger pull-right'>На осмотр</button>";
+                                    echo "<button id='" . $result[$i][0] . " 
+                                            ' class='btn btn-danger pull-right'>Редактировать</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
