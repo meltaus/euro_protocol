@@ -44,16 +44,15 @@ if (isset($_GET['id_protocol'])) {
     $columnName = array("name");
     $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 1";
     $nameScan = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
-    $nameScan = $nameScan[0][0];
 }
 ?>
 
 <div class="container kv-main">
     <?php
-    if (isset($_GET['id_protocol'])) {
+    if ((isset($_GET['id_protocol'])) && (isset($nameScan))) {
         echo "<div class='row'";
         echo "<object>";
-        echo "<embed src='. $absRootDir . "/" . $nameScan .' width='100%' height='300' />";
+        echo "<embed src='. $absRootDir . "/" . $nameScan[0][0] .' width='100%' height='300' />";
         echo "</object>";
         echo "</div>";
     }
@@ -97,10 +96,13 @@ if (isset($_GET['id_protocol'])) {
 </html>
 
 <script>
+    //Получаем id протокола
+    var id_protocol = <?php json_encode($_GET['id_protocol']);?>;
+
     //Загрузка файлов
     $('#file-ru').fileinput({
         language: 'ru',
-        uploadUrl: 'upload.php',
+        uploadUrl: 'upload.php?id_protocol=' + id_protocol,
         allowedFileExtensions: ['jpg']
     });
 
