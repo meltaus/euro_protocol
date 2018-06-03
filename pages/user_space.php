@@ -146,7 +146,7 @@ $result = createDataForMailPage();
 
                             <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
                                 Дата осмотра:
-                                <input type="date" class="form-control" name="dateP" id="dateP" value="
+                                <input type="datetime-local" class="form-control" name="dateP" id="dateP" value="
 									<?php
                                 echo date('Y-m-d');
                                 ?>">
