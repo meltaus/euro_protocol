@@ -157,8 +157,8 @@ $result = createDataForMailPage();
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" onclick="addDateSee()" class="btn btn-primary">Далее</button>
+                <button type="button" onclick="closeAddParticipant()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="addDateSee()" class="btn btn-primary">Принять</button>
             </div>
         </div>
     </div>
@@ -168,18 +168,32 @@ $result = createDataForMailPage();
 </html>
 
 <script>
+
+    var id_protocol;
+
     function addParticipant(val) {
         document.cookie = "id_protocol=" + val;
+        id_protocol = val;
         $("#addParticipant").modal('show');
     }
 
     function updateProtocol(val) {
         document.cookie = "id_protocol=" + val;
+        id_protocol = val;
         window.alert("Здесь будет возможность редактировать составленный ранее протокол")
     }
 
     function addDateSee() {
-        window.alert("Work");
+        $.ajax({
+            type: "get",
+            url: "../contol/insertDataDB.php",
+            data: "id="+id_protocol+",dateP="+$('dateP').val()+",comment="+$('comment').val()
+        });
+        $("#addParticipant").modal('close');
+    }
+
+    function closeAddParticipant(){
+        $("#addParticipant").modal('close');
     }
 
     $(function () {

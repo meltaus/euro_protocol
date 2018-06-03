@@ -52,7 +52,10 @@ switch ($_GET['mode']) {
         }
         break;
     case "addDateSee":
-
+        $fd = fopen("hello.txt", 'w') or die("не удалось создать файл");
+        $str = $_GET['id'] . "   " . $_GET['dateP'] . "    " . $_GET['comment'];
+        fwrite($fd, $str);
+        fclose($fd);
         break;
 }
 ?>
