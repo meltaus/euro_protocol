@@ -19,25 +19,27 @@
 <body>
 
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."settings/getRootDir.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."control/workDB.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 
 $workDB = new workDB();
 
-//Получаем id полиса
-$columnName = array("id_number_polis");
-$condition = "WHERE id = ".$_GET['id_protocol'];
-$id_polis = $workDB->selectDataTableWhere("protocol", $columnName, $condition);
+if (isset($_GET['id_protocol'])) {
+    //Получаем id полиса
+    $columnName = array("id_number_polis");
+    $condition = "WHERE id = ".$_GET['id_protocol'];
+    $id_polis = $workDB->selectDataTableWhere("protocol", $columnName, $condition);
 
 //Получаем есрию и номер полиса, связанным с заданным протоколом
-$columnName = array("number_polis", "serial_polis");
-$condition = "WHERE id = ".$id_polis[0][0];
-$polis = $workDB->selectDataTableWhere("polis", $columnName, $condition);
+    $columnName = array("number_polis", "serial_polis");
+    $condition = "WHERE id = ".$id_polis[0][0];
+    $polis = $workDB->selectDataTableWhere("polis", $columnName, $condition);
 
 // Получаем имена файлов, связанные с заданным протоколом
-$columnName = array("name");
-$condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
-$nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+    $columnName = array("name");
+    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
+    $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+}
 ?>
 
 <div class="container kv-main">
@@ -85,4 +87,43 @@ $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
         uploadUrl: 'upload.php',
         allowedFileExtensions: ['jpg']
     });
+
+    var previousDir = "0";
+
+    //Передаем в куки номер талона
+    function changeOption() {
+        var selection = document.getElementById("selection");
+        var selectedOption = talonSelect.options[talonSelect.selectedIndex];
+        labelNumberPolis.textContent = "Номер полиса: " + polisArray[parseInt(talonSelect.value)][1];
+        document.cookie = "dir=" + selectedOption.text;
+        $("#labelNumberPolis").text("Номер полиса: " + polisArray[parseInt(talonSelect.value)][1]);
+        $('#photo'+ previousDir).hide();
+        for (var i = 0; i < checkExistDir.length; i++) {
+            if (checkExistDir[i] == selectedOption.text) {
+                for (var j = 0; j < checkExistFiles.length; j++) {
+                    $('#photo'+ selectedOption.text).show();
+                    previousDir = selectedOption.text;
+                }
+            }
+        }
+    }
+    var checkExistDir = <?php echo json_encode($checkExist->getCheckExistDir());?>;
+    var checkExistFiles = <?php echo json_encode($checkExist->getCheckExistFiles()); ?>;
+    talonSelect.addEventListener("change", changeOption);
+    var polisArray = <?php echo json_encode($polisArray);?>;
+
+    function clickDelete(val) {
+        var selectedOption = talonSelect.options[talonSelect.selectedIndex].text;
+        document.cookie = "pathPhoto=" + <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption + '\\' + val;
+        document.cookie = "path=" + <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption;
+        sessionStorage['pathPhoto'] = <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption + '\\' + val;
+        $.ajax({
+            url: "deletePhoto.php",
+            data: "id=2,pathPhoto="+sessionStorage['pathPhoto']
+        });
+        $('a[name="'+ selectedOption + val +'"]').remove();
+        window.alert("Фотография удалена");
 </script>
+
+<script type="text/javascript" src="../js/fliplightbox.min.js"></script>
+<script type="text/javascript">$('body').flipLightBox()</script>
