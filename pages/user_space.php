@@ -184,11 +184,11 @@ $result = createDataForMailPage();
     }
 
     function addDateSee() {
-        var dateP = $('dateP').val();
-        var comment = $('comment').val();
+        var dateP = document.getElementById('dateP').value;
+        var comment = document.getElementById('comment').value;
         $.ajax({
             type: "get",
-            url: "../contol/insertDataDB.php",
+            url: "../control/insertDataDB.php",
             data:{'mode':'addDateSee',
                     'id':id_protocol,
                     'dateP':dateP,
