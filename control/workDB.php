@@ -1,6 +1,4 @@
 <?php
-
-
 class workDB
 {
     private $conn;
@@ -8,12 +6,20 @@ class workDB
     //Конструктор. Подключаемся к базе
     public function __construct()
     {
-        require_once $_SERVER['DOCUMENT_ROOT']."/settings/connectionDB.php";
-
+        $host = 'localhost'; // адрес сервера
+        $database = 'euro_protocol'; // имя базы данных
+        $user = 'root'; // имя пользователя
+        $password = 'Xgx885900'; // пароль
+        $nameApp = ""; //Имя приложения
+        $charset = "UTF-8";           //Кодировка
         // подключаемся к серверу
         $this->conn = mysqli_connect($host, $user, $password, $database)
         or die("Ошибка подключения к базе данных" . mysqli_error($this->conn));
-        mysqli_query($this->conn, "use euro_protocol") or die("Ошибка " . mysqli_error($this->conn));
+        if (!mysqli_query($this->conn, "use euro_protocol")) {
+            $fd = fopen("use.txt", 'w') or die("не удалось создать файл");
+            fwrite($fd, mysqli_error($this->conn));
+            fclose($fd);
+        }
         mysqli_query($this->conn, "SET NAMES utf8") or die("Ошибка " . mysqli_error($this->conn));
     }
 
@@ -215,11 +221,8 @@ class workDB
         }
         $query = substr($query,0,-1);
         $query .= " WHERE ".$nameIDColumn. " = ".$id;
-        $fd = fopen("hello.txt", 'w') or die("не удалось создать файл");
-        $str = "Привет мир";
-        fwrite($fd, $query);
-        fclose($fd);
-        $this->anyQueryDB($query);
+
+        $result = $this->anyQueryDB($query);
     }
 
     /**

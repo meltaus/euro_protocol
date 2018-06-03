@@ -193,12 +193,13 @@ $result = createDataForMailPage();
                     'id':id_protocol,
                     'dateP':dateP,
                     'comment':comment}
-        });
-        $("#addParticipant").modal('hidden');
+            });
+        window.alert("Данные внесены. Теперь вы можете закрыть окно");
     }
 
     function closeAddParticipant(){
-        $("#addParticipant").modal('hidden');
+        window.close();
+        // $("#addParticipant").modal('hidden');
     }
 
     $(function () {

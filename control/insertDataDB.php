@@ -1,6 +1,6 @@
 <?php
-include $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
-include $_SERVER["DOCUMENT_ROOT"]."/control/insertAllData.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/control/insertAllData.php";
 $insertAllData = new insertAllData();
 $workDB = new workDB();
 
@@ -53,10 +53,9 @@ switch ($_GET['mode']) {
         }
         break;
     case "addDateSee":
-
         $columnValues = array(
-            'time_inspection' => $_GET['dateP'],
-            'comment' => $_GET['comment']
+            'time_inspection' => "'".$_GET['dateP']."'",
+            'comment' => "'".$_GET['comment']."'"
         );
 
         $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
