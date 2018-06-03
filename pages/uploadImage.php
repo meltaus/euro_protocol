@@ -30,12 +30,12 @@ if (isset($_GET['id_protocol'])) {
     $condition = "WHERE id = ".$_GET['id_protocol'];
     $id_polis = $workDB->selectDataTableWhere("protocol", $columnName, $condition);
 
-//Получаем есрию и номер полиса, связанным с заданным протоколом
+    //Получаем есрию и номер полиса, связанным с заданным протоколом
     $columnName = array("number_polis", "serial_polis");
     $condition = "WHERE id = ".$id_polis[0][0];
     $polis = $workDB->selectDataTableWhere("polis", $columnName, $condition);
 
-// Получаем имена файлов, связанные с заданным протоколом
+    // Получаем имена файлов, связанные с заданным протоколом
     $columnName = array("name");
     $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
     $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
@@ -91,18 +91,12 @@ if (isset($_GET['id_protocol'])) {
         allowedFileExtensions: ['jpg']
     });
 
-    //var previousDir = "0";
-    //
-    //var checkExistFiles = <?php //echo json_encode($checkExist->getCheckExistFiles()); ?>//;
-    //talonSelect.addEventListener("change", changeOption);
-    //var polisArray = <?php //echo json_encode($polisArray);?>//;
-    //
-    //function clickDelete(val) {
-    //    $.ajax({
-    //        url: "deletePhoto.php?path=" + <?php //echo json_encode($absRootDir . '/' . $polis[0][1] . $polis[0][0]);?>//,
-    //        data: "id=2,path=" + sessionStorage['path']
-    //    });
-    //    $('a[name="' + val + '"]').remove();
-    //    window.alert("Фотография удалена");
-    }
+    function clickDelete(val) {
+        $.ajax({
+            url: "deletePhoto.php?path=" + <?php echo json_encode($absRootDir . '/' . $polis[0][1] . $polis[0][0]);?>,
+            data: "id=2,path=" + sessionStorage['path']
+        });
+        $('a[name="' + val + '"]').remove();
+        window.alert("Фотография удалена");
+     }
 </script>
