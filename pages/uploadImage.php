@@ -44,21 +44,24 @@ if (isset($_GET['id_protocol'])) {
 
 <div class="container kv-main">
     <div class="row">
+    </div>
+    <div class="row">
         <div class="conteiner" id="gallery">
             <?php
-            $count = count($nameFiles);
-            echo '<div id="proho'. $_GET['id_protocol'] . '" style="display: none;">';
-            for ($i = 0; $i < $count; $i++) {
-                echo '<a href="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] .
-                    '/' . '" class="flipLightBox" name="' .
-                    $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '">';
-                echo '<img src="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '" width="225" height="225"></img>';
-                echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
-                        <button onclick="clickDelete(this.id)" id="' . $polis[0][1] . $polis[0][0] . '">
+            if (isset($_GET['id_protocol']) && isset($nameFiles)) {
+                $count = count($nameFiles);
+                echo '<div id="proho'. $_GET['id_protocol'] . '" style="display: none;">';
+                for ($i = 0; $i < $count; $i++) {
+                    echo '<a href="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] .
+                        '/' . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
+                    echo '<img src="' . $absRootDir . '/' . $polis[0][1] . $polis[0][0] . '" width="225" height="225"></img>';
+                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
+                        <button onclick="clickDelete(this.id)" id="' . $nameFiles[$i][0] . '">
                         Удалить</button></span></span>';
-                echo '</a>';
+                    echo '</a>';
+                }
+                echo '</div>';
             }
-            echo '</div>';
             ?>
         </div>
         <br>
@@ -88,42 +91,18 @@ if (isset($_GET['id_protocol'])) {
         allowedFileExtensions: ['jpg']
     });
 
-    var previousDir = "0";
-
-    //Передаем в куки номер талона
-    function changeOption() {
-        var selection = document.getElementById("selection");
-        var selectedOption = talonSelect.options[talonSelect.selectedIndex];
-        labelNumberPolis.textContent = "Номер полиса: " + polisArray[parseInt(talonSelect.value)][1];
-        document.cookie = "dir=" + selectedOption.text;
-        $("#labelNumberPolis").text("Номер полиса: " + polisArray[parseInt(talonSelect.value)][1]);
-        $('#photo'+ previousDir).hide();
-        for (var i = 0; i < checkExistDir.length; i++) {
-            if (checkExistDir[i] == selectedOption.text) {
-                for (var j = 0; j < checkExistFiles.length; j++) {
-                    $('#photo'+ selectedOption.text).show();
-                    previousDir = selectedOption.text;
-                }
-            }
-        }
+    //var previousDir = "0";
+    //
+    //var checkExistFiles = <?php //echo json_encode($checkExist->getCheckExistFiles()); ?>//;
+    //talonSelect.addEventListener("change", changeOption);
+    //var polisArray = <?php //echo json_encode($polisArray);?>//;
+    //
+    //function clickDelete(val) {
+    //    $.ajax({
+    //        url: "deletePhoto.php?path=" + <?php //echo json_encode($absRootDir . '/' . $polis[0][1] . $polis[0][0]);?>//,
+    //        data: "id=2,path=" + sessionStorage['path']
+    //    });
+    //    $('a[name="' + val + '"]').remove();
+    //    window.alert("Фотография удалена");
     }
-    var checkExistDir = <?php echo json_encode($checkExist->getCheckExistDir());?>;
-    var checkExistFiles = <?php echo json_encode($checkExist->getCheckExistFiles()); ?>;
-    talonSelect.addEventListener("change", changeOption);
-    var polisArray = <?php echo json_encode($polisArray);?>;
-
-    function clickDelete(val) {
-        var selectedOption = talonSelect.options[talonSelect.selectedIndex].text;
-        document.cookie = "pathPhoto=" + <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption + '\\' + val;
-        document.cookie = "path=" + <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption;
-        sessionStorage['pathPhoto'] = <?php echo json_encode($getRootDir->getAbsRootDir());?> + selectedOption + '\\' + val;
-        $.ajax({
-            url: "deletePhoto.php",
-            data: "id=2,pathPhoto="+sessionStorage['pathPhoto']
-        });
-        $('a[name="'+ selectedOption + val +'"]').remove();
-        window.alert("Фотография удалена");
 </script>
-
-<script type="text/javascript" src="../js/fliplightbox.min.js"></script>
-<script type="text/javascript">$('body').flipLightBox()</script>
