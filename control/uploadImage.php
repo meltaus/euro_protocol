@@ -14,7 +14,7 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
         substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg");
     $columnValues = array(
         "id_protocol" => $_GET['id_protocol'],
-        "name" => $_FILES["file-image"]["name"][0],0,-4  . $current_date . ".jpg",
+        "name" => substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg",
         "id_type" => 2
     );
     $workDB->insertDataTable("document", $columnValues);
