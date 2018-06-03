@@ -5,8 +5,8 @@ function createDataForMailPage() {
 /* Формат конечного массива $totalResult:
 [iterInProtocolTable]  [protocol.id,
 						protocol.time_register, 
-						polis.serial_polis, 
-						polis.number_polis, 
+						polis.serial_polis + polis.number_polis, 
+						polis.serial_polis_memver + polis.number_polis_member, 
 						protocol.time_inspection]
 						
 
