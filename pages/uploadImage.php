@@ -39,12 +39,25 @@ if (isset($_GET['id_protocol'])) {
     $columnName = array("name");
     $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 2";
     $nameFiles = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+
+    //Получаем имя скана изввещения
+    $columnName = array("name");
+    $condition = "WHERE id_protocol = ".$_GET['id_protocol']." id_type = 1";
+    $nameScan = $workDB->selectDataTableWhere("documnet", $columnName, $condition);
+    $nameScan = $nameScan[0][0];
 }
 ?>
 
 <div class="container kv-main">
-    <div class="row">
-    </div>
+    <?php
+    if (isset($_GET['id_protocol'])) {
+        echo "<div class='row'";
+        echo "<object>";
+        echo "<embed src='. $absRootDir . "/" . $nameScan .' width='100%' height='300' />";
+        echo "</object>";
+        echo "</div>";
+    }
+    ?>
     <div class="row">
         <div class="conteiner" id="gallery">
             <?php
