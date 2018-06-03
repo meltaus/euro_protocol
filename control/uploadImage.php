@@ -1,8 +1,10 @@
 <?php
+require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
+$workDB = new workDB();
 //Сборка пути до конечной директории. В конец вставляется номер талона
 $current_date = date('Y-m-d');
-require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
-$outputDir = $absRootDir . $_POST['SerialPolisV'] . $_POST['NumberPolisV'] . "/";
+$outputDir = $absRootDir . $_GET['SerialPolisV'] . $_GET['NumberPolisV'] . "/";
 if (!file_exists($outputDir)) {
     @mkdir($outputDir);
 }
@@ -10,6 +12,13 @@ if (!file_exists($outputDir)) {
 if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
     move_uploaded_file($_FILES['file-image']['tmp_name'][0], $outputDir .
         substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg");
+    $columnValues = array(
+        "id_protocol" => $_GET['id_protocol'],
+        "name" => $_FILES["file-image"]["name"][0],0,-4  . $current_date . ".jpg",
+        "id_type" => 2
+    );
+    $workDB->insertDataTable("document", $columnValues);
+    unset($workDB);
 } else {
     echo "Possible file upload attack: ";
     echo "filename '" . substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg" . "'.";
