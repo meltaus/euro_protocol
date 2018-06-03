@@ -104,7 +104,7 @@ $result = createDataForMailPage();
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
                                     echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
                                             class='btn btn-danger pull-right'>На осмотр</button>";
-                                    echo "<button id='" . $result[$i][0] . " 
+                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . " 
                                             ' class='btn btn-danger pull-right'>Редактировать</button>";
                                     echo "</div>";
                                     echo "</td>";
@@ -170,11 +170,9 @@ $result = createDataForMailPage();
         $("#addParticipant").modal('show');
     }
 
-    $(function () {
-        $("#bq").click(function () {
-            $("#addProtocol").modal('show');
-        });
-    });
+    function updateProtocol(val) {
+        window.alert("Здесь будет возможность редактировать составленный ранее протокол")
+    }
 
     $(function () {
         $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
