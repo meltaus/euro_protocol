@@ -125,7 +125,7 @@ $result = createDataForMailPage();
                                 if ($result[$i][$j] == null) {
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<button onclick='addParticipant()'>На осмотр</button>";
+                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'>На осмотр</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
@@ -186,8 +186,8 @@ $result = createDataForMailPage();
 </html>
 
 <script>
-    function addParticipant() {
-        modal('show');
+    function addParticipant(val) {
+        $("#addParticipant").modal('show');
     }
 
     $(function () {
