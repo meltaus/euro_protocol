@@ -1,7 +1,9 @@
 <?php
-//Сборка пути до конечной директории. В конец вставляется номер талона
+//Сборка пути до конечной директории
 require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
 $outputDir = $absRootDir . $_POST['SerialPolisV'] . $_POST['NumberPolisV'] . "/";
+
+
 if ((isset($_POST['SerialPolisV'])) && (isset($_POST['NumberPolisV']))) {
     if (!file_exists($outputDir)) {
         @mkdir($outputDir);
