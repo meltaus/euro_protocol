@@ -149,6 +149,33 @@ class workDB
 
         return null;
     }
+	
+	 /**
+     * Ведет себя так же как selectDataTable, но к запросу добавляет условие, которое содержится в строке $condition
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить
+     * @param $condition Условие, которое записывается после WHERE
+     * @return array Возвращает двумерный массив, где array[$i] является массивом, в котором каждый элемент соответствует столбцу запрашиваемой таблицы
+     */
+    public function selectDataTableOrderBy($tableName, $columnName, $condition) {
+        //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
+        if (gettype($columnName) == "array") {
+            $query = "SELECT ";
+            $iter = count($columnName);
+            for ($i = 0; $i < $iter; $i++) {
+                $query .= "$columnName[$i]";
+                if ($i == $iter - 1) {
+                    $query .= " ";
+                } else {
+                    $query .= ", ";
+                }
+            }
+            $query .= "FROM ".$tableName." ORDER BY ".$condition;
+            return $this->analysisResult($this->anyQueryDB($query));
+        }
+
+        return null;
+    }
 
     /**
      * Отправляет к БД произвольный запрос. Возвращает ответ от БД
@@ -213,28 +240,4 @@ class workDB
         return $result_array;
     }
 	
-	    /**
-     * Разбор ответа из БД
-     * @param $result ответ из БД
-     * @return array Двумерный массив строка\колонка
-     */
-    public function selectDataFromMainPage($sort) {
-        //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
-        if ($sort == "time_register") {
-            $query = "SELECT id, time_register FROM polis SORTBY";
-            $iter = count($columnName);
-            for ($i = 0; $i < $iter; $i++) {
-                $query .= "$columnName[$i]";
-                if ($i == $iter - 1) {
-                    $query .= " ";
-                } else {
-                    $query .= ", ";
-                }
-            }
-            $query .= "FROM ".$tableName;
-            return $this->analysisResult($this->anyQueryDB($query));
-        }
-
-        return null;
-    }
 }
