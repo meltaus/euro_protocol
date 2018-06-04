@@ -18,31 +18,12 @@ USE `euro_protocol`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `notice_for_inspection`
+-- Dumping events for database 'euro_protocol'
 --
 
-DROP TABLE IF EXISTS `notice_for_inspection`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notice_for_inspection` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_notification` int(11) NOT NULL,
-  `time_notification` datetime NOT NULL,
-  `id_nethod_notofication` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`id_notification`),
-  KEY `fk_id_nethod_notofication_idx` (`id_nethod_notofication`),
-  CONSTRAINT `fk_id_nethod_notofication` FOREIGN KEY (`id_nethod_notofication`) REFERENCES `method_notification` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
--- Dumping data for table `notice_for_inspection`
+-- Dumping routines for database 'euro_protocol'
 --
-
-LOCK TABLES `notice_for_inspection` WRITE;
-/*!40000 ALTER TABLE `notice_for_inspection` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notice_for_inspection` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04 20:49:11
+-- Dump completed on 2018-06-04 20:49:13

@@ -29,7 +29,7 @@ CREATE TABLE `auto` (
   `mark` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `auto` (
 
 LOCK TABLES `auto` WRITE;
 /*!40000 ALTER TABLE `auto` DISABLE KEYS */;
-INSERT INTO `auto` VALUES (1,'Toyota','Rav 4'),(2,'Toyota','Land Cruser'),(3,'Toyota','Corolla'),(4,'Honda','Civic'),(5,'Honda','Accord'),(6,'Nissan','SkyLina'),(7,'Nissan','Z350'),(8,'Mersedes','Benz'),(9,'Lada','Приора'),(10,'Lada','Ларгус'),(11,'Lada','Калина'),(12,'Nissan','Almera'),(13,'УАЗ','Патриот'),(14,'Volvo','CX90'),(15,'Mazda','CX-5'),(16,'Mersedes','SL-500'),(17,'Honda','CR-V'),(18,'Subaru','Impresa');
+INSERT INTO `auto` VALUES (1,'Toyota','Rav 4'),(2,'Toyota','Land Cruser'),(3,'Toyota','Corolla'),(4,'Honda','Civic'),(5,'Honda','Accord'),(6,'Nissan','SkyLina'),(7,'Nissan','Z350'),(8,'Mersedes','Benz'),(9,'Lada','Приора'),(10,'Lada','Ларгус'),(11,'Lada','Калина'),(12,'Nissan','Almera'),(13,'УАЗ','Патриот'),(14,'Volvo','CX90'),(15,'Mazda','CX-5'),(16,'Mersedes','SL-500'),(17,'Honda','CR-V'),(18,'Subaru','Impresa'),(19,'Lada','2101'),(20,'Lada','Гранта');
 /*!40000 ALTER TABLE `auto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04  2:07:30
+-- Dump completed on 2018-06-04 20:49:12

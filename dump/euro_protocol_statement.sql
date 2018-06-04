@@ -31,7 +31,7 @@ CREATE TABLE `statement` (
   PRIMARY KEY (`id`),
   KEY `fk_metod_idx` (`method`),
   CONSTRAINT `fk_metod` FOREIGN KEY (`method`) REFERENCES `method_notification` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `statement` (
 
 LOCK TABLES `statement` WRITE;
 /*!40000 ALTER TABLE `statement` DISABLE KEYS */;
-INSERT INTO `statement` VALUES (1,1,1),(2,1,1),(3,1,1),(4,2,1),(5,3,0),(6,2,0),(7,3,0),(8,1,0),(9,1,0),(10,3,0),(11,2,1),(12,3,1),(13,2,0),(14,1,1),(15,1,0),(16,1,0),(18,1,0),(19,1,0),(20,1,0),(21,2,1);
+INSERT INTO `statement` VALUES (1,1,1),(2,1,1),(3,1,1),(4,2,1),(5,3,0),(6,2,0),(7,3,0),(8,1,0),(9,1,0),(10,3,0),(11,2,1),(12,3,1),(13,2,0),(14,1,1),(15,1,0),(16,1,0),(18,1,0),(19,1,0),(20,1,0),(21,2,1),(22,2,0),(23,1,0),(24,1,1),(25,3,0);
 /*!40000 ALTER TABLE `statement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04  2:07:31
+-- Dump completed on 2018-06-04 20:49:13

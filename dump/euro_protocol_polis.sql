@@ -29,7 +29,7 @@ CREATE TABLE `polis` (
   `number_polis` varchar(32) NOT NULL,
   `serial_polis` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `polis` (
 
 LOCK TABLES `polis` WRITE;
 /*!40000 ALTER TABLE `polis` DISABLE KEYS */;
-INSERT INTO `polis` VALUES (12,'987198237','eee'),(13,'654216','еах'),(14,'9871987','фыв'),(15,'5449787','йцу'),(16,'21687','asd'),(17,'54461','qwe'),(18,'987198237','hhh'),(19,'8765','qwe'),(20,'821599','ccc'),(21,'84362','eee'),(22,'546231','йцу'),(23,'12312','кдл'),(24,'12121212','УУУ'),(25,'1249442324','ЙЙЙ'),(26,'102309','еее'),(27,'1029312','ааа');
+INSERT INTO `polis` VALUES (12,'987198237','eee'),(13,'654216','еах'),(14,'9871987','фыв'),(15,'5449787','йцу'),(16,'21687','asd'),(17,'54461','qwe'),(18,'987198237','hhh'),(19,'8765','qwe'),(20,'821599','ccc'),(21,'84362','eee'),(22,'546231','йцу'),(23,'12312','кдл'),(24,'12121212','УУУ'),(25,'1249442324','ЙЙЙ'),(26,'102309','еее'),(27,'1029312','ааа'),(28,'213123','vvv'),(29,'123123','eee'),(30,'122391','УУУ'),(31,'123445','ВВВ'),(32,'1231241','еее'),(33,'23124','ааа'),(34,'12313','еее'),(35,'9750','ааа');
 /*!40000 ALTER TABLE `polis` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04  2:07:31
+-- Dump completed on 2018-06-04 20:49:13

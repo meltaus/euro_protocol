@@ -28,7 +28,7 @@ CREATE TABLE `company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'Надежда'),(2,'Ингосстрах'),(3,'Росгосстрах'),(4,'Шаражка №35'),(5,'Не надежда'),(6,'Говно');
+INSERT INTO `company` VALUES (1,'Надежда'),(2,'Ингосстрах'),(3,'Росгосстрах'),(4,'Шаражка №35'),(5,'Не надежда'),(6,'Говно'),(7,'Согаз');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04  2:07:30
+-- Dump completed on 2018-06-04 20:49:12
