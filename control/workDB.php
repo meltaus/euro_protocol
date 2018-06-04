@@ -1,6 +1,4 @@
 <?php
-
-
 class workDB
 {
     private $conn;
@@ -8,12 +6,20 @@ class workDB
     //Конструктор. Подключаемся к базе
     public function __construct()
     {
-        require_once $_SERVER['DOCUMENT_ROOT']."/settings/connectionDB.php";
-
+        $host = '192.168.59.110'; // адрес сервера
+        $database = 'euro_protocol'; // имя базы данных
+        $user = 'root'; // имя пользователя
+        $password = 'Y@lt;lf99'; // пароль
+        $nameApp = ""; //Имя приложения
+        $charset = "UTF-8";           //Кодировка
         // подключаемся к серверу
         $this->conn = mysqli_connect($host, $user, $password, $database)
         or die("Ошибка подключения к базе данных" . mysqli_error($this->conn));
-        mysqli_query($this->conn, "use euro_protocol") or die("Ошибка " . mysqli_error($this->conn));
+        if (!mysqli_query($this->conn, "use euro_protocol")) {
+            $fd = fopen("use.txt", 'w') or die("не удалось создать файл");
+            fwrite($fd, mysqli_error($this->conn));
+            fclose($fd);
+        }
         mysqli_query($this->conn, "SET NAMES utf8") or die("Ошибка " . mysqli_error($this->conn));
     }
 
@@ -149,6 +155,33 @@ class workDB
 
         return null;
     }
+	
+	 /**
+     * Ведет себя так же как selectDataTable, но к запросу добавляет условие, которое содержится в строке $condition
+     * @param $tableName Имя таблицы из которой необходимо получить данные
+     * @param $columnName Массив строк, содержащий столбцы, которые необходимо получить
+     * @param $condition Условие, которое записывается после WHERE
+     * @return array Возвращает двумерный массив, где array[$i] является массивом, в котором каждый элемент соответствует столбцу запрашиваемой таблицы
+     */
+    public function selectDataTableOrderBy($tableName, $columnName, $condition) {
+        //Если $columnName массив - составляем и выполняем запрос, если нет - возвращаем null
+        if (gettype($columnName) == "array") {
+            $query = "SELECT ";
+            $iter = count($columnName);
+            for ($i = 0; $i < $iter; $i++) {
+                $query .= "$columnName[$i]";
+                if ($i == $iter - 1) {
+                    $query .= " ";
+                } else {
+                    $query .= ", ";
+                }
+            }
+            $query .= "FROM ".$tableName." ORDER BY ".$condition;
+            return $this->analysisResult($this->anyQueryDB($query));
+        }
+
+        return null;
+    }
 
     /**
      * Отправляет к БД произвольный запрос. Возвращает ответ от БД
@@ -188,7 +221,8 @@ class workDB
         }
         $query = substr($query,0,-1);
         $query .= " WHERE ".$nameIDColumn. " = ".$id;
-        $this->anyQueryDB($query);
+
+        $result = $this->anyQueryDB($query);
     }
 
     /**
@@ -212,4 +246,5 @@ class workDB
         }
         return $result_array;
     }
+	
 }

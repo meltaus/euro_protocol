@@ -17,7 +17,7 @@
 <?php
 /*
 id="method_notification" - Метод подачи заявления
-id="proxy" - Признак подачи по доверенностиmethod_notification
+id="proxy" - Признак подачи по доверенности
 id="dateN" - Дата направления в СК
 id="dateP" - Дата поступления в СК
 id="dateDtp" - Дата ДТП
@@ -37,52 +37,50 @@ id="NumberPolisP" - Номер полиса пострадавшего
 id="MarkAutoP" - Марка автомобиля пострадавшего
 id="ModelAutoP" - Модель автомобиля пострадавшего
 id="GosNumberP" - Гос. номер автомобиля пострадавшего
-
-id="comment"    - Комментарий к протоколу
 */
 ?>
 <div class="container">
-    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification" enctype="multipart/form-data">
+    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>Извещение о ДПТ</label>
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-group" style="margin-left: 1%">
-                <table border="0px">
+					
+		<div class="row">		
+            <div>
+			    <table border="0px">
                     <tr>
-                        <td valign="top">
+						<td valign="top">
                             <div style="margin-top: 20%; margin-left: 5px;">
                                 <label>Метод подачи заявления:</label>
                             </div>
                         </td>
                         <td>
-                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
-                                <select class="custom-select form-control" id="method_notification" name="method_notification">
-                                    <option selected="selected">Выберите поле</option>
-                                    <?php
-                                    require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
-                                    $workDB = new workDB();
-                                    $columnName = array("method");
-                                    $methodArray = $workDB->selectUniqueDataTable("method_notification", $columnName);
-                                    $iter = count($methodArray);
-                                    for ($i = 0; $i < $iter; $i++) {
-                                        echo '<option value="' . $i . '">' . $methodArray[$i][0] . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+							<div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+								<select class="custom-select form-control" id="method_notification" name="method_notification">
+								<option selected="selected">Выберите поле</option>
+								<?php
+									require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
+									$workDB = new workDB();
+									$columnName = array("method");
+									$methodArray = $workDB->selectUniqueDataTable("method_notification", $columnName);
+									$iter = count($methodArray);
+										for ($i = 0; $i < $iter; $i++) {
+											echo '<option value="' . $i . '">' . $methodArray[$i][0] . '</option>';
+										}
+								?>
+								</select>
+							</div>
                         </td>
                         <td valign="top">
-                            <div style="margin-top: 10%; margin-left: 5px"; class="checkbox form-group">
-                                <input type="checkbox" value="" id="proxy" name="proxy">
-                                <i class="fa fa-2x icon-checkbox"></i>
-                                Предоставленно по доверености
-                            </div>
+							<div style="margin-top: 10%; margin-left: 5px"; class="checkbox form-group">
+								<input type="checkbox" value="" id="proxy" name="proxy">
+								<i class="fa fa-2x icon-checkbox"></i>
+								Предоставленно по доверености
+							</div>
                         </td>
-                    </tr>
+                    </tr>				
                     <tr>
                         <td valign="top">
                             <div style="margin-top: 20%">
@@ -91,23 +89,12 @@ id="comment"    - Комментарий к протоколу
                         </td>
                         <td>
                             <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
-                                <input type="date" class="form-control" name="dateN" id="dateN"
-                                       value="<?php echo date('Y-m-d'); ?>">
-                                <i class="fa fa-calendar"></i>
+                            <input type="date" class="form-control" name="dateN" id="dateN"
+                                   value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </td>
                         <td valign="top">
-                            <div class="form-group">
-                                <div class="row">
-                                    <label>
-                                        Загрузките отсканированное извещение в формате pdf
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <input dropzone="move" name="scanpdf" id="scanpdf" type="file"
-                                           accept="application/pdf" />
-                                </div>
-                            </div>
+
                         </td>
                     </tr>
                     <tr>
@@ -118,9 +105,8 @@ id="comment"    - Комментарий к протоколу
                         </td>
                         <td>
                             <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
-                                <input type="date" class="form-control" name="dateP" id="dateP"
-                                       value="<?php echo date('Y-m-d'); ?>">
-                                <i class="fa fa-calendar"></i>
+                            <input type="date" class="form-control" name="dateP" id="dateP"
+                                   value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </td>
                         <td valign="top">
@@ -130,18 +116,18 @@ id="comment"    - Комментарий к протоколу
                 </table>
             </div>
         </div>
-
+		
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>Обстоятельства ДТП</label>
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-group" style="margin-left: 1%">
-                <table border="0px">
+		
+		<div class="row">		
+            <div>
+			    <table border="0px">
                     <tr>
-                        <td valign="top">
+						<td valign="top">
                             <div style="margin-top: 20%; margin-left: 5px;">
                                 <label>Дата и время ДПТ:</label>
                             </div>
@@ -151,26 +137,25 @@ id="comment"    - Комментарий к протоколу
                         </td>
                         <td valign="top">
                             <div style="margin-top: 5%; margin-left: 5px"; class="form-group">
-                                <input type="datetime-local" class="form-control" name="dateDtp" id="dateDtp"
-                                       value="<?php echo date('Y-m-d\TH:i:s'); ?>">
-                                <i class="fa fa-calendar"></i>
+								<input type="datetime-local" class="form-control" name="dateDtp" id="dateDtp"
+                                value="<?php echo date('Y-m-d\TH:i:s'); ?>">
                             </div>
                         </td>
-                    </tr>
+                    </tr>				
                 </table>
             </div>
         </div>
-
-        <div class="row">
+		
+		<div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>Сведения об участниках</label>
             </div>
         </div>
-
-        <div class="row">
-            <label>Виновник</label>
+		
+		<div class="row">
+        <label>Виновник</label>
         </div>
-
+		
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">
@@ -180,29 +165,29 @@ id="comment"    - Комментарий к протоколу
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+		<div class="row">
+		    <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="CompanyV" id="CompanyV" autocomplete="off"
                            placeholder="Компания">
                     <i class="fa fa-file"></i>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+			</div>
+			<div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="SerialPolisV" id="SerialPolisV" autocomplete="off"
                            placeholder="Серия полиса">
                     <i class="fa fa-file"></i>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+		    <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="NumberPolisV" id="NumberPolisV" autocomplete="off"
                            placeholder="Номер полиса">
                     <i class="fa fa-file"></i>
                 </div>
             </div>
-        </div>
+		</div>
         <div class="row">
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
@@ -227,10 +212,10 @@ id="comment"    - Комментарий к протоколу
             </div>
         </div>
 
-        <div class="row">
-            <label>Потерпевший</label>
+		<div class="row">
+        <label>Потерпевший</label>
         </div>
-
+		
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">
@@ -240,29 +225,29 @@ id="comment"    - Комментарий к протоколу
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+		<div class="row">
+		    <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="CompanyP" id="CompanyP" autocomplete="off"
                            placeholder="Компания">
                     <i class="fa fa-file"></i>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+			</div>
+			<div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="SerialPolisP" id="SerialPolisP" autocomplete="off"
                            placeholder="Серия полиса">
                     <i class="fa fa-file"></i>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+		    <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
                     <input type="text" class="form-control" name="NumberPolisP" id="NumberPolisP" autocomplete="off"
                            placeholder="Номер полиса">
                     <i class="fa fa-file"></i>
                 </div>
             </div>
-        </div>
+		</div>
         <div class="row">
             <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
                 <div class="form-group">
@@ -286,7 +271,7 @@ id="comment"    - Комментарий к протоколу
                 </div>
             </div>
         </div>
-
+		
         <div class="row">
             <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6">
             </div>
@@ -323,8 +308,8 @@ id="comment"    - Комментарий к протоколу
         $("#SerialPolisV").typeahead({ //на какой input:text назначить результаты списка
             ajax: '/control/getDataWithComp.php?mode=serial_polis'
         });
-
-        $("#fioP").typeahead({ //на какой input:text назначить результаты списка
+		
+		$("#fioP").typeahead({ //на какой input:text назначить результаты списка
             ajax: '/control/getDataWithComp.php?mode=people'
         });
 
@@ -338,14 +323,6 @@ id="comment"    - Комментарий к протоколу
 
         $("#SerialPolisP").typeahead({ //на какой input:text назначить результаты списка
             ajax: '/control/getDataWithComp.php?mode=serial_polis'
-        });
-
-        $("#CompanyV").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=company'
-        });
-
-        $("#CompanyP").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=company'
         });
 
     })
