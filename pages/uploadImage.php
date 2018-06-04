@@ -67,13 +67,13 @@ if (isset($_GET['id_protocol'])) {
 <div class="container kv-main">
     <?php
 
-    if ((isset($_GET['id_protocol'])) && (count($nameScan) != 0)) {
-        echo "<div class='row'>";
-        echo "<object>";
-        echo "<embed src='". $absRootDir . "/" . $nameScan[0][0] ."' width='100%' height='300' />";
-        echo "</object>";
-        echo "</div>";
-    }
+//    if ((isset($_GET['id_protocol'])) && (count($nameScan) != 0)) {
+//        echo "<div class='row'>";
+//        echo "<object>";
+//        echo "<embed src='". $absRootDir . "/" . $nameScan[0][0] ."' width='100%' height='300' />";
+//        echo "</object>";
+//        echo "</div>";
+//    }
     ?>
     <div class="row">
         <div class="conteiner" id="gallery">
@@ -108,6 +108,9 @@ if (isset($_GET['id_protocol'])) {
             </div>
             <br>
         </form>
+    </div>
+    <div class="row">
+        <a href="user_space.php" class='btn btn-danger pull-right'>Назад</a>
     </div>
 </div>
 

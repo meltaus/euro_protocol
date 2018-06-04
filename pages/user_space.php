@@ -27,7 +27,7 @@ $result = createDataForMailPage();
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <table border="1px";  style="margin:10px auto;">
+            <table style="margin:10px auto;">
                 <tr>
                     <td>
                         <div style="margin:10px auto;">
@@ -38,7 +38,6 @@ $result = createDataForMailPage();
                     </td>
                     <td>
                         <div style="margin-left: 5%; margin-right: 5%">
-                            Тут могла быть Ваша реклама
                         </div>
                     </td>
                 </tr>
@@ -105,9 +104,9 @@ $result = createDataForMailPage();
                                     echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
                                             class='btn btn-danger pull-right' 
                                             style='margin-left: 5px'>На осмотр</button>";
-                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . " 
-                                            ' class='btn btn-danger pull-right' 
-                                            style='margin-right: 5px'>Редактировать</button>";
+//                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . "
+//                                            ' class='btn btn-danger pull-right'
+//                                            style='margin-right: 5px'>Редактировать</button>";
                                     echo "</div>";
                                     echo "</td>";
                                 }
