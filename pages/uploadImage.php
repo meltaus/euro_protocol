@@ -90,9 +90,10 @@ if (isset($_GET['id_protocol'])) {
                         '/' . $nameFiles[$i][0] . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
                     echo '<img src="' . $rootDir  . $polis[0][1] . $polis[0][0] .
                         '/' . $nameFiles[$i][0] . '" width="225" height="225"></img>';
-                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
-                        <button onclick="clickDelete(this.id)" id="' . $nameFiles[$i][0] . '">
-                        Удалить</button></span></span>';
+//                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
+//                        <button onclick="clickDelete(this.id)" id="' . $nameFiles[$i][0] . '">
+//                        Удалить</button></span></span>';
+                    echo '<span>Скоро здесь будет кнопка "Удалить"<br><span></span></span>';
                     echo '</a>';
                 }
                 echo '</div>';
@@ -131,7 +132,7 @@ if (isset($_GET['id_protocol'])) {
 
     function clickDelete(val) {
         sessionStorage['pathPhoto'] = <?php echo json_encode($absRootDir . $polis[0][1] . $polis[0][0] . '/');?> + val;
-        var date = new Date(new Date().getTime() + 60 * 1000);
+        var date = new Date(new Date().getTime() + 120 * 1000);
         document.cookie = "pathPhoto=" + sessionStorage['pathPhoto'] + "; path=/; expires=" + date.toUTCString();
         document.cookie = "namePhoto=" + val + "; path=/; expires=" + date.toUTCString();
         $.ajax({
