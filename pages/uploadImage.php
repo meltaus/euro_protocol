@@ -67,32 +67,37 @@ if (isset($_GET['id_protocol'])) {
 <div class="container kv-main">
     <?php
 
-//    if ((isset($_GET['id_protocol'])) && (count($nameScan) != 0)) {
-//        echo "<div class='row'>";
-//        echo "<object>";
-//        echo "<embed src='". $absRootDir . "/" . $nameScan[0][0] ."' width='100%' height='300' />";
-//        echo "</object>";
-//        echo "</div>";
-//    }
+    if ((isset($_GET['id_protocol'])) && (count($nameScan) != 0)) {
+        echo "<div class='row'>";
+//        echo '<iframe src="http://docs.google.com/gview?url=' . $rootDir . $polis[0][1] . $polis[0][0] .
+//            '/' . $nameScan[0][0] . '&embedded=true"
+//style="width: 600px; height: 600px;" frameborder="0">Ваш браузер не поддерживает фреймы</iframe>';
+        echo "<object>";
+        echo "<embed src='". $rootDir . $polis[0][1] . $polis[0][0] .
+            '/' . $nameScan[0][0] ."' width='100%' height='300' />";
+        echo "</object>";
+        echo "</div>";
+    }
     ?>
     <div class="row">
         <div class="conteiner" id="gallery">
             <?php
-//            if ((isset($_GET['id_protocol'])) && (count($nameFiles) != 0)) {
-//                $count = count($nameFiles);
-//                echo '<div id="photo'. $_GET['id_protocol'] . '">';
-//                for ($i = 0; $i < $count; $i++) {
-//                    echo '<a href="' . $rootDir  . $polis[0][1] . $polis[0][0] .
-//                        '/' . $nameFiles[0][$i] . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
-//                    echo '<img src="' . $rootDir  . $polis[0][1] . $polis[0][0] .
-//                        '/' . $nameFiles[0][$i] . '" width="225" height="225"></img>';
+            if ((isset($_GET['id_protocol'])) && (count($nameFiles) != 0)) {
+                $count = count($nameFiles);
+                echo '<div id="photo'. $_GET['id_protocol'] . '">';
+                for ($i = 0; $i < $count; $i++) {
+                    echo '<a href="' . $rootDir  . $polis[0][1] . $polis[0][0] .
+                        '/' . $nameFiles[$i][0] . '" class="flipLightBox" name="' . $nameFiles[$i][0] . '">';
+                    echo '<img src="' . $rootDir  . $polis[0][1] . $polis[0][0] .
+                        '/' . $nameFiles[$i][0] . '" width="225" height="225"></img>';
 //                    echo '<span>Что бы удалить изображение нажмите кнопки ниже<br><span>
-//                        <button onclick="clickDelete(this.id)" id="' . $nameFiles . '">
+//                        <button onclick="clickDelete(this.id)" id="' . $nameFiles[$i][0] . '">
 //                        Удалить</button></span></span>';
-//                    echo '</a>';
-//                }
-//                echo '</div>';
-//            }
+                    echo '<span>Скоро здесь будет кнопка "Удалить"<br><span></span></span>';
+                    echo '</a>';
+                }
+                echo '</div>';
+            }
             ?>
         </div>
         <br>
@@ -122,15 +127,21 @@ if (isset($_GET['id_protocol'])) {
     $('#file-ru').fileinput({
         language: 'ru',
         uploadUrl: '../control/uploadImage.php',
-        allowedFileExtensions: ['jpg']
+        allowedFileExtensions: ['jpg', 'jpeg']
     });
 
     function clickDelete(val) {
+        sessionStorage['pathPhoto'] = <?php echo json_encode($absRootDir . $polis[0][1] . $polis[0][0] . '/');?> + val;
+        var date = new Date(new Date().getTime() + 120 * 1000);
+        document.cookie = "pathPhoto=" + sessionStorage['pathPhoto'] + "; path=/; expires=" + date.toUTCString();
+        document.cookie = "namePhoto=" + val + "; path=/; expires=" + date.toUTCString();
         $.ajax({
-            url: "deletePhoto.php?path=" + <?php echo json_encode($absRootDir . '/' . $polis[0][1] . $polis[0][0]);?>,
-            data: "id=2,path=" + sessionStorage['path']
+            url: "../control/deletePhoto.php",
+            data: "id=2,pathPhoto=" + sessionStorage['pathPhoto']
         });
         $('a[name="' + val + '"]').remove();
         window.alert("Фотография удалена");
      }
 </script>
+<script type="text/javascript" src="../js/fliplightbox.min.js"></script>
+<script type="text/javascript">$('body').flipLightBox()</script>

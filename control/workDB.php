@@ -201,7 +201,10 @@ class workDB
      */
     public function deleteRowDataTable ($tableName, $nameIDColumn, $id) {
         if (($tableName) && ($nameIDColumn) && (id)) {
-            $query = "DELETE FROM ".$tableName." WHERE ".$nameIDColumn." = ".$id;
+            $columnName = array("id");
+            $condition = "WHERE " . $nameIDColumn . " = '" . $id . "'";
+            $result = $this->selectDataTableWhere($tableName, $columnName, $condition);
+            $query = "DELETE FROM ".$tableName." WHERE id = ".$result[0][0];
             $this->anyQueryDB($query);
         }
     }

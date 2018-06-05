@@ -202,7 +202,6 @@ $result = createDataForMailPage();
                     'dateP':dateP,
                     'comment':comment}
             });
-        window.alert("Данные внесены. Теперь вы можете закрыть окно");
         window.location.reload();
     }
 
