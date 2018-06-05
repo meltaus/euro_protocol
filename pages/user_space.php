@@ -203,6 +203,7 @@ $result = createDataForMailPage();
                     'comment':comment}
             });
         window.alert("Данные внесены. Теперь вы можете закрыть окно");
+        window.location.reload();
     }
 
     function closeAddParticipant(){
