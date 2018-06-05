@@ -6,10 +6,10 @@ class workDB
     //Конструктор. Подключаемся к базе
     public function __construct()
     {
-        $host = '192.168.59.110'; // адрес сервера
+        $host = 'localhost'; // адрес сервера
         $database = 'euro_protocol'; // имя базы данных
         $user = 'root'; // имя пользователя
-        $password = 'Y@lt;lf99'; // пароль
+        $password = 'xgx354800'; // пароль
         $nameApp = ""; //Имя приложения
         $charset = "UTF-8";           //Кодировка
         // подключаемся к серверу
@@ -201,7 +201,10 @@ class workDB
      */
     public function deleteRowDataTable ($tableName, $nameIDColumn, $id) {
         if (($tableName) && ($nameIDColumn) && (id)) {
-            $query = "DELETE FROM ".$tableName." WHERE ".$nameIDColumn." = ".$id;
+            $columnName = array("id");
+            $condition = "WHERE " . $nameIDColumn . " = '" . $id . "'";
+            $result = $this->selectDataTableWhere($tableName, $columnName, $condition);
+            $query = "DELETE FROM ".$tableName." WHERE id = ".$result[0][0];
             $this->anyQueryDB($query);
         }
     }

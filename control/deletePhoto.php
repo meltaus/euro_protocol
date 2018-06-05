@@ -1,4 +1,10 @@
 <?php
-if ( !(@unlink($_GET['pathPhoto'])) )
+if ( !(@unlink($_COOKIE['pathPhoto'])) )
 {
-} die('Error Delete File.');
+
+} else {
+    include_once $_SERVER['DOCUMENT_ROOT']."/control/workDB.php";
+    $workDB = new workDB();
+    $workDB->deleteRowDataTable("document", "name", $_COOKIE['namePhoto']);
+};
+?>
