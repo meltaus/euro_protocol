@@ -12,6 +12,114 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap-typeahead.min.js"></script>
     <link href="../css/style.css" media="all" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        <!--
+
+        function validate_form ( )
+        {
+            valid = true;
+
+            if ( document.notification.method_notification.selectedIndex == 0 )
+            {
+                alert ( "Пожалуйста, выберите способ подачи заявления." );
+                valid = false;
+            }
+
+            if ( document.notification.fioV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'ФИО виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.CompanyV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Страховая компания виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.SerialPolisV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Серию полиса виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.NumberPolisV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Номер полиса виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.MarkAutoV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Марку автомобиля виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.ModelAutoV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Модель автомобиля виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.GosNumberV.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Гос.номер виновника'." );
+                valid = false;
+            }
+
+            if ( document.notification.fioP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'ФИО потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.CompanyP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Страховаяя компания потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.SerialPolisP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Серия полиса потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.NumberPolisP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Номер полиса потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.MarkAutoP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Марка автомобиля потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.ModelAutoP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Модель автомобиля потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.GosNumberP.value == "" )
+            {
+                alert ( "Пожалуйста заполните поле 'Гос.номер потерпевшего'." );
+                valid = false;
+            }
+
+            if ( document.notification.scanpdf.value == "" )
+            {
+                alert ( "Пожалуйста выберите файл для загрузки." );
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        //-->
+    </script>
 </head>
 <body>
 <?php
@@ -42,7 +150,8 @@ id="comment"    - Комментарий к протоколу
 */
 ?>
 <div class="container">
-    <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification" enctype="multipart/form-data">
+    <form class="form-horizontal" method="post" onsubmit="return validate_form()"
+          action="/control/insertDataDB.php?mode=notify" name="notification" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <label>Извещение о ДТП</label>

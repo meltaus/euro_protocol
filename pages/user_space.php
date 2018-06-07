@@ -159,7 +159,7 @@ $result = createDataForMailPage();
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="closeAddParticipant()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeAddParticipant()" class="btn btn-default" data-dismiss="modal">Отмена</button>
                 <button type="button" onclick="addDateSee()" class="btn btn-primary">Принять</button>
             </div>
         </div>
@@ -194,15 +194,19 @@ $result = createDataForMailPage();
     function addDateSee() {
         var dateP = document.getElementById('dateP').value;
         var comment = document.getElementById('comment').value;
-        $.ajax({
-            type: "get",
-            url: "../control/insertDataDB.php",
-            data:{'mode':'addDateSee',
+        if (dateP == "") {
+            window.alert("Необходимо указать дату и время");
+        } else {
+            $.ajax({
+                type: "get",
+                url: "../control/insertDataDB.php",
+                data:{'mode':'addDateSee',
                     'id':id_protocol,
                     'dateP':dateP,
                     'comment':comment}
             });
-        window.location.reload();
+            window.location.reload();
+        }
     }
 
     function closeAddParticipant(){
