@@ -45,7 +45,7 @@ id="comment"    - Комментарий к протоколу
     <form class="form-horizontal" method="post" action="/control/insertDataDB.php?mode=notify" name="notification" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <label>Извещение о ДПТ</label>
+                <label>Извещение о ДТП</label>
             </div>
         </div>
 
@@ -55,7 +55,7 @@ id="comment"    - Комментарий к протоколу
                     <tr>
                         <td valign="top">
                             <div style="margin-top: 20%; margin-left: 5px;">
-                                <label>Метод подачи заявления:</label>
+                                <label>Способ подачи заявления:</label>
                             </div>
                         </td>
                         <td>
