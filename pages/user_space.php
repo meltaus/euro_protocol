@@ -16,7 +16,18 @@
 <body>
 <?php
 include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/control/workDB.php";
 $result = createDataForMailPage();
+$query = "SELECT people.name FROM people INNER JOIN protocol ON protocol.id_people_culprit = people.id ";
+$condition = "WHERE protocol.id in (";
+for ($i = 0; $i < count($result); $i++) {
+    $condition .= $result[$i][0] . ",";
+}
+$condition = substr($condition,0,-1) . ")";
+$query .= $condition;
+$workDB = new workDB();
+$nameCulprint = $workDB->analysisResult($workDB->anyQueryDB($query));
+unset($workDB);
 ?>
 
 <div class="container">
@@ -55,6 +66,11 @@ $result = createDataForMailPage();
                     </td>
                     <td>
                         <div style="margin-left: 5%; margin-right: 5%">
+                            ФИО виновника
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-left: 5%; margin-right: 5%">
                             Серия/Номер виновника
                         </div>
                     </td>
@@ -80,6 +96,11 @@ $result = createDataForMailPage();
                                 echo "<td>";
                                 echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
                                 echo $result[$i][$j];
+                                echo "</div>";
+                                echo "</td>";
+                                echo "<td>";
+                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
+                                echo $nameCulprint[$i][0];
                                 echo "</div>";
                                 echo "</td>";
                                 break;
