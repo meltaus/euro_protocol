@@ -102,7 +102,7 @@ $result = createDataForMailPage();
                                     echo "<td>";
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
                                     echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
-                                            class='btn btn-danger pull-right' 
+                                            class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>На осмотр</button>";
 //                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . "
 //                                            ' class='btn btn-danger pull-right'
@@ -115,7 +115,7 @@ $result = createDataForMailPage();
                                     echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
                                     echo "Дата осмотра: ". $result[$i][$j];
                                     echo "<a href='uploadImage.php?id_protocol=". $result[$i][0] ."' id='" . $result[$i][0] . " 
-                                            ' class='btn btn-danger pull-right' 
+                                            ' class='btn btn-success pull-right' 
                                             style='margin-left: 10px'>Добавить осмотр</button>";
                                     echo "</div>";
                                     echo "</td>";
