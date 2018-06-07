@@ -1,7 +1,7 @@
 <?php
 //Сборка пути до конечной директории
 require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
-$outputDir = $absRootDir . $_POST['SerialPolisV'] . $_POST['NumberPolisV'] . "/";
+$outputDir = $absRootDir . iconv("utf-8","windows-1251", $_POST['SerialPolisV']) . $_POST['NumberPolisV'] . "/";
 
 
 if ((isset($_POST['SerialPolisV'])) && (isset($_POST['NumberPolisV']))) {
@@ -16,7 +16,7 @@ if ((isset($_POST['SerialPolisV'])) && (isset($_POST['NumberPolisV']))) {
         move_uploaded_file
         (
             $_FILES["scanpdf"]["tmp_name"],
-            $outputDir . substr($_FILES["scanpdf"]["name"],0,-4)  . $current_date . ".pdf"
+            $outputDir . iconv("utf-8","windows-1251", substr($_FILES["scanpdf"]["name"],0,-4))  . $current_date . ".pdf"
         );
     } else {
         echo("Ошибка загрузки файла");
