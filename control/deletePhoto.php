@@ -6,5 +6,5 @@ if ( !(@unlink($_COOKIE['pathPhoto'])) )
     include_once $_SERVER['DOCUMENT_ROOT']."/control/workDB.php";
     $workDB = new workDB();
     $workDB->deleteRowDataTable("document", "name", $_COOKIE['namePhoto']);
-};
+}
 ?>
