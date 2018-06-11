@@ -21,6 +21,10 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
         "id_type" => 2
     );
     $workDB->insertDataTable("document", $columnValues);
+    $columnValues = array(
+        "time_fact_inspection" => "'".date('Y-m-d H:m')."'"
+    );
+    $workDB->updateDataTable("protocol", $columnValues, "id", $_COOKIE['id_protocol']);
     unset($workDB);
 } else {
     echo "Possible file upload attack: ";
