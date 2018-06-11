@@ -455,7 +455,13 @@ unset($workDB);
                             //Статус
                             echo "<td>";
                             echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                            echo "Отправить телеграмму?";
+                            if ($result[$i][10] == null) {
+                                echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary pull-right' 
+                                            style='margin-left: 5px'>Отправить телеграмму</button>";
+                            } else {
+                                echo "О телеграмме: ".$result[$i][10];
+                            }
                             echo "</div>";
                             echo "</td>";
 
@@ -565,8 +571,41 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeAddParticipant()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
                 <button type="button" onclick="addDateSee()" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sendMessage" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+
+                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+                                Дата отправки извещения:
+                                <input type="datetime-local" class="form-control" name="dateNotice" id="dateNotice"
+                                       value="<?php echo date('Y-m-d').'T'.date('H:i'); ?>">
+                            </div>
+                            <div style="margin-top: 10%; margin-left: 5px">
+                                Способ отправки извещения:
+                                <input type="text" id="typeNotice" name="typeNotice">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="addNotice()" class="btn btn-primary">Принять</button>
             </div>
         </div>
     </div>
@@ -597,6 +636,12 @@ unset($workDB);
         window.alert("Здесь будет возможность редактировать составленный ранее протокол")
     }
 
+    function sendMessage(val) {
+        document.cookie = "id_protocol=" + val;
+        id_protocol = val;
+        $("#sendMessage").modal('show');
+    }
+
     function addDateSee() {
         var dateP = document.getElementById('dateP').value;
         var comment = document.getElementById('comment').value;
@@ -615,7 +660,30 @@ unset($workDB);
         }
     }
 
-    function closeAddParticipant(){
+    function addNotice() {
+        var dateNotice = document.getElementById('dateNotice').value;
+        dateNotice = dateNotice.replace("T", ",");
+        var typeNotice = document.getElementById('typeNotice').value;
+        if (dateNotice == "") {
+            window.alert("Необходимо указать время отправики телеграммы");
+        }
+        if (typeNotice == "") {
+            window.alert("Необходимо указать способ передачи телеграммы");
+        }
+        if ((dateNotice != "") && (typeNotice != "")) {
+            $.ajax({
+                type: "get",
+                url: "../control/insertDataDB.php",
+                data:{'mode':'addNotice',
+                    'id':id_protocol,
+                    'dateNotice':dateNotice,
+                    'typeNotice':typeNotice}
+            });
+            window.location.reload();
+        }
+    }
+
+    function closeModalWindow(){
         window.close();
     }
 
