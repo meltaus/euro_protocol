@@ -78,5 +78,12 @@ switch ($_GET['mode']) {
 
         $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
         break;
+
+    case "addNotice":
+        $columnValues = array(
+            'notice' => "'".$_GET['dateNotice'].". Метод: ".$_GET['typeNotice']."'"
+        );
+        $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
+        break;
 }
 ?>
