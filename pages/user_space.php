@@ -15,18 +15,30 @@
 </head>
 <body>
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/control/workDB.php";
-$result = createDataForMailPage();
-$query = "SELECT people.name FROM people INNER JOIN protocol ON protocol.id_people_culprit = people.id ";
-$condition = "WHERE protocol.id in (";
-for ($i = 0; $i < count($result); $i++) {
-    $condition .= $result[$i][0] . ",";
-}
-$condition = substr($condition,0,-1) . ")";
-$query .= $condition;
+include_once $_SERVER['DOCUMENT_ROOT']."/control/workDB.php";
+
 $workDB = new workDB();
-$nameCulprint = $workDB->analysisResult($workDB->anyQueryDB($query));
+$query = "SELECT protocol.id, polis.number_polis, polis.serial_polis, people.name, protocol.time_register, protocol.time_atuo_emer,
+		protocol.time_inspection, protocol.time_fact_inspection,protocol.time_insert_service_control,
+        protocol.time_send_service_control, protocol.notice, protocol.comment, protocol.hide FROM protocol
+        INNER JOIN polis on protocol.id_number_polis = polis.id
+        INNER JOIN people on protocol.id_people_culprit = people.id";
+$result = $workDB->analysisResult($workDB->anyQueryDB($query));
+$query = "SELECT protocol.id, polis.number_polis, polis.serial_polis FROM protocol
+        INNER JOIN polis on protocol.id_number_polis_member = polis.id";
+$result_member = $workDB->analysisResult($workDB->anyQueryDB($query));
+$columnName = array("id_protocol");
+$condition = "WHERE id_type = 2";
+$result_document = $workDB->selectDataTableWhere("document", $columnName, $condition);
+$iter = count($result_document);
+$tmp_arr = array();
+for ($i = 0; $i < $iter; $i++) {
+    array_push($tmp_arr, $result_document[$i][0]);
+}
+$result_document = $tmp_arr;
+unset($tmp_arr);
+unset($condition);
+unset($columnName);
 unset($workDB);
 ?>
 
@@ -57,100 +69,473 @@ unset($workDB);
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <table border="1px"; style="margin:10px auto">
-                <tr>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Дата занесения
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            ФИО виновника
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Серия/Номер виновника
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Серия/Номер пострадавшего
-                        </div>
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-                <?php
-                for ($i = 0; $i < count($result); $i++) {
-                    echo "<tr>";
-
-                    for ($j = 0; $j < count($result[$i]); $j++) {
-
-                        switch ($j) {
-                            case 0:
-                                break;
-                            case 1:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $nameCulprint[$i][0];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 2:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 3:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 4:
-                                if ($result[$i][$j] == null) {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
-                                            class='btn btn-primary pull-right' 
-                                            style='margin-left: 5px'>На осмотр</button>";
-//                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . "
-//                                            ' class='btn btn-danger pull-right'
-//                                            style='margin-right: 5px'>Редактировать</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                else {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "Дата осмотра: ". $result[$i][$j];
-                                    echo "<a href='uploadImage.php?id_protocol=". $result[$i][0] ."' id='" . $result[$i][0] . " 
-                                            ' class='btn btn-success pull-right' 
-                                            style='margin-left: 10px'>Добавить осмотр</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                break;
-                        }
-                    }
-                    echo "</tr>";
-                }
-                ?>
-            </table>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#all">Все заявки</a></li>
+                <li><a data-toggle="tab" href="#notDate">Не назначенные</a></li>
+                <li><a data-toggle="tab" href="#withDate">На осмотр</a></li>
+                <li><a data-toggle="tab" href="#afterDate">После осмотра</a></li>
+                <li><a data-toggle="tab" href="#lateDate">Просроченные</a></li>
+                <li><a data-toggle="tab" href="#trueDate">Осмотренные</a></li>
+            </ul>
         </div>
     </div>
+
+    <div class="tab-content">
+        <div id="all" class="tab-pane fade in active">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        echo "<tr>";
+
+                        //Дата занесения
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][4];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //ФИО виновника
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][3];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][2] . $result[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса пострадавшего
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result_member[$i][2] . $result_member[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="notDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Статус
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if ($result[$i][6] == null) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                            echo "Дата осмотра еще не наназначена";
+                            echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary pull-right' 
+                                            style='margin-left: 5px'>На осмотр</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="withDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Статус
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && (!in_array($result[$i][0],$result_document))) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "Дата осмотра: " . $result[$i][6];
+                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success pull-right' 
+                                            style='margin-left: 10px'>Добавить осмотр</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="afterDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действие
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && (in_array($result[$i][0],$result_document))) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "Дата осмотра: " . $result[$i][6];
+                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success pull-right' 
+                                            style='margin-left: 10px'>Изменить фотографии</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="lateDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действие
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && ($result[$i][7] == null)) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "Отправить телеграмму?";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="trueDate"class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && ($result[$i][7] != null)) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <!--модальные окна-->
 <div id="addParticipant" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -232,7 +617,6 @@ unset($workDB);
 
     function closeAddParticipant(){
         window.close();
-        // $("#addParticipant").modal('hidden');
     }
 
     $(function () {
@@ -244,4 +628,12 @@ unset($workDB);
             ajax: '/control/getDataWithComp.php?mode=model_auto'
         });
     })
+
+
+    $(function(){
+        $("#myTab a").click(function(e){
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
 </script>
