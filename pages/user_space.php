@@ -15,18 +15,30 @@
 </head>
 <body>
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/control/getData.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/control/workDB.php";
-$result = createDataForMailPage();
-$query = "SELECT people.name FROM people INNER JOIN protocol ON protocol.id_people_culprit = people.id ";
-$condition = "WHERE protocol.id in (";
-for ($i = 0; $i < count($result); $i++) {
-    $condition .= $result[$i][0] . ",";
-}
-$condition = substr($condition,0,-1) . ")";
-$query .= $condition;
+include_once $_SERVER['DOCUMENT_ROOT'] . "/control/workDB.php";
+
 $workDB = new workDB();
-$nameCulprint = $workDB->analysisResult($workDB->anyQueryDB($query));
+$query = "SELECT protocol.id, polis.number_polis, polis.serial_polis, people.name, protocol.time_register, protocol.time_atuo_emer,
+		protocol.time_inspection, protocol.time_fact_inspection,protocol.time_insert_service_control,
+        protocol.time_send_service_control, protocol.notice, protocol.comment, protocol.hide FROM protocol
+        INNER JOIN polis on protocol.id_number_polis = polis.id
+        INNER JOIN people on protocol.id_people_culprit = people.id";
+$result = $workDB->analysisResult($workDB->anyQueryDB($query));
+$query = "SELECT protocol.id, polis.number_polis, polis.serial_polis FROM protocol
+        INNER JOIN polis on protocol.id_number_polis_member = polis.id";
+$result_member = $workDB->analysisResult($workDB->anyQueryDB($query));
+$columnName = array("id_protocol");
+$condition = "WHERE id_type = 2";
+$result_document = $workDB->selectDataTableWhere("document", $columnName, $condition);
+$iter = count($result_document);
+$tmp_arr = array();
+for ($i = 0; $i < $iter; $i++) {
+    array_push($tmp_arr, $result_document[$i][0]);
+}
+$result_document = $tmp_arr;
+unset($tmp_arr);
+unset($condition);
+unset($columnName);
 unset($workDB);
 ?>
 
@@ -57,101 +69,499 @@ unset($workDB);
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <table border="1px"; style="margin:10px auto">
-                <tr>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Дата занесения
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            ФИО виновника
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Серия/Номер виновника
-                        </div>
-                    </td>
-                    <td>
-                        <div style="margin-left: 5%; margin-right: 5%">
-                            Серия/Номер пострадавшего
-                        </div>
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-                <?php
-                for ($i = 0; $i < count($result); $i++) {
-                    echo "<tr>";
-
-                    for ($j = 0; $j < count($result[$i]); $j++) {
-
-                        switch ($j) {
-                            case 0:
-                                break;
-                            case 1:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $nameCulprint[$i][0];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 2:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 3:
-                                echo "<td>";
-                                echo "<div style=\"margin-left: 5%; margin-right: 5%\">";
-                                echo $result[$i][$j];
-                                echo "</div>";
-                                echo "</td>";
-                                break;
-                            case 4:
-                                if ($result[$i][$j] == null) {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "<button onclick='addParticipant(this.id)' id='". $result[$i][0] . "'
-                                            class='btn btn-primary pull-right' 
-                                            style='margin-left: 5px'>На осмотр</button>";
-//                                    echo "<button onclick='updateProtocol(this.id)' id='" . $result[$i][0] . "
-//                                            ' class='btn btn-danger pull-right'
-//                                            style='margin-right: 5px'>Редактировать</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                else {
-                                    echo "<td>";
-                                    echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
-                                    echo "Дата осмотра: ". $result[$i][$j];
-                                    echo "<a href='uploadImage.php?id_protocol=". $result[$i][0] ."' id='" . $result[$i][0] . " 
-                                            ' class='btn btn-success pull-right' 
-                                            style='margin-left: 10px'>Добавить осмотр</button>";
-                                    echo "</div>";
-                                    echo "</td>";
-                                }
-                                break;
-                        }
-                    }
-                    echo "</tr>";
-                }
-                ?>
-            </table>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#all">Все заявки</a></li>
+                <li><a data-toggle="tab" href="#notDate">Не назначенные</a></li>
+                <li><a data-toggle="tab" href="#withDate">На осмотр</a></li>
+                <li><a data-toggle="tab" href="#afterDate">После осмотра</a></li>
+                <li><a data-toggle="tab" href="#lateDate">Просроченные</a></li>
+                <li><a data-toggle="tab" href="#trueDate">Осмотренные</a></li>
+            </ul>
         </div>
     </div>
+
+    <div class="tab-content">
+        <div id="all" class="tab-pane fade in active">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действия
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        echo "<tr>";
+
+                        //Дата занесения
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][4];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //ФИО виновника
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][3];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][2] . $result[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса пострадавшего
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result_member[$i][2] . $result_member[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Действия
+                        echo "<td>";
+                        echo "<div class='center-block
+                                  col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+//                        echo "<button onclick='editProtocol(this.id)' id='" . $result[$i][0] . "'
+//                                            class='btn btn-primary center-block'
+//                                            style='margin-left: 5px; margin-top: 5px'>Редактировать</button>";
+                        echo "<button onclick='infoProtocol(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary center-block' 
+                                            style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Сведения</button>";
+                        echo "</div>";
+                        echo "</td>";
+
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="notDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Статус
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if ($result[$i][6] == null) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                            echo "Дата осмотра еще не наназначена";
+                            echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary pull-right' 
+                                            style='margin-left: 5px'>На осмотр</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="withDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Статус
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && (!in_array($result[$i][0], $result_document))) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "Дата осмотра: " . $result[$i][6];
+                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success pull-right' 
+                                            style='margin-left: 10px'>Добавить осмотр</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="afterDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действие
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && (in_array($result[$i][0], $result_document))) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "Дата осмотра: " . $result[$i][6];
+                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success pull-right' 
+                                            style='margin-left: 10px'>Изменить фотографии</button>";
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="lateDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действие
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && ($result[$i][7] == null)) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            echo "<td>";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            if ($result[$i][10] == null) {
+                                echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary pull-right' 
+                                            style='margin-left: 5px'>Отправить телеграмму</button>";
+                            } else {
+                                echo "О телеграмме: " . $result[$i][10];
+                            }
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+        <div id="trueDate" class="tab-pane fade">
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto">
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Дата занесения
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                ФИО виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер виновника
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Серия/Номер пострадавшего
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                    $iter = count($result);
+                    for ($i = 0; $i < $iter; $i++) {
+                        if (($result[$i][6] != null) && ($result[$i][7] != null)) {
+                            echo "<tr>";
+
+                            //Дата занесения
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <!--модальные окна-->
+<!--Назначить время осмотра и комментарий-->
 <div id="addParticipant" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -164,7 +574,7 @@ unset($workDB);
                     <div class="row">
                         <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
 
-                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+                            <div style="margin-top: 10%; margin-left: 5px" ; class="form-group">
                                 Дата осмотра:
                                 <input type="datetime-local" class="form-control" name="dateP" id="dateP" value="
 									<?php
@@ -180,8 +590,182 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeAddParticipant()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
                 <button type="button" onclick="addDateSee()" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Добавить информацию об отправке телеграммы-->
+<div id="sendMessage" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+
+                            <div style="margin-top: 10%; margin-left: 5px" ; class="form-group">
+                                Дата отправки извещения:
+                                <input type="datetime-local" class="form-control" name="dateNotice" id="dateNotice"
+                                       value="<?php echo date('Y-m-d') . 'T' . date('H:i'); ?>">
+                            </div>
+                            <div style="margin-top: 10%; margin-left: 5px">
+                                Способ отправки извещения:
+                                <input type="text" id="typeNotice" name="typeNotice">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
+                <button type="button" onclick="addNotice()" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Информация о протоколе-->
+<div id="infoProtocol" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>О виновнике</label>
+                                </div>
+                                <div class="row">
+                                    <text id="infoFIOV">ФИО</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoPolisV">Серия + номер</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoAutoV">Марка + модель</text>
+                                </div>
+                                <div class="row">
+                                    <text id="ingoGosNumberV">Гос.Номер</text>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>О потерпевшем</label>
+                                </div>
+                                <div class="row">
+                                    <text id="infoFIOP">ФИО</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoPolisP">Серия + номер</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoAutoP">Марка + модель</text>
+                                </div>
+                                <div class="row">
+                                    <text id="ingoGosNumberP">Гос.Номер</text>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>Даты</label>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата регистрации:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoDateRegistry"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата ДТП:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoDateDTP"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Назначенная дата осмотра:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoTimeInspection"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата фактического осмотра:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoTimeFactInspection"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата и способ отправки извещения:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoNotice"></text>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>Комментарий</label>
+                                </div>
+                                <div class="row">
+                                    <text id="commentProtocol">Комментарий</text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
+                <button type="button" onclick="" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Редактирование протокола-->
+<div id="editProtocol" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                            Здесь можно будет отредактировать протокол
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">OK
+                </button>
             </div>
         </div>
     </div>
@@ -212,6 +796,12 @@ unset($workDB);
         window.alert("Здесь будет возможность редактировать составленный ранее протокол")
     }
 
+    function sendMessage(val) {
+        document.cookie = "id_protocol=" + val;
+        id_protocol = val;
+        $("#sendMessage").modal('show');
+    }
+
     function addDateSee() {
         var dateP = document.getElementById('dateP').value;
         var comment = document.getElementById('comment').value;
@@ -221,18 +811,84 @@ unset($workDB);
             $.ajax({
                 type: "get",
                 url: "../control/insertDataDB.php",
-                data:{'mode':'addDateSee',
-                    'id':id_protocol,
-                    'dateP':dateP,
-                    'comment':comment}
+                data: {
+                    'mode': 'addDateSee',
+                    'id': id_protocol,
+                    'dateP': dateP,
+                    'comment': comment
+                }
             });
             window.location.reload();
         }
     }
 
-    function closeAddParticipant(){
+    function infoProtocol(val) {
+        $.ajax({
+            type: "get",
+            url: "../control/getData.php",
+            data: {
+                'mode': 'info',
+                'id_protocol': val
+            },
+            success: function (response) {
+                var protocol = JSON.parse(response);
+                //Заполняем дданные о виновнике
+                document.getElementById('infoPolisV').innerHTML = protocol[0] + protocol[1];
+                document.getElementById('infoFIOV').innerHTML = protocol[2];
+                document.getElementById('infoAutoV').innerHTML = protocol[4] + " " + protocol[5];
+                document.getElementById('ingoGosNumberV').innerHTML = protocol[3];
+
+                //Заполняем данные о пострадавшем
+                document.getElementById('infoPolisP').innerHTML = protocol[6] + protocol[7];
+                document.getElementById('infoFIOP').innerHTML = protocol[8];
+                document.getElementById('infoAutoP').innerHTML = protocol[10] + " " + protocol[11];
+                document.getElementById('ingoGosNumberP').innerHTML = protocol[9];
+
+                //Даты
+                document.getElementById('infoDateRegistry').innerHTML = protocol[12];
+                document.getElementById('infoDateDTP').innerHTML = protocol[13];
+                document.getElementById('infoTimeInspection').innerHTML = protocol[14];
+                document.getElementById('infoTimeFactInspection').innerHTML = protocol[15];
+                document.getElementById('infoNotice').innerHTML = protocol[16];
+
+                //Комментарий
+                document.getElementById('commentProtocol').innerHTML = protocol[17];
+            }
+        });
+        $("#infoProtocol").modal('show');
+    }
+
+    function editProtocol(val) {
+        $("#editProtocol").modal('show');
+    }
+
+    function addNotice() {
+        var dateNotice = document.getElementById('dateNotice').value;
+        dateNotice = dateNotice.replace("T", ",");
+        var typeNotice = document.getElementById('typeNotice').value;
+        if (dateNotice == "") {
+            window.alert("Необходимо указать время отправики телеграммы");
+        }
+        if (typeNotice == "") {
+            window.alert("Необходимо указать способ передачи телеграммы");
+        }
+        if ((dateNotice != "") && (typeNotice != "")) {
+            $.ajax({
+                type: "get",
+                url: "../control/insertDataDB.php",
+                data: {
+                    'mode': 'addNotice',
+                    'id': id_protocol,
+                    'dateNotice': dateNotice,
+                    'typeNotice': typeNotice
+                }
+            });
+            window.location.reload();
+        }
+    }
+
+    function closeModalWindow() {
         window.close();
-        // $("#addParticipant").modal('hidden');
     }
 
     $(function () {
@@ -244,4 +900,12 @@ unset($workDB);
             ajax: '/control/getDataWithComp.php?mode=model_auto'
         });
     })
+
+
+    $(function () {
+        $("#myTab a").click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
 </script>
