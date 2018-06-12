@@ -105,6 +105,11 @@ unset($workDB);
                                 Серия/Номер пострадавшего
                             </div>
                         </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Действия
+                            </div>
+                        </td>
                     </tr>
                     <?php
                     $iter = count($result);
@@ -136,6 +141,19 @@ unset($workDB);
                         echo "<td>";
                         echo "<div style='margin-left: 5%; margin-right: 5%'>";
                         echo $result_member[$i][2] . $result_member[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Действия
+                        echo "<td>";
+                        echo "<div class='center-block
+                                  col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                        echo "<button onclick='editProtocol(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary center-block' 
+                                            style='margin-left: 5px; margin-top: 5px'>Редактировать</button>";
+                        echo "<button onclick='infoProtocol(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary center-block' 
+                                            style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Сведения</button>";
                         echo "</div>";
                         echo "</td>";
 
@@ -543,6 +561,7 @@ unset($workDB);
 </div>
 
 <!--модальные окна-->
+<!--Назначить время осмотра и комментарий-->
 <div id="addParticipant" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -577,7 +596,7 @@ unset($workDB);
         </div>
     </div>
 </div>
-
+<!--Добавить информацию об отправке телеграммы-->
 <div id="sendMessage" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -606,6 +625,96 @@ unset($workDB);
             <div class="modal-footer">
                 <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
                 <button type="button" onclick="addNotice()" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Информация о протоколе-->
+<div id="infoProtocol" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>О виновнике</label>
+                                </div>
+                                <div class="row">
+                                    <text id="infoFIOV">ФИО</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoPolisV">Серия + номер</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoAutoV">Марка + модель</text>
+                                </div>
+                                <div class="row">
+                                    <text id="ingoGosNumberV">Гос.Номер</text>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>О потерпевшем</label>
+                                </div>
+                                <div class="row">
+                                    <text id="infoFIOP">ФИО</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoPolisP">Серия + номер</text>
+                                </div>
+                                <div class="row">
+                                    <text id="infoAutoP">Марка + модель</text>
+                                </div>
+                                <div class="row">
+                                    <text id="ingoGosNumberP">Гос.Номер</text>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>Даты</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                                <div class="row">
+                                    <label>Комментарий</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="" class="btn btn-primary">Принять</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Редактирование протокола-->
+<div id="editProtocol" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Назначить осмотр</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                            Здесь можно будет отредактировать протокол
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
@@ -658,6 +767,14 @@ unset($workDB);
             });
             window.location.reload();
         }
+    }
+
+    function infoProtocol(val) {
+        $("#infoProtocol").modal('show');
+    }
+
+    function editProtocol(val) {
+        $("#editProtocol").modal('show');
     }
 
     function addNotice() {
