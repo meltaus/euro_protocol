@@ -30,26 +30,21 @@ switch ($_GET['mode']) {
 		WHERE id = ".$_GET['id_protocol'];
         $other = $workDB->analysisResult($workDB->anyQueryDB($query));
 
-        $tmp_arr = array();
         $iter = count($culprit[0]);
         for ($i = 0; $i < $iter; $i++) {
-            array_push($tmp_arr, $culprit[0][$i]);
+            array_push($result, $culprit[0][$i]);
         }
-        array_push($result, $tmp_arr);
 
-        $tmp_arr = array();
         $iter = count($member[0]);
         for ($i = 0; $i < $iter; $i++) {
-            array_push($tmp_arr, $member[0][$i]);
+            array_push($result, $member[0][$i]);
         }
-        array_push($result, $tmp_arr);
 
-        $tmp_arr = array();
         $iter = count($other[0]);
         for ($i = 0; $i < $iter; $i++) {
-            array_push($tmp_arr, $other[0][$i]);
+            array_push($result, $other[0][$i]);
         }
-        array_push($result, $tmp_arr);
+        echo json_encode($result);
         break;
 }
 ?>
