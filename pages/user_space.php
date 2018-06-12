@@ -148,9 +148,9 @@ unset($workDB);
                         echo "<td>";
                         echo "<div class='center-block
                                   col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-                        echo "<button onclick='editProtocol(this.id)' id='" . $result[$i][0] . "'
-                                            class='btn btn-primary center-block' 
-                                            style='margin-left: 5px; margin-top: 5px'>Редактировать</button>";
+//                        echo "<button onclick='editProtocol(this.id)' id='" . $result[$i][0] . "'
+//                                            class='btn btn-primary center-block'
+//                                            style='margin-left: 5px; margin-top: 5px'>Редактировать</button>";
                         echo "<button onclick='infoProtocol(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary center-block' 
                                             style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Сведения</button>";
