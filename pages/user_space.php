@@ -15,7 +15,7 @@
 </head>
 <body>
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/control/workDB.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/control/workDB.php";
 
 $workDB = new workDB();
 $query = "SELECT protocol.id, polis.number_polis, polis.serial_polis, people.name, protocol.time_register, protocol.time_atuo_emer,
@@ -277,7 +277,7 @@ unset($workDB);
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
-                        if (($result[$i][6] != null) && (!in_array($result[$i][0],$result_document))) {
+                        if (($result[$i][6] != null) && (!in_array($result[$i][0], $result_document))) {
                             echo "<tr>";
 
                             //Дата занесения
@@ -358,7 +358,7 @@ unset($workDB);
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
-                        if (($result[$i][6] != null) && (in_array($result[$i][0],$result_document))) {
+                        if (($result[$i][6] != null) && (in_array($result[$i][0], $result_document))) {
                             echo "<tr>";
 
                             //Дата занесения
@@ -478,7 +478,7 @@ unset($workDB);
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>Отправить телеграмму</button>";
                             } else {
-                                echo "О телеграмме: ".$result[$i][10];
+                                echo "О телеграмме: " . $result[$i][10];
                             }
                             echo "</div>";
                             echo "</td>";
@@ -490,7 +490,7 @@ unset($workDB);
                 </table>
             </div>
         </div>
-        <div id="trueDate"class="tab-pane fade">
+        <div id="trueDate" class="tab-pane fade">
             <div class="row">
                 <table border="1px" ; style="margin:10px auto">
                     <tr>
@@ -574,7 +574,7 @@ unset($workDB);
                     <div class="row">
                         <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
 
-                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+                            <div style="margin-top: 10%; margin-left: 5px" ; class="form-group">
                                 Дата осмотра:
                                 <input type="datetime-local" class="form-control" name="dateP" id="dateP" value="
 									<?php
@@ -590,7 +590,8 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
                 <button type="button" onclick="addDateSee()" class="btn btn-primary">Принять</button>
             </div>
         </div>
@@ -609,10 +610,10 @@ unset($workDB);
                     <div class="row">
                         <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
 
-                            <div style="margin-top: 10%; margin-left: 5px"; class="form-group">
+                            <div style="margin-top: 10%; margin-left: 5px" ; class="form-group">
                                 Дата отправки извещения:
                                 <input type="datetime-local" class="form-control" name="dateNotice" id="dateNotice"
-                                       value="<?php echo date('Y-m-d').'T'.date('H:i'); ?>">
+                                       value="<?php echo date('Y-m-d') . 'T' . date('H:i'); ?>">
                             </div>
                             <div style="margin-top: 10%; margin-left: 5px">
                                 Способ отправки извещения:
@@ -623,7 +624,8 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
                 <button type="button" onclick="addNotice()" class="btn btn-primary">Принять</button>
             </div>
         </div>
@@ -679,10 +681,57 @@ unset($workDB);
                                 <div class="row">
                                     <label>Даты</label>
                                 </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата регистрации:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoDateRegistry"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата ДТП:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoDateDTP"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Назначенная дата осмотра:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoTimeInspection"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата фактического осмотра:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoTimeFactInspection"></text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="row">
+                                        <text>Дата и способ отправки извещения:</text>
+                                    </div>
+                                    <div class="row">
+                                        <text id="infoNotice"></text>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                                 <div class="row">
                                     <label>Комментарий</label>
+                                </div>
+                                <div class="row">
+                                    <text id="commentProtocol">Комментарий</text>
                                 </div>
                             </div>
                         </div>
@@ -690,7 +739,8 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">Отмена
+                </button>
                 <button type="button" onclick="" class="btn btn-primary">Принять</button>
             </div>
         </div>
@@ -714,7 +764,8 @@ unset($workDB);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">OK</button>
+                <button type="submit" onclick="closeModalWindow()" class="btn btn-default" data-dismiss="modal">OK
+                </button>
             </div>
         </div>
     </div>
@@ -760,16 +811,50 @@ unset($workDB);
             $.ajax({
                 type: "get",
                 url: "../control/insertDataDB.php",
-                data:{'mode':'addDateSee',
-                    'id':id_protocol,
-                    'dateP':dateP,
-                    'comment':comment}
+                data: {
+                    'mode': 'addDateSee',
+                    'id': id_protocol,
+                    'dateP': dateP,
+                    'comment': comment
+                }
             });
             window.location.reload();
         }
     }
 
     function infoProtocol(val) {
+        $.ajax({
+            type: "get",
+            url: "../control/getData.php",
+            data: {
+                'mode': 'info',
+                'id_protocol': val
+            },
+            success: function (response) {
+                var protocol = JSON.parse(response);
+                //Заполняем дданные о виновнике
+                document.getElementById('infoPolisV').innerHTML = protocol[0] + protocol[1];
+                document.getElementById('infoFIOV').innerHTML = protocol[2];
+                document.getElementById('infoAutoV').innerHTML = protocol[4] + " " + protocol[5];
+                document.getElementById('ingoGosNumberV').innerHTML = protocol[3];
+
+                //Заполняем данные о пострадавшем
+                document.getElementById('infoPolisP').innerHTML = protocol[6] + protocol[7];
+                document.getElementById('infoFIOP').innerHTML = protocol[8];
+                document.getElementById('infoAutoP').innerHTML = protocol[10] + " " + protocol[11];
+                document.getElementById('ingoGosNumberP').innerHTML = protocol[9];
+
+                //Даты
+                document.getElementById('infoDateRegistry').innerHTML = protocol[12];
+                document.getElementById('infoDateDTP').innerHTML = protocol[13];
+                document.getElementById('infoTimeInspection').innerHTML = protocol[14];
+                document.getElementById('infoTimeFactInspection').innerHTML = protocol[15];
+                document.getElementById('infoNotice').innerHTML = protocol[16];
+
+                //Комментарий
+                document.getElementById('commentProtocol').innerHTML = protocol[17];
+            }
+        });
         $("#infoProtocol").modal('show');
     }
 
@@ -791,16 +876,18 @@ unset($workDB);
             $.ajax({
                 type: "get",
                 url: "../control/insertDataDB.php",
-                data:{'mode':'addNotice',
-                    'id':id_protocol,
-                    'dateNotice':dateNotice,
-                    'typeNotice':typeNotice}
+                data: {
+                    'mode': 'addNotice',
+                    'id': id_protocol,
+                    'dateNotice': dateNotice,
+                    'typeNotice': typeNotice
+                }
             });
             window.location.reload();
         }
     }
 
-    function closeModalWindow(){
+    function closeModalWindow() {
         window.close();
     }
 
@@ -815,8 +902,8 @@ unset($workDB);
     })
 
 
-    $(function(){
-        $("#myTab a").click(function(e){
+    $(function () {
+        $("#myTab a").click(function (e) {
             e.preventDefault();
             $(this).tab('show');
         });
