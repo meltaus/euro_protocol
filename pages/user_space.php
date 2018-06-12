@@ -83,7 +83,12 @@ unset($workDB);
     <div class="tab-content">
         <div id="all" class="tab-pane fade in active">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="search-text"
+                       onkeyup="tableSearch('allData')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="allData">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -111,6 +116,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -160,12 +167,18 @@ unset($workDB);
                         echo "</tr>";
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="notDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="searchTableNotDate"
+                       onkeyup="searchTableNotDate('tableNotDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableNotDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -193,6 +206,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -241,12 +256,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="withDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDate"
+                       onkeyup="tableWithDate('tableWithDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableWithDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -274,6 +295,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -322,12 +345,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="afterDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableAfterDate"
+                       onkeyup="tableAfterDate('tableAfterDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableAfterDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -355,6 +384,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -403,12 +434,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="lateDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableLateDate"
+                       onkeyup="tableLateDate('tableLateDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableLateDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -436,6 +473,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -487,12 +526,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="trueDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableTrueDate"
+                       onkeyup="tableTrueDate('tableTrueDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableTrueDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -515,6 +560,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -553,6 +600,7 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -908,4 +956,119 @@ unset($workDB);
             $(this).tab('show');
         });
     });
+
+    function tableSearch(val) {
+        var phrase = document.getElementById('search-text');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+    function searchTableNotDate(val) {
+        var phrase = document.getElementById('searchTableNotDate');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+    function tableWithDate(val) {
+        var phrase = document.getElementById('tableWithDate');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+    function tableAfterDate(val) {
+        var phrase = document.getElementById('tableAfterDate');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+    function tableLateDate(val) {
+        var phrase = document.getElementById('tableLateDate');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+    function tableTrueDate(val) {
+        var phrase = document.getElementById('tableTrueDate');
+        var table = document.getElementById(val);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
 </script>
