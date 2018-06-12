@@ -4,6 +4,8 @@ $workDB = new workDB();
 
 switch ($_GET['mode']) {
     case 'info':
+        $result = array();
+
         //Информация о виновнике
         $query = "SELECT polis.serial_polis, polis.number_polis, people.name,
 		people.state_car_number, auto.mark, auto.name FROM protocol
@@ -20,13 +22,34 @@ switch ($_GET['mode']) {
         INNER JOIN people on protocol.id_people_member = people.id
         INNER JOIN auto on people.id_auto = auto.id
         WHERE protocol.id = ".$_GET['id_protocol'];
-        $membere = $workDB->analysisResult($workDB->anyQueryDB($query));
+        $member = $workDB->analysisResult($workDB->anyQueryDB($query));
 
         //Даты, комментарии и извещения
         $query = "SELECT time_register, time_atuo_emer, time_inspection, time_fact_inspection, time_send_service_control
 		notice, `comment` FROM protocol
 		WHERE id = ".$_GET['id_protocol'];
         $other = $workDB->analysisResult($workDB->anyQueryDB($query));
+
+        $tmp_arr = array();
+        $iter = count($culprit[0]);
+        for ($i = 0; $i < $iter; $i++) {
+            array_push($tmp_arr, $culprit[0][$i]);
+        }
+        array_push($result, $tmp_arr);
+
+        $tmp_arr = array();
+        $iter = count($member[0]);
+        for ($i = 0; $i < $iter; $i++) {
+            array_push($tmp_arr, $member[0][$i]);
+        }
+        array_push($result, $tmp_arr);
+
+        $tmp_arr = array();
+        $iter = count($other[0]);
+        for ($i = 0; $i < $iter; $i++) {
+            array_push($tmp_arr, $other[0][$i]);
+        }
+        array_push($result, $tmp_arr);
         break;
 }
 ?>
