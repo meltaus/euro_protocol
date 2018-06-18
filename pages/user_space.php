@@ -83,7 +83,12 @@ unset($workDB);
     <div class="tab-content">
         <div id="all" class="tab-pane fade in active">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="allDataSearch"
+                       onkeyup="tableSearch('allDataSearch', 'allData')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="allData">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -111,6 +116,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -160,12 +167,18 @@ unset($workDB);
                         echo "</tr>";
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="notDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableNotDateSearch"
+                       onkeyup="tableSearch('tableNotDateSearch','tableNotDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableNotDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -193,6 +206,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -229,7 +244,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра еще не наназначена";
                             echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
@@ -241,12 +256,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="withDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDateSearch"
+                       onkeyup="tableSearch('tableWithDateSearch', 'tableWithDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableWithDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -274,6 +295,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -310,7 +333,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра: " . $result[$i][6];
                             echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
@@ -322,12 +345,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="afterDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableAfterDateSearch"
+                       onkeyup="tableSearch('tableAfterDateSearch', 'tableAfterDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableAfterDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -355,6 +384,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -391,7 +422,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра: " . $result[$i][6];
                             echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
@@ -403,12 +434,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="lateDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableLateDateSearch"
+                       onkeyup="tableSearch('tableLateDateSearch', 'tableLateDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableLateDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -436,6 +473,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -472,7 +511,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             if ($result[$i][10] == null) {
                                 echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
@@ -487,12 +526,18 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="trueDate" class="tab-pane fade">
             <div class="row">
-                <table border="1px" ; style="margin:10px auto">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableTrueDateSearch"
+                       onkeyup="tableSearch('tableTrueDateSearch', 'tableTrueDate')">
+            </div>
+            <div class="row">
+                <table border="1px" ; style="margin:10px auto" id="tableTrueDate">
+                    <thead>
                     <tr>
                         <td>
                             <div style="margin-left: 5%; margin-right: 5%">
@@ -515,6 +560,8 @@ unset($workDB);
                             </div>
                         </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
@@ -553,6 +600,7 @@ unset($workDB);
                         }
                     }
                     ?>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -891,16 +939,6 @@ unset($workDB);
         window.close();
     }
 
-    $(function () {
-        $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=mark_auto'
-        });
-
-        $("#model_auto").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=model_auto'
-        });
-    })
-
 
     $(function () {
         $("#myTab a").click(function (e) {
@@ -908,4 +946,24 @@ unset($workDB);
             $(this).tab('show');
         });
     });
+
+    function tableSearch(pharseName, tableName) {
+        var phrase = document.getElementById(pharseName);
+        var table = document.getElementById(tableName);
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
 </script>
