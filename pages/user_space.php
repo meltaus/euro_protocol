@@ -244,7 +244,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра еще не наназначена";
                             echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
@@ -333,7 +333,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра: " . $result[$i][6];
                             echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
@@ -422,7 +422,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра: " . $result[$i][6];
                             echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
@@ -511,7 +511,7 @@ unset($workDB);
 
                             //Статус
                             echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style=\"margin-top: 10px\">";
+                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             if ($result[$i][10] == null) {
                                 echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
