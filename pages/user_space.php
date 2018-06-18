@@ -83,8 +83,8 @@ unset($workDB);
     <div class="tab-content">
         <div id="all" class="tab-pane fade in active">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="search-text"
-                       onkeyup="tableSearch('allData')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="allDataSearch"
+                       onkeyup="tableSearch('allDataSearch', 'allData')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="allData">
@@ -173,8 +173,8 @@ unset($workDB);
         </div>
         <div id="notDate" class="tab-pane fade">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="searchTableNotDate"
-                       onkeyup="searchTableNotDate('tableNotDate')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableNotDateSearch"
+                       onkeyup="tableSearch('tableNotDateSearch','tableNotDate')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="tableNotDate">
@@ -262,8 +262,8 @@ unset($workDB);
         </div>
         <div id="withDate" class="tab-pane fade">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDate"
-                       onkeyup="tableWithDate('tableWithDate')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDateSearch"
+                       onkeyup="tableSearch('tableWithDateSearch', 'tableWithDate')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="tableWithDate">
@@ -351,8 +351,8 @@ unset($workDB);
         </div>
         <div id="afterDate" class="tab-pane fade">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableAfterDate"
-                       onkeyup="tableAfterDate('tableAfterDate')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableAfterDateSearch"
+                       onkeyup="tableSearch('tableAfterDateSearch', 'tableAfterDate')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="tableAfterDate">
@@ -440,8 +440,8 @@ unset($workDB);
         </div>
         <div id="lateDate" class="tab-pane fade">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableLateDate"
-                       onkeyup="tableLateDate('tableLateDate')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableLateDateSearch"
+                       onkeyup="tableSearch('tableLateDateSearch', 'tableLateDate')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="tableLateDate">
@@ -532,8 +532,8 @@ unset($workDB);
         </div>
         <div id="trueDate" class="tab-pane fade">
             <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableTrueDate"
-                       onkeyup="tableTrueDate('tableTrueDate')">
+                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableTrueDateSearch"
+                       onkeyup="tableSearch('tableTrueDateSearch', 'tableTrueDate')">
             </div>
             <div class="row">
                 <table border="1px" ; style="margin:10px auto" id="tableTrueDate">
@@ -939,16 +939,6 @@ unset($workDB);
         window.close();
     }
 
-    $(function () {
-        $("#mark_auto").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=mark_auto'
-        });
-
-        $("#model_auto").typeahead({ //на какой input:text назначить результаты списка
-            ajax: '/control/getDataWithComp.php?mode=model_auto'
-        });
-    })
-
 
     $(function () {
         $("#myTab a").click(function (e) {
@@ -957,104 +947,9 @@ unset($workDB);
         });
     });
 
-    function tableSearch(val) {
-        var phrase = document.getElementById('search-text');
-        var table = document.getElementById(val);
-        var regPhrase = new RegExp(phrase.value, 'i');
-        var flag = false;
-        for (var i = 1; i < table.rows.length; i++) {
-            flag = false;
-            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-                if (flag) break;
-            }
-            if (flag) {
-                table.rows[i].style.display = "";
-            } else {
-                table.rows[i].style.display = "none";
-            }
-
-        }
-    }
-    function searchTableNotDate(val) {
-        var phrase = document.getElementById('searchTableNotDate');
-        var table = document.getElementById(val);
-        var regPhrase = new RegExp(phrase.value, 'i');
-        var flag = false;
-        for (var i = 1; i < table.rows.length; i++) {
-            flag = false;
-            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-                if (flag) break;
-            }
-            if (flag) {
-                table.rows[i].style.display = "";
-            } else {
-                table.rows[i].style.display = "none";
-            }
-
-        }
-    }
-    function tableWithDate(val) {
-        var phrase = document.getElementById('tableWithDate');
-        var table = document.getElementById(val);
-        var regPhrase = new RegExp(phrase.value, 'i');
-        var flag = false;
-        for (var i = 1; i < table.rows.length; i++) {
-            flag = false;
-            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-                if (flag) break;
-            }
-            if (flag) {
-                table.rows[i].style.display = "";
-            } else {
-                table.rows[i].style.display = "none";
-            }
-
-        }
-    }
-    function tableAfterDate(val) {
-        var phrase = document.getElementById('tableAfterDate');
-        var table = document.getElementById(val);
-        var regPhrase = new RegExp(phrase.value, 'i');
-        var flag = false;
-        for (var i = 1; i < table.rows.length; i++) {
-            flag = false;
-            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-                if (flag) break;
-            }
-            if (flag) {
-                table.rows[i].style.display = "";
-            } else {
-                table.rows[i].style.display = "none";
-            }
-
-        }
-    }
-    function tableLateDate(val) {
-        var phrase = document.getElementById('tableLateDate');
-        var table = document.getElementById(val);
-        var regPhrase = new RegExp(phrase.value, 'i');
-        var flag = false;
-        for (var i = 1; i < table.rows.length; i++) {
-            flag = false;
-            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-                if (flag) break;
-            }
-            if (flag) {
-                table.rows[i].style.display = "";
-            } else {
-                table.rows[i].style.display = "none";
-            }
-
-        }
-    }
-    function tableTrueDate(val) {
-        var phrase = document.getElementById('tableTrueDate');
-        var table = document.getElementById(val);
+    function tableSearch(pharseName, tableName) {
+        var phrase = document.getElementById(pharseName);
+        var table = document.getElementById(tableName);
         var regPhrase = new RegExp(phrase.value, 'i');
         var flag = false;
         for (var i = 1; i < table.rows.length; i++) {
