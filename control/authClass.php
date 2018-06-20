@@ -12,6 +12,7 @@ class authClass
      */
     public function isAuth()
     {
+        session_start();
         if (isset($_SESSION["is_auth"])) { //Если сессия существует
             return $_SESSION["is_auth"]; //Возвращаем значение переменной сессии is_auth (хранит true если авторизован, false если не авторизован)
         } else return false; //Пользователь не авторизован, т.к. переменная is_auth не создана
