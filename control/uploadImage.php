@@ -25,6 +25,13 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
         "time_fact_inspection" => "'".date('Y-m-d H:m')."'"
     );
     $workDB->updateDataTable("protocol", $columnValues, "id", $_COOKIE['id_protocol']);
+    $columnName = array(
+        'id_protocol' => $_COOKIE['id_protocol'],
+        'id_user' => $_SESSION['user_id'],
+        'time' => date('Y-m-d H:m'),
+        'type_action' => 'Добавление\изменение фотографии с именем '.substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg"
+    );
+    $this->workDB->insertDataTable("work_database", $columnName);
     unset($workDB);
 } else {
     echo "Possible file upload attack: ";
