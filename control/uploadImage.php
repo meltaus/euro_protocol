@@ -13,26 +13,36 @@ if (!file_exists($outputDir)) {
 //Загрузка фотографии во временную директорию и перемещение в конечную директорию
 if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
     $name = substr($_FILES["file-image"]["name"][0],0,-4);
+    $fullName = substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg";
+    $columnName = array('name');
+    $condition = "WHERE id_protocol = " . $_COOKIE['id_protocol'] . " && name = '" . $fullName . "'";
+    $resultPhoto = $workDB->selectDataTableWhere("document", $columnName, $condition);
+    $action = "";
 
     move_uploaded_file($_FILES['file-image']['tmp_name'][0], $outputDir .
         iconv("utf-8","windows-1251", $name)  . $current_date . ".jpg");
-    $columnValues = array(
-        "id_protocol" => $_COOKIE['id_protocol'],
-        "name" => substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg",
-        "id_type" => 2
-    );
-    $workDB->insertDataTable("document", $columnValues);
+    if (count($resultPhoto[0]) == 0) {
+        $action = "Добавление";
+        $columnValues = array(
+            "id_protocol" => $_COOKIE['id_protocol'],
+            "name" => $fullName,
+            "id_type" => 2
+        );
+        $workDB->insertDataTable("document", $columnValues);
+    } else {
+        $action = "Изменение";
+    }
     $columnValues = array(
         "time_fact_inspection" => "'".date('Y-m-d H:m')."'"
     );
     $workDB->updateDataTable("protocol", $columnValues, "id", $_COOKIE['id_protocol']);
-    $columnName = array(
+    $columnValues = array(
         'id_protocol' => $_COOKIE['id_protocol'],
         'id_user' => $_SESSION['user_id'],
         'time' => date('Y-m-d H:m'),
-        'type_action' => 'Добавление\изменение фотографии с именем '.substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . '.jpg'
+        'type_action' => $action.' фотографии с именем '. $fullName
     );
-    $workDB->insertDataTable("work_database", $columnName);
+    $workDB->insertDataTable("work_database", $columnValues);
     unset($workDB);
 } else {
     echo "Possible file upload attack: ";
