@@ -777,7 +777,7 @@ unset($workDB);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
+                            <div class="col-lg-2 col-md-1 col-sm-2 col-xs-2">
                                 <div class="row">
                                     <label>Комментарий</label>
                                 </div>
