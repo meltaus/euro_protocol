@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 class insertAllData
 {
@@ -256,6 +257,20 @@ class insertAllData
             'id_type' => 1
         );
         $this->workDB->insertDataTable("document", $columnName);
+        $columnName = array(
+            'id_protocol' => $result[0][0],
+            'id_user' => $_SESSION['user_id'],
+            'time' => date('Y-m-d H:m'),
+            'type_action' => 'Заведение протокола'
+        );
+        $this->workDB->insertDataTable("work_database", $columnName);
+        $columnName = array(
+            'id_protocol' => $result[0][0],
+            'id_user' => $_SESSION['user_id'],
+            'time' => date('Y-m-d H:m'),
+            'type_action' => 'Добавление скана протокола. Имя файла '.$this->documentName
+        );
+        $this->workDB->insertDataTable("work_database", $columnName);
         $this->workDB->anyQueryDB("commit");
     }
 }

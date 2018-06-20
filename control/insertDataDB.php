@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/control/insertAllData.php";
 $insertAllData = new insertAllData();
@@ -77,6 +78,13 @@ switch ($_GET['mode']) {
         );
 
         $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
+        $columnName = array(
+            'id_protocol' => $_GET['id'],
+            'id_user' => $_SESSION['user_id'],
+            'time' => date('Y-m-d H:m'),
+            'type_action' => 'Назначение осмотра'
+        );
+        $workDB->insertDataTable("work_database", $columnName);
         break;
 
     case "addNotice":
@@ -84,6 +92,13 @@ switch ($_GET['mode']) {
             'notice' => "'".$_GET['dateNotice'].". Метод: ".$_GET['typeNotice']."'"
         );
         $workDB->updateDataTable("protocol", $columnValues, "id", $_GET['id']);
+        $columnName = array(
+            'id_protocol' => $_GET['id'],
+            'id_user' => $_SESSION['user_id'],
+            'time' => date('Y-m-d H:m'),
+            'type_action' => 'Отправка извещения'
+        );
+        $workDB->insertDataTable("work_database", $columnName);
         break;
 }
 ?>
