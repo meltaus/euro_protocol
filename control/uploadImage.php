@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once $_SERVER["DOCUMENT_ROOT"]."/settings/getRootDir.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/control/workDB.php";
 $workDB = new workDB();
@@ -29,9 +30,9 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
         'id_protocol' => $_COOKIE['id_protocol'],
         'id_user' => $_SESSION['user_id'],
         'time' => date('Y-m-d H:m'),
-        'type_action' => 'Добавление\изменение фотографии с именем '.substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg"
+        'type_action' => 'Добавление\изменение фотографии с именем '.substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . '.jpg'
     );
-    $this->workDB->insertDataTable("work_database", $columnName);
+    $workDB->insertDataTable("work_database", $columnName);
     unset($workDB);
 } else {
     echo "Possible file upload attack: ";
