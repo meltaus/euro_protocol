@@ -62,9 +62,15 @@ unset($workDB);
                 <tr>
                     <td>
                         <div style="margin:10px auto;">
-                            <div class="form-group">
-                                <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
-                            </div>
+                            <?php
+                            if (strcmp($_SESSION['permission'][2], '1') == 0) {
+                                ?>
+                                <div class="form-group">
+                                    <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </td>
                     <td>
@@ -79,8 +85,18 @@ unset($workDB);
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#all">Все заявки</a></li>
-                <li><a data-toggle="tab" href="#notDate">Не назначенные</a></li>
-                <li><a data-toggle="tab" href="#withDate">На осмотр</a></li>
+                <?php
+                if (strcmp($_SESSION['permission'][2], '1') == 0) {
+                    ?>
+                    <li><a data-toggle="tab" href="#notDate">Не назначенные</a></li>
+                    <?php
+                }
+                if (strcmp($_SESSION['permission'][4], '1') == 0) {
+                    ?>
+                    <li><a data-toggle="tab" href="#withDate">На осмотр</a></li>
+                    <?php
+                }
+                ?>
                 <li><a data-toggle="tab" href="#afterDate">После осмотра</a></li>
                 <li><a data-toggle="tab" href="#lateDate">Просроченные</a></li>
                 <li><a data-toggle="tab" href="#trueDate">Осмотренные</a></li>
@@ -179,195 +195,205 @@ unset($workDB);
                 </table>
             </div>
         </div>
-        <div id="notDate" class="tab-pane fade">
-            <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableNotDateSearch"
-                       onkeyup="tableSearch('tableNotDateSearch','tableNotDate')">
-            </div>
-            <div class="row">
-                <table border="1px" ; style="margin:10px auto" id="tableNotDate">
-                    <thead>
-                    <tr>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Дата занесения
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                ФИО виновника
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Серия/Номер виновника
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Серия/Номер пострадавшего
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Статус
-                            </div>
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $iter = count($result);
-                    for ($i = 0; $i < $iter; $i++) {
-                        if ($result[$i][7] == null) {
-                            echo "<tr>";
+        <?php
+        if (strcmp($_SESSION['permission'][2], '1') == 0) {
+            ?>
+            <div id="notDate" class="tab-pane fade">
+                <div class="row">
+                    <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableNotDateSearch"
+                           onkeyup="tableSearch('tableNotDateSearch','tableNotDate')">
+                </div>
+                <div class="row">
+                    <table border="1px" ; style="margin:10px auto" id="tableNotDate">
+                        <thead>
+                        <tr>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Дата занесения
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    ФИО виновника
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Серия/Номер виновника
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Серия/Номер пострадавшего
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Статус
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $iter = count($result);
+                        for ($i = 0; $i < $iter; $i++) {
+                            if ($result[$i][7] == null) {
+                                echo "<tr>";
 
-                            //Дата занесения
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][4];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //ФИО виновника
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][3];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Серия + номер полиса
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][2] . $result[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Серия + номер полиса пострадавшего
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result_member[$i][2] . $result_member[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Статус
-                            if ($result[$i][6] == null) {
+                                //Дата занесения
                                 echo "<td>";
-                                echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
-                                echo "Дата осмотра еще не наназначена";
-                                echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][4];
+                                echo "</div>";
+                                echo "</td>";
+
+                                //ФИО виновника
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][3];
+                                echo "</div>";
+                                echo "</td>";
+
+                                //Серия + номер полиса
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][2] . $result[$i][1];
+                                echo "</div>";
+                                echo "</td>";
+
+                                //Серия + номер полиса пострадавшего
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result_member[$i][2] . $result_member[$i][1];
+                                echo "</div>";
+                                echo "</td>";
+
+                                //Статус
+                                if ($result[$i][6] == null) {
+                                    echo "<td>";
+                                    echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
+                                    echo "Дата осмотра еще не наназначена";
+                                    echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>На осмотр</button>";
-                                echo "</div>";
-                                echo "</td>";
-                            } else {
-                                echo "<td>";
-                                echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
-                                echo "Назначено: " . $result[$i][6];
-                                echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                    echo "</div>";
+                                    echo "</td>";
+                                } else {
+                                    echo "<td>";
+                                    echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
+                                    echo "Назначено: " . $result[$i][6];
+                                    echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>Новое время</button>";
+                                    echo "</div>";
+                                    echo "</td>";
+                                }
+
+                                echo "</tr>";
+                            }
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php
+        }
+        if (strcmp($_SESSION['permission'][4], '1') == 0) {
+            ?>
+            <div id="withDate" class="tab-pane fade">
+                <div class="row">
+                    <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDateSearch"
+                           onkeyup="tableSearch('tableWithDateSearch', 'tableWithDate')">
+                </div>
+                <div class="row">
+                    <table border="1px" ; style="margin:10px auto" id="tableWithDate">
+                        <thead>
+                        <tr>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Дата занесения
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    ФИО виновника
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Серия/Номер виновника
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Серия/Номер пострадавшего
+                                </div>
+                            </td>
+                            <td>
+                                <div style="margin-left: 5%; margin-right: 5%">
+                                    Статус
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $iter = count($result);
+                        for ($i = 0; $i < $iter; $i++) {
+                            if (($result[$i][6] != null) && (!in_array($result[$i][0], $result_document))) {
+                                echo "<tr>";
+
+                                //Дата занесения
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][4];
                                 echo "</div>";
                                 echo "</td>";
-                            }
 
-                            echo "</tr>";
-                        }
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div id="withDate" class="tab-pane fade">
-            <div class="row">
-                <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableWithDateSearch"
-                       onkeyup="tableSearch('tableWithDateSearch', 'tableWithDate')">
-            </div>
-            <div class="row">
-                <table border="1px" ; style="margin:10px auto" id="tableWithDate">
-                    <thead>
-                    <tr>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Дата занесения
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                ФИО виновника
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Серия/Номер виновника
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Серия/Номер пострадавшего
-                            </div>
-                        </td>
-                        <td>
-                            <div style="margin-left: 5%; margin-right: 5%">
-                                Статус
-                            </div>
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $iter = count($result);
-                    for ($i = 0; $i < $iter; $i++) {
-                        if (($result[$i][6] != null) && (!in_array($result[$i][0], $result_document))) {
-                            echo "<tr>";
+                                //ФИО виновника
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][3];
+                                echo "</div>";
+                                echo "</td>";
 
-                            //Дата занесения
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][4];
-                            echo "</div>";
-                            echo "</td>";
+                                //Серия + номер полиса
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result[$i][2] . $result[$i][1];
+                                echo "</div>";
+                                echo "</td>";
 
-                            //ФИО виновника
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][3];
-                            echo "</div>";
-                            echo "</td>";
+                                //Серия + номер полиса пострадавшего
+                                echo "<td>";
+                                echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                                echo $result_member[$i][2] . $result_member[$i][1];
+                                echo "</div>";
+                                echo "</td>";
 
-                            //Серия + номер полиса
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][2] . $result[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Серия + номер полиса пострадавшего
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result_member[$i][2] . $result_member[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Статус
-                            echo "<td>";
-                            echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
-                            echo "Дата осмотра: " . $result[$i][6];
-                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                //Статус
+                                echo "<td>";
+                                echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
+                                echo "Дата осмотра: " . $result[$i][6];
+                                echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
                                             style='margin-left: 10px'>Добавить осмотр</button>";
-                            echo "</div>";
-                            echo "</td>";
+                                echo "</div>";
+                                echo "</td>";
 
-                            echo "</tr>";
+                                echo "</tr>";
+                            }
                         }
-                    }
-                    ?>
-                    </tbody>
-                </table>
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <?php
+        }
+        ?>
         <div id="afterDate" class="tab-pane fade">
             <div class="row">
                 <input class="form-control" type="text" placeholder="Поиск по таблице" id="tableAfterDateSearch"
@@ -445,13 +471,17 @@ unset($workDB);
                             echo "Осмотр был: " . $result[$i][7];
                             $tmp = date('Y-m-d\TH:i:s');
                             if (strtotime($result[$i][7]) >= strtotime("$tmp - 1 day")) {
-                                echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                if (strcmp($_SESSION['permission'][4], '1') == 0) {
+                                    echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
                                             style='margin-left: 10px'>Изменить фото</button>";
+                                }
                             } else {
-                                echo "<a href='view_image.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                if (strcmp($_SESSION['permission'][3], '1') == 0) {
+                                    echo "<a href='view_image.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
                                             style='margin-left: 10px'>Смотреть фото</button>";
+                                }
                             }
                             echo "</div>";
                             echo "</td>";
@@ -539,9 +569,13 @@ unset($workDB);
                             echo "<td>";
                             echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             if ($result[$i][10] == null) {
-                                echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
+                                if (strcmp($_SESSION['permission'][2], '1') == 0) {
+                                    echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>Отправить телеграмму</button>";
+                                } else {
+                                    echo "Нет доступных действий";
+                                }
                             } else {
                                 echo "О телеграмме: " . $result[$i][10];
                             }

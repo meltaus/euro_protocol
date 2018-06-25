@@ -62,9 +62,15 @@ unset($workDB);
                 <tr>
                     <td>
                         <div style="margin:10px auto;">
-                            <div class="form-group">
-                                <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
-                            </div>
+                            <?php
+                            if (strcmp($_SESSION['permission'][2], '1') == 0) {
+                                ?>
+                                <div class="form-group">
+                                    <a href="insert_notify.php" class="btn btn-primary btn-block">Добавить протокол</a>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </td>
                     <td>
@@ -341,9 +347,13 @@ unset($workDB);
                             echo "<td>";
                             echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             if ($result[$i][10] == null) {
-                                echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
+                                if (strcmp($_SESSION['permission'][2], '1') == 0) {
+                                    echo "<button onclick='sendMessage(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>Отправить телеграмму</button>";
+                                } else {
+                                    echo "Нет доступных действий";
+                                }
                             } else {
                                 echo "О телеграмме: " . $result[$i][10];
                             }
