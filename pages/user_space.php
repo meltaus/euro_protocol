@@ -216,58 +216,60 @@ unset($workDB);
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
-                        echo "<tr>";
+                        if ($result[$i][7] == null) {
+                            echo "<tr>";
 
-                        //Дата занесения
-                        echo "<td>";
-                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                        echo $result[$i][4];
-                        echo "</div>";
-                        echo "</td>";
-
-                        //ФИО виновника
-                        echo "<td>";
-                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                        echo $result[$i][3];
-                        echo "</div>";
-                        echo "</td>";
-
-                        //Серия + номер полиса
-                        echo "<td>";
-                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                        echo $result[$i][2] . $result[$i][1];
-                        echo "</div>";
-                        echo "</td>";
-
-                        //Серия + номер полиса пострадавшего
-                        echo "<td>";
-                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                        echo $result_member[$i][2] . $result_member[$i][1];
-                        echo "</div>";
-                        echo "</td>";
-
-                        //Статус
-                        if ($result[$i][6] == null) {
+                            //Дата занесения
                             echo "<td>";
-                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
-                            echo "Дата осмотра еще не наназначена";
-                            echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][4];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //ФИО виновника
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][3];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][2] . $result[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Серия + номер полиса пострадавшего
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Статус
+                            if ($result[$i][6] == null) {
+                                echo "<td>";
+                                echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
+                                echo "Дата осмотра еще не наназначена";
+                                echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>На осмотр</button>";
-                            echo "</div>";
-                            echo "</td>";
-                        } else {
-                            echo "<td>";
-                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
-                            echo "Назначено: " . $result[$i][6];
-                            echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                echo "</div>";
+                                echo "</td>";
+                            } else {
+                                echo "<td>";
+                                echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
+                                echo "Назначено: " . $result[$i][6];
+                                echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary pull-right' 
                                             style='margin-left: 5px'>Новое время</button>";
-                            echo "</div>";
-                            echo "</td>";
-                        }
+                                echo "</div>";
+                                echo "</td>";
+                            }
 
-                        echo "</tr>";
+                            echo "</tr>";
+                        }
                     }
                     ?>
                     </tbody>
