@@ -49,7 +49,10 @@ unset($workDB);
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-top: 10px">
+            <a href="user_space_old_protocol.php" class="btn btn-primary">Старые протоколы</a>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-top: 10px">
             <a href="/pages/logout.php" class="btn btn-danger pull-right">Выйти</a>
         </div>
     </div>
