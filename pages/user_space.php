@@ -442,10 +442,17 @@ unset($workDB);
                             //Статус
                             echo "<td>";
                             echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
-                            echo "Дата осмотра: " . $result[$i][6];
-                            echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                            echo "Осмотр был: " . $result[$i][7];
+                            $tmp = date('Y-m-d\TH:i:s');
+                            if (strtotime($result[$i][7]) >= strtotime("$tmp - 1 day")) {
+                                echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
-                                            style='margin-left: 10px'>Изменить фотографии</button>";
+                                            style='margin-left: 10px'>Изменить фото</button>";
+                            } else {
+                                echo "<a href='view_image.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success pull-right' 
+                                            style='margin-left: 10px'>Смотреть фото</button>";
+                            }
                             echo "</div>";
                             echo "</td>";
 
