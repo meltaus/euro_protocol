@@ -745,6 +745,9 @@ unset($workDB);
                                 <div class="row">
                                     <text id="ingoGosNumberV">Гос.Номер</text>
                                 </div>
+                                <div class="row">
+                                    <text id="statementMethod">Метод подачи заявления</text>
+                                </div>
                             </div>
                             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                                 <div class="row">
@@ -938,6 +941,14 @@ unset($workDB);
 
                 //Комментарий
                 document.getElementById('commentProtocol').innerHTML = protocol[17];
+
+                //Метод подачи заявление
+                var method = protocol[18];
+                if (protocol[19] = "0") {
+                } else {
+                    method += " с доверенностью";
+                }
+                document.getElementById('statementMethod').innerHTML = method;
             }
         });
         $("#infoProtocol").modal('show');
