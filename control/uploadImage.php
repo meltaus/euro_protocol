@@ -16,6 +16,7 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
     $fullName = substr($_FILES["file-image"]["name"][0],0,-4)  . $current_date . ".jpg";
     $columnName = array('name');
     $condition = "WHERE id_protocol = " . $_COOKIE['id_protocol'] . " && name = '" . $fullName . "'";
+    $this->workDB->anyQueryDB("start transaction");
     $resultPhoto = $workDB->selectDataTableWhere("document", $columnName, $condition);
     $action = "";
 
@@ -43,6 +44,7 @@ if (is_uploaded_file($_FILES['file-image']['tmp_name'][0])) {
         'type_action' => $action.' фотографии с именем '. $fullName
     );
     $workDB->insertDataTable("work_database", $columnValues);
+    $this->workDB->anyQueryDB("commit");
     unset($workDB);
 } else {
     echo "Possible file upload attack: ";
