@@ -50,7 +50,7 @@ unset($workDB);
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-top: 10px">
-            <a href="user_space666.php" class="btn btn-primary">Новые протоколы</a>
+            <a href="user_space.php" class="btn btn-primary">Новые протоколы</a>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-top: 10px">
             <a href="/pages/logout.php" class="btn btn-danger pull-right">Выйти</a>
