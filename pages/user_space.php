@@ -25,10 +25,12 @@ $query = "SELECT protocol.id, polis.number_polis, polis.serial_polis, people.nam
 		protocol.time_inspection, protocol.time_fact_inspection,protocol.time_insert_service_control,
         protocol.time_send_service_control, protocol.notice, protocol.comment, protocol.hide FROM protocol
         INNER JOIN polis on protocol.id_number_polis = polis.id
-        INNER JOIN people on protocol.id_people_culprit = people.id";
+        INNER JOIN people on protocol.id_people_culprit = people.id
+        WHERE protocol.time_register >= DATE_SUB(CURDATE(),INTERVAL 18 DAY)";
 $result = $workDB->analysisResult($workDB->anyQueryDB($query));
 $query = "SELECT protocol.id, polis.number_polis, polis.serial_polis FROM protocol
-        INNER JOIN polis on protocol.id_number_polis_member = polis.id";
+        INNER JOIN polis on protocol.id_number_polis_member = polis.id
+        WHERE protocol.time_register >= DATE_SUB(CURDATE(),INTERVAL 18 DAY)";
 $result_member = $workDB->analysisResult($workDB->anyQueryDB($query));
 $columnName = array("id_protocol");
 $condition = "WHERE id_type = 2";
@@ -214,38 +216,38 @@ unset($workDB);
                     <?php
                     $iter = count($result);
                     for ($i = 0; $i < $iter; $i++) {
+                        echo "<tr>";
+
+                        //Дата занесения
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][4];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //ФИО виновника
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][3];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result[$i][2] . $result[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Серия + номер полиса пострадавшего
+                        echo "<td>";
+                        echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                        echo $result_member[$i][2] . $result_member[$i][1];
+                        echo "</div>";
+                        echo "</td>";
+
+                        //Статус
                         if ($result[$i][6] == null) {
-                            echo "<tr>";
-
-                            //Дата занесения
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][4];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //ФИО виновника
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][3];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Серия + номер полиса
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result[$i][2] . $result[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Серия + номер полиса пострадавшего
-                            echo "<td>";
-                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
-                            echo $result_member[$i][2] . $result_member[$i][1];
-                            echo "</div>";
-                            echo "</td>";
-
-                            //Статус
                             echo "<td>";
                             echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Дата осмотра еще не наназначена";
@@ -254,9 +256,18 @@ unset($workDB);
                                             style='margin-left: 5px'>На осмотр</button>";
                             echo "</div>";
                             echo "</td>";
-
-                            echo "</tr>";
+                        } else {
+                            echo "<td>";
+                            echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-bottom: 2px; margin-top: 2px'>";
+                            echo "Назначено: " . $result[$i][6];
+                            echo "<button onclick='addParticipant(this.id)' id='" . $result[$i][0] . "'
+                                            class='btn btn-primary pull-right' 
+                                            style='margin-left: 5px'>Новое время</button>";
+                            echo "</div>";
+                            echo "</td>";
                         }
+
+                        echo "</tr>";
                     }
                     ?>
                     </tbody>
@@ -562,6 +573,11 @@ unset($workDB);
                                 Серия/Номер пострадавшего
                             </div>
                         </td>
+                        <td>
+                            <div style="margin-left: 5%; margin-right: 5%">
+                                Время фактического осмотра
+                            </div>
+                        </td>
                     </tr>
                     </thead>
                     <tbody>
@@ -596,6 +612,13 @@ unset($workDB);
                             echo "<td>";
                             echo "<div style='margin-left: 5%; margin-right: 5%'>";
                             echo $result_member[$i][2] . $result_member[$i][1];
+                            echo "</div>";
+                            echo "</td>";
+
+                            //Время фактического осмотра
+                            echo "<td>";
+                            echo "<div style='margin-left: 5%; margin-right: 5%'>";
+                            echo $result[$i][7];
                             echo "</div>";
                             echo "</td>";
 
