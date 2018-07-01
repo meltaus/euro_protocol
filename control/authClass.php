@@ -29,6 +29,10 @@ class authClass
                 $_SESSION["is_auth"] = true; //Делаем пользователя авторизованным
                 $_SESSION["login"] = $login; //Записываем в сессию логин пользователя
                 $_SESSION["user_id"] = $userArray[$i][0];   //user_id
+                $query = "SELECT * FROM permission_user WHERE user_id = ".$_SESSION['user_id'];
+                $permission = $workDB->analysisResult($workDB->anyQueryDB($query));
+                $_SESSION['permission'] = $permission[0];
+                unset($workDB);
                 return true;
             }
         }

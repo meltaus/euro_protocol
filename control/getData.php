@@ -30,6 +30,12 @@ switch ($_GET['mode']) {
 		WHERE id = ".$_GET['id_protocol'];
         $other = $workDB->analysisResult($workDB->anyQueryDB($query));
 
+        //Метод подачи заявления
+        $query = "SELECT method_notification.method, statement.proxy FROM statement
+                  INNER JOIN method_notification on statement.method = method_notification.id
+                  WHERE statement.id = (SELECT protocol.id_statement FROM protocol WHERE id = ".$_GET['id_protocol'].")";
+        $statement = $workDB->analysisResult($workDB->anyQueryDB($query));
+
         $iter = count($culprit[0]);
         for ($i = 0; $i < $iter; $i++) {
             array_push($result, $culprit[0][$i]);
@@ -43,6 +49,10 @@ switch ($_GET['mode']) {
         $iter = count($other[0]);
         for ($i = 0; $i < $iter; $i++) {
             array_push($result, $other[0][$i]);
+        }
+        $iter = count($other[0]);
+        for ($i = 0; $i < $iter; $i++) {
+            array_push($result, $statement[0][$i]);
         }
         echo json_encode($result);
         break;

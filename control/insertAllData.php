@@ -101,6 +101,8 @@ class insertAllData
      */
     private function idCompany($companyName) {
         $query = "SELECT count(id) FROM company WHERE company_name = '".$companyName."'";
+        $this->workDB->anyQueryDB("start transaction");
+
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         $condition = "WHERE company_name = '".$companyName."'";
         $column_name = array("id");
@@ -113,7 +115,7 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("company", $column_name, $condition);
-
+        $this->workDB->anyQueryDB("commit");
         return $result[0][0];
     }
 
@@ -144,6 +146,8 @@ class insertAllData
         $query = "SELECT count(id) FROM auto WHERE mark = '".$mark."' && `name` = '".$model."' ";
         $condition = "WHERE mark = '".$mark."' && `name` = '".$model."'";
         $column_name = array("id");
+        $this->workDB->anyQueryDB("start transaction");
+
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         if($count[0][0] == 0) {
             $columnName = array(
@@ -154,6 +158,7 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("auto", $column_name, $condition);
+        $this->workDB->anyQueryDB("commit");
         return $result[0][0];
     }
 
@@ -166,7 +171,8 @@ class insertAllData
         $query = "SELECT count(id) FROM polis WHERE number_polis = '".$number_polis."' 
                     && serial_polis = '".$serial_polis."'";
         $condition = "WHERE number_polis = '".$number_polis."' && serial_polis = '".$serial_polis."'";
-        $column_name = array("id");
+        $column_name = array("id");$this->workDB->anyQueryDB("start transaction");
+
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
             $columnName = array(
@@ -177,7 +183,7 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("polis",$column_name, $condition);
-
+        $this->workDB->anyQueryDB("commit");
         return $result[0][0];
     }
 
@@ -216,6 +222,8 @@ class insertAllData
         $condition = "WHERE `name` = '".$FIO."' && id_auto = ".$id_auto."
                     && state_car_number = '".$state_number_car."'";
         $column_name = array("id");
+        $this->workDB->anyQueryDB("start transaction");
+
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
         if ($count[0][0] == 0) {
             $columnName = array(
@@ -228,6 +236,7 @@ class insertAllData
         }
 
         $result = $this->workDB->selectDataTableWhere("people", $column_name, $condition);
+        $this->workDB->anyQueryDB("commit");
         return $result[0][0];
     }
 
