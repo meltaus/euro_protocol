@@ -6,7 +6,7 @@ class workDB
     //Конструктор. Подключаемся к базе
     public function __construct()
     {
-        $host = '192.168.59.110'; // адрес сервера
+        $host = 'localhost'; // адрес сервера
         $database = 'euro_protocol'; // имя базы данных
         $user = 'root'; // имя пользователя
         $password = 'Y@lt;lf99'; // пароль

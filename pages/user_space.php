@@ -470,7 +470,7 @@ unset($workDB);
                             echo "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\" style='margin-bottom: 2px; margin-top: 2px'>";
                             echo "Осмотр был: " . $result[$i][7];
                             $tmp = date('Y-m-d\TH:i:s');
-                            if (strtotime($result[$i][7]) >= strtotime("$tmp - 1 day")) {
+                            if (strtotime($result[$i][7]) >= strtotime("$tmp - 10 day")) {
                                 if (strcmp($_SESSION['permission'][4], '1') == 0) {
                                     echo "<a href='uploadImage.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
                                             ' class='btn btn-success pull-right' 
