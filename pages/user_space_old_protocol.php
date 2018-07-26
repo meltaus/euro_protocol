@@ -173,6 +173,9 @@ unset($workDB);
                         echo "<button onclick='infoProtocol(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary center-block' 
                                             style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Сведения</button>";
+                        echo "<a href='showDoc.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success center-block' 
+                                            style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Извещение</button>";
                         echo "</div>";
                         echo "</td>";
 

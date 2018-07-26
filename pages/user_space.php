@@ -186,6 +186,9 @@ unset($workDB);
                         echo "<button onclick='infoProtocol(this.id)' id='" . $result[$i][0] . "'
                                             class='btn btn-primary center-block' 
                                             style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Сведения</button>";
+                        echo "<a href='showDoc.php?id_protocol=" . $result[$i][0] . "' id='" . $result[$i][0] . " 
+                                            ' class='btn btn-success center-block' 
+                                            style='margin-left: 5px; margin-top: 5px; margin-bottom: 5px'>Извещение</button>";
                         echo "</div>";
                         echo "</td>";
 
@@ -948,6 +951,13 @@ unset($workDB);
                                     <text id="commentProtocol">Комментарий</text>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <object>
+                                <embed src="" id="pdfProtocol" width='100%' height='300'>
+                            </object>
                         </div>
                     </div>
                 </div>
