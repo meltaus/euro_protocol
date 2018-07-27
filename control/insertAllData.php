@@ -27,6 +27,7 @@ class insertAllData
     private $company_name_member;
     private $time_send_service_control;
     private $documentName;
+    private $phoneNumber;
 
     //Переменные присущие только таблице
     private $id_number_polis;
@@ -76,6 +77,7 @@ class insertAllData
         $this->company_name_member = $columnValues['company_name_member'];
         $this->time_send_service_control = $columnValues['time_send_service_control'];
         $this->documentName = $columnValues['filename'];
+        $this->phoneNumber = $columnValues['phoneNumber'];
 
         $this->id_auto_culprit = $this->idAuto($this->mark_culprit, $this->model_culprit);
         $this->id_auto_member = $this->idAuto($this->mark_member, $this->model_member);
@@ -87,9 +89,9 @@ class insertAllData
         $this->id_number_polis_member = $this->idNumberPolis($this->number_polis_member, $this->serial_polis_member);
 
         $this->id_people_culprit = $this->idPeople($this->FIO_culprit, $this->id_auto_culprit,
-            $this->state_car_number_culprit, $this->id_company_culprit);
+            $this->state_car_number_culprit, $this->id_company_culprit, $this->phoneNumber);
         $this->id_people_member = $this->idPeople($this->FIO_member, $this->id_auto_member,
-            $this->state_car_number_member, $this->id_company_member);
+            $this->state_car_number_member, $this->id_company_member, " ");
 
         $this->id_statement = $this->idStatement($this->statement, $this->proxy);
     }
@@ -216,7 +218,7 @@ class insertAllData
      * @param $state_number_car Гос.номер указанного автомобиля
      * @return mixed id человека
      */
-    private function idPeople($FIO, $id_auto, $state_number_car, $id_company) {
+    private function idPeople($FIO, $id_auto, $state_number_car, $id_company, $phoneNumber) {
         $query = "SELECT count(id) FROM people WHERE `name` = '".$FIO."' && id_auto = ".$id_auto." 
                     && state_car_number = '".$state_number_car."'";
         $condition = "WHERE `name` = '".$FIO."' && id_auto = ".$id_auto."
@@ -225,12 +227,16 @@ class insertAllData
         $this->workDB->anyQueryDB("start transaction");
 
         $count = $this->workDB->analysisResult($this->workDB->anyQueryDB($query));
+        if ($phoneNumber == "" or $phoneNumber == null or $phoneNumber == " ") {
+            $phoneNumber = " ";
+        }
         if ($count[0][0] == 0) {
             $columnName = array(
                 'name' => $FIO,
                 'id_auto' => $id_auto,
                 'state_car_number' => $state_number_car,
-                'id_company' => $id_company
+                'id_company' => $id_company,
+                'phone_number' => $phoneNumber
             );
             $this->workDB->insertDataTable("people", $columnName);
         }

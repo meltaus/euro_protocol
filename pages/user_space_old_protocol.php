@@ -560,6 +560,9 @@ unset($workDB);
                                 <div class="row">
                                     <text id="ingoGosNumberV">Гос.Номер</text>
                                 </div>
+                                <div class="row">
+                                    <text id="phoneNumber">Номер телефона. если есть</text>
+                                </div>
                             </div>
                             <div class="col-lg-3 col-md-1 col-sm-3 col-xs-3">
                                 <div class="row">
@@ -735,24 +738,38 @@ unset($workDB);
                 //Заполняем дданные о виновнике
                 document.getElementById('infoPolisV').innerHTML = protocol[0] + protocol[1];
                 document.getElementById('infoFIOV').innerHTML = protocol[2];
-                document.getElementById('infoAutoV').innerHTML = protocol[4] + " " + protocol[5];
+                document.getElementById('infoAutoV').innerHTML = protocol[5] + " " + protocol[6];
                 document.getElementById('ingoGosNumberV').innerHTML = protocol[3];
 
                 //Заполняем данные о пострадавшем
-                document.getElementById('infoPolisP').innerHTML = protocol[6] + protocol[7];
-                document.getElementById('infoFIOP').innerHTML = protocol[8];
-                document.getElementById('infoAutoP').innerHTML = protocol[10] + " " + protocol[11];
-                document.getElementById('ingoGosNumberP').innerHTML = protocol[9];
+                document.getElementById('infoPolisP').innerHTML = protocol[7] + protocol[8];
+                document.getElementById('infoFIOP').innerHTML = protocol[9];
+                document.getElementById('infoAutoP').innerHTML = protocol[11] + " " + protocol[12];
+                document.getElementById('ingoGosNumberP').innerHTML = protocol[10];
 
                 //Даты
-                document.getElementById('infoDateRegistry').innerHTML = protocol[12];
-                document.getElementById('infoDateDTP').innerHTML = protocol[13];
-                document.getElementById('infoTimeInspection').innerHTML = protocol[14];
-                document.getElementById('infoTimeFactInspection').innerHTML = protocol[15];
-                document.getElementById('infoNotice').innerHTML = protocol[16];
+                document.getElementById('infoDateRegistry').innerHTML = protocol[13];
+                document.getElementById('infoDateDTP').innerHTML = protocol[14];
+                document.getElementById('infoTimeInspection').innerHTML = protocol[15];
+                document.getElementById('infoTimeFactInspection').innerHTML = protocol[16];
+                document.getElementById('infoNotice').innerHTML = protocol[17];
 
                 //Комментарий
-                document.getElementById('commentProtocol').innerHTML = protocol[17];
+                document.getElementById('commentProtocol').innerHTML = protocol[18];
+
+                //Метод подачи заявление
+                var method = protocol[19];
+                if (protocol[20] == "0") {
+                } else {
+                    method += " с доверенностью";
+                }
+                document.getElementById('statementMethod').innerHTML = method;
+                var phoneNumber = protocol[4];
+                if (phoneNumber == " " || phoneNumber == null || phoneNumber == "") {
+                    document.getElementById('phoneNumber').innerHTML = "Телефона нет";
+                } else {
+                    document.getElementById('phoneNumber').innerHTML = phoneNumber;
+                }
             }
         });
         $("#infoProtocol").modal('show');

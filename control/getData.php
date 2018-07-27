@@ -8,7 +8,7 @@ switch ($_GET['mode']) {
 
         //Информация о виновнике
         $query = "SELECT polis.serial_polis, polis.number_polis, people.name,
-		people.state_car_number, auto.mark, auto.name FROM protocol
+		people.state_car_number, people.phone_number, auto.mark, auto.name FROM protocol
 		INNER JOIN polis on protocol.id_number_polis = polis.id
         INNER JOIN people on protocol.id_people_culprit = people.id
         INNER JOIN auto on people.id_auto = auto.id

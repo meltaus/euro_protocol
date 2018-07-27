@@ -335,6 +335,15 @@ id="comment"    - Комментарий к протоколу
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-1 col-sm-4 col-xs-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" autocomplete="off"
+                           placeholder="Номер телефона (если есть)">
+                    <i class="fa fa-phone"></i>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <label>Потерпевший</label>
