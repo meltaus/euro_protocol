@@ -39,6 +39,9 @@ $condition = "WHERE id_protocol = ".$_GET['id_protocol']." && id_type = 1";
 $nameScan = $workDB->selectDataTableWhere("document", $columnName, $condition);
 ?>
 <div class="container kv-main">
+    <div class="row">
+        <a href="user_space.php" class='btn btn-danger pull-right'>Назад</a>
+    </div>
     <?php
     echo "<div class='row'>";
     echo "<object>";
@@ -47,7 +50,4 @@ $nameScan = $workDB->selectDataTableWhere("document", $columnName, $condition);
     echo "</object>";
     echo "</div>";
     ?>
-    <div class="row">
-        <a href="user_space.php" class='btn btn-danger pull-right'>Назад</a>
-    </div>
 </div>
